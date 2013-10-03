@@ -1,18 +1,15 @@
 
 CONTIKI_CPU=$(CONTIKI)/cpu/rl78
 
-CONTIKI_CPU_DIRS = .
-
-CONTIKI_SOURCEFILES += uart0.c
-
 ### Compiler definitions
 CROSS_COMPILE ?= $(shell echo /usr/share/*rl78*/bin | head -1)/rl78-elf-
 CC       = $(CROSS_COMPILE)gcc
 LD       = $(CROSS_COMPILE)gcc
-AS       = $(CROSS_COMPILE)as
+AS       = $(CROSS_COMPILE)gcc
 NM       = $(CROSS_COMPILE)nm
 OBJCOPY  = $(CROSS_COMPILE)objcopy
 STRIP    = $(CROSS_COMPILE)strip
+
 ifdef WERROR
 CFLAGSWERROR ?= -Werror -pedantic -std=c99 -Werror
 endif
@@ -21,7 +18,17 @@ CFLAGS  += $(CFLAGSNO) -O
 
 CFLAGS  += -Os -ggdb -ffunction-sections -fdata-sections
 LDFLAGS += -Wl,--gc-sections -T $(CONTIKI)/platform/$(TARGET)/rl78-R5F100SL.ld -nostartfiles
+ASFLAGS += -c
 
+### CPU-dependent directories
+CONTIKI_CPU_DIRS += .
+CONTIKI_CPU_DIRS += sys
+
+### CPU-dependent source files
+CONTIKI_SOURCEFILES += uart0.c
+CONTIKI_SOURCEFILES += clock.c
+
+CONTIKI_ASMFILES += crt0.S 
 
 ### Compilation rules
 
@@ -42,3 +49,5 @@ contiki-$(TARGET).a: ${addprefix $(OBJECTDIR)/,symbols.o}
 
 %.srec: %
 	$(OBJCOPY) -O srec $^ $@
+
+CONTIKI_OBJECTFILES += $(OBJECTDIR)/crt0.o

@@ -142,6 +142,8 @@ main(int argc, char **argv)
   autostart_start(autostart_processes);
 
   while(1) {
+    int retval;
+ 
     retval = process_run();
 
     etimer_request_poll();
