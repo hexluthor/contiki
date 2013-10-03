@@ -3074,7 +3074,9 @@ union un_pmc {
 #define FLWH (*(volatile union un_flwh *)0xFFF8E)
 #define ITMC (*(volatile union un_itmc *)0xFFF90)
 #define SEC (*(volatile union un_sec *)0xFFF92)
-#define MIN (*(volatile union un_min *)0xFFF93)
+
+// Collides with MIN() macro:
+//#define MIN (*(volatile union un_min *)0xFFF93)
 #define HOUR (*(volatile union un_hour *)0xFFF94)
 #define WEEK (*(volatile union un_week *)0xFFF95)
 #define DAY (*(volatile union un_day *)0xFFF96)
