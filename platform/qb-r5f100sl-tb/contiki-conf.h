@@ -86,11 +86,8 @@
 #define dbg_putchar(x) uart1_putc(x)
 
 #define USE_FORMATTED_STDIO         1
-#define MACA_DEBUG                  0
-#define CONTIKI_MACA_RAW_MODE       0
 
 #define BLOCKING_TX 1
-#define MACA_AUTOACK 1
 #define NULLRDC_CONF_802154_AUTOACK_HW 1
 
 #define USE_WDT 0
@@ -112,7 +109,7 @@
 #define NETSTACK_CONF_NETWORK sicslowpan_driver
 #define NETSTACK_CONF_MAC     nullmac_driver 
 #define NETSTACK_CONF_RDC     nullrdc_driver
-#define NETSTACK_CONF_RADIO   contiki_maca_driver
+//#define NETSTACK_CONF_RADIO   contiki_maca_driver
 #define NETSTACK_CONF_FRAMER  framer_802154
 
 #define NETSTACK_CONF_RDC_CHANNEL_CHECK_RATE      8
@@ -126,7 +123,7 @@
 #define NETSTACK_CONF_NETWORK rime_driver
 #define NETSTACK_CONF_MAC     csma_driver
 #define NETSTACK_CONF_RDC     sicslowmac_driver
-#define NETSTACK_CONF_RADIO   contiki_maca_driver
+//#define NETSTACK_CONF_RADIO   contiki_maca_driver
 #define NETSTACK_CONF_FRAMER  framer_802154
 
 #define NETSTACK_CONF_RDC_CHANNEL_CHECK_RATE      8
@@ -228,7 +225,6 @@
 #define UIP_CONF_UDP_CONNS       12
 #define UIP_CONF_FWCACHE_SIZE    30
 #define UIP_CONF_BROADCAST       1
-#define UIP_ARCH_IPCHKSUM        1
 #define UIP_CONF_UDP             1
 #define UIP_CONF_UDP_CHECKSUMS   1
 #define UIP_CONF_PINGADDRCONF    0
