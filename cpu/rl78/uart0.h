@@ -2,6 +2,8 @@
 #define UART0_H__
 
 void uart0_init(void);
-int uart0_puts(const char __far * s);
+void uart0_putchar(int c);
+
+int uart0_puts(const char* s);
 
 #endif // UART0_H__

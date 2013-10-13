@@ -8,6 +8,7 @@ LD       = $(CROSS_COMPILE)gcc
 AS       = $(CROSS_COMPILE)gcc
 NM       = $(CROSS_COMPILE)nm
 OBJCOPY  = $(CROSS_COMPILE)objcopy
+OBJDUMP  = $(CROSS_COMPILE)objdump
 STRIP    = $(CROSS_COMPILE)strip
 
 ifdef WERROR
@@ -16,8 +17,16 @@ endif
 CFLAGSNO ?= -Wall -g $(CFLAGSWERROR)
 CFLAGS  += $(CFLAGSNO) -O
 
+CFLAGS += -mmul=g13
 CFLAGS  += -Os -ggdb -ffunction-sections -fdata-sections
+
+# Enable override of write() function:
+CFLAGS  += -fno-builtin
+LDFLAGS += -fno-builtin
+
+# LDFLAGS += -Wl,--no-whole-archive
 LDFLAGS += -Wl,--gc-sections -T $(CONTIKI)/platform/$(TARGET)/rl78-R5F100SL.ld -nostartfiles
+
 ASFLAGS += -c
 
 ### CPU-dependent directories
@@ -27,6 +36,7 @@ CONTIKI_CPU_DIRS += sys
 ### CPU-dependent source files
 CONTIKI_SOURCEFILES += uart0.c
 CONTIKI_SOURCEFILES += clock.c
+CONTIKI_SOURCEFILES += write.c
 
 CONTIKI_ASMFILES += crt0.S 
 
@@ -49,5 +59,11 @@ contiki-$(TARGET).a: ${addprefix $(OBJECTDIR)/,symbols.o}
 
 %.srec: %
 	$(OBJCOPY) -O srec $^ $@
+
+%.lst: %.elf
+	$(OBJDUMP) -DS $^ > $@
+
+%.lst: %
+	$(OBJDUMP) -DS $^ > $@
 
 CONTIKI_OBJECTFILES += $(OBJECTDIR)/crt0.o
