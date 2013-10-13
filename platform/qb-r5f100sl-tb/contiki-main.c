@@ -49,11 +49,23 @@
 #endif /* WITH_UIP6 */
 
 #include "net/rime.h"
+#include "uart0.h"
 
 SENSORS(&button_sensor);
 
 static uint8_t serial_id[] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
 static uint16_t node_id = 0x0102;
+
+__attribute__((interrupt))
+void wdti_handler(void)
+{
+}
+
+__attribute__((interrupt))
+void it_handler(void)
+{
+}
+
 /*---------------------------------------------------------------------------*/
 static void
 set_rime_addr(void)
@@ -87,9 +99,38 @@ set_rime_addr(void)
 int contiki_argc = 0;
 char **contiki_argv;
 
+static void delay_1sec(void) {
+	/* Delay 1 second */
+	register unsigned long int i;
+	for (i = 0x000FFFFFUL; i; --i)
+		asm("nop");
+}
+
 int
 main(int argc, char **argv)
 {
+	asm("di");
+	/* Setup clocks */
+	CMC.cmc = 0x11U;                                        /* Enable XT1, disable X1 */
+	CSC.csc = 0x80U;                                        /* Start XT1 and HOCO, stop X1 */
+	CKC.ckc = 0x00U;
+	delay_1sec();
+	OSMC.osmc = 0x00;                                       /* Supply fsub to peripherals, including Interval Timer */
+ 	uart0_init();
+	
+	// Force linking of custom write() function:
+	write(1, NULL, 0);
+
+	/* Setup 12-bit interval timer */
+	RTCEN = 1;                                              /* Enable 12-bit interval timer and RTC */
+	ITMK = 1;                                               /* Disable IT interrupt */
+	ITPR0 = 0;                                              /* Set interrupt priority - highest */
+	ITPR1 = 0;
+	ITMC.itmc = 0x8FFFU;                                    /* Set maximum period 4096/32768Hz = 1/8 s, and start timer */
+	ITIF = 0;                                               /* Clear interrupt request flag */
+	ITMK = 0;                                               /* Enable IT interrupt */
+	//asm ("ei");                                             /* Enable interrupts */
+
 #if UIP_CONF_IPV6
 #if UIP_CONF_IPV6_RPL
   printf(CONTIKI_VERSION_STRING " started with IPV6, RPL\n");
@@ -99,7 +140,7 @@ main(int argc, char **argv)
 #else
   printf(CONTIKI_VERSION_STRING " started\n");
 #endif
-
+	
   /* crappy way of remembering and accessing argc/v */
   contiki_argc = argc;
   contiki_argv = argv;

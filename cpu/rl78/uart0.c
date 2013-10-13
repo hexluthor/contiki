@@ -72,15 +72,20 @@ void uart0_init(void)
     STIF0 = 1;                                              /* Set buffer empty interrupt request flag */
 }
 
-int uart0_puts(const char __far * s)
+void uart0_putchar(int c) {
+	while (0 == STIF0);
+	STIF0 = 0;
+	SDR00.sdr00 = c;
+}
+
+int uart0_puts(const char* s)
 {
     int len = 0;
     SMR00.smr00 |= 0x0001U;                                 /* Set buffer empty interrupt */
     while ('\0' != *s)
     {
-        while (0 == STIF0);
-        STIF0 = 0;
-        SDR00.sdr00 = *s++;
+      uart0_putchar(*s);
+      s++;
         ++len;
     }
 #if 0
@@ -88,11 +93,8 @@ int uart0_puts(const char __far * s)
     STIF0 = 0;
     SDR00.sdr00 = '\r';
 #endif
-    while (0 == STIF0);
-    STIF0 = 0;
     SMR00.smr00 &= ~0x0001U;
-    SDR00.sdr00 = '\n';
-    while (0 == STIF0);
+    uart0_putchar('\n');
 #if 0
     while (0 != SSR00.BIT.bit6);                            /* Wait until TSF00 == 0 */
 #endif

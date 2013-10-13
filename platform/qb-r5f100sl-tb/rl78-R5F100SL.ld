@@ -42,7 +42,8 @@ MEMORY {
 	VEC (r)   : ORIGIN = 0x00000, LENGTH = 0x00002
 	IVEC (r)  : ORIGIN = 0x00004, LENGTH = 0x0007c
 	OPT (r)   : ORIGIN = 0x000c0, LENGTH = 0x00004
-	ROM (r)   : ORIGIN = 0x000d8, LENGTH = 0x7ff28
+	MIRROR (r): ORIGIN = 0x03000, LENGTH = 0x04f00
+	ROM (r)   : ORIGIN = 0x07F00, LENGTH = 0x78100
 	RAM (w)   : ORIGIN = 0xf8000, LENGTH = 0x07ee0
 	STACK (w) : ORIGIN = 0xffee0, LENGTH = 0x00002
 }
@@ -98,7 +99,7 @@ SECTIONS
     _edata = .;
     PROVIDE (edata = .);
     PROVIDE (__dataend = .);
-  } > RAM AT> ROM
+  } > RAM AT> MIRROR
 
   /* Note that crt0 assumes this is a multiple of two; all the
      start/stop symbols are also assumed word-aligned.  */
@@ -167,7 +168,7 @@ SECTIONS
     KEEP (*(EXCLUDE_FILE (*crtend*.o ) .dtors))
     KEEP (*(SORT(.dtors.*)))
     KEEP (*(.dtors))
-  } > ROM
+  } > MIRROR
 
   .text           :
   {
