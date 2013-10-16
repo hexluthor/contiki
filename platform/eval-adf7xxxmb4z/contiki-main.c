@@ -111,11 +111,11 @@ main(int argc, char **argv)
 {
 	asm("di");
 	/* Setup clocks */
-	CMC.cmc = 0x11U;                                        /* Enable XT1, disable X1 */
-	CSC.csc = 0x80U;                                        /* Start XT1 and HOCO, stop X1 */
-	CKC.ckc = 0x00U;
+	CMC = 0x11U;                                        /* Enable XT1, disable X1 */
+	CSC = 0x80U;                                        /* Start XT1 and HOCO, stop X1 */
+	CKC = 0x00U;
 	delay_1sec();
-	OSMC.osmc = 0x00;                                       /* Supply fsub to peripherals, including Interval Timer */
+	OSMC = 0x00;                                       /* Supply fsub to peripherals, including Interval Timer */
  	uart0_init();
 	
 	// Force linking of custom write() function:
@@ -126,7 +126,7 @@ main(int argc, char **argv)
 	ITMK = 1;                                               /* Disable IT interrupt */
 	ITPR0 = 0;                                              /* Set interrupt priority - highest */
 	ITPR1 = 0;
-	ITMC.itmc = 0x8FFFU;                                    /* Set maximum period 4096/32768Hz = 1/8 s, and start timer */
+	ITMC = 0x8FFFU;                                    /* Set maximum period 4096/32768Hz = 1/8 s, and start timer */
 	ITIF = 0;                                               /* Clear interrupt request flag */
 	ITMK = 0;                                               /* Enable IT interrupt */
 	//asm ("ei");                                             /* Enable interrupts */
