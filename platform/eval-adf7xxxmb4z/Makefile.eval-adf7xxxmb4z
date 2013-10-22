@@ -4,7 +4,12 @@ CONTIKI_TARGET_DIRS = .
 CONTIKI_CORE = contiki-main
 CONTIKI_TARGET_MAIN = ${CONTIKI_CORE}.o
 
+ARCH += ADF7023.c
+ARCH += adf7023-contiki.c
+
+CONTIKI_TARGET_SOURCEFILES += $(ARCH)
 CONTIKI_TARGET_SOURCEFILES += contiki-main.c
+
 CONTIKI_SOURCEFILES += $(CONTIKI_TARGET_SOURCEFILES)
 
 ${warning $(CONTIKI)}
@@ -21,7 +26,7 @@ endif
 
 include $(CONTIKIRL78)/Makefile.rl78
 
-PROG_UART    ?= /dev/ttyUSB3
+PROG_UART    ?= /dev/ttyUSB1
 CONSOLE_UART ?= /dev/ttyUSB0
 
 run: $(CONTIKI_PROJECT).$(TARGET).srec
