@@ -318,14 +318,14 @@
 #define CRCD     (*(volatile unsigned short *)0xF02FA)
 
 
-union ADM2union {
+struct ADM2struct {
 	unsigned char  adtyp     : 1;
 	unsigned char            : 1;
 	unsigned char  awc       : 1;
 	unsigned char  adrck     : 1;
 };
 
-union ADULunion {
+struct ADULstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -336,7 +336,7 @@ union ADULunion {
 	unsigned char  bit7      : 1;
 };
 
-union ADLLunion {
+struct ADLLstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -347,7 +347,7 @@ union ADLLunion {
 	unsigned char  bit7      : 1;
 };
 
-union ADTESunion {
+struct ADTESstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -358,7 +358,7 @@ union ADTESunion {
 	unsigned char  bit7      : 1;
 };
 
-union PU0union {
+struct PU0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -369,7 +369,7 @@ union PU0union {
 	unsigned char  bit7      : 1;
 };
 
-union PU1union {
+struct PU1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -380,7 +380,7 @@ union PU1union {
 	unsigned char  bit7      : 1;
 };
 
-union PU3union {
+struct PU3struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -391,7 +391,7 @@ union PU3union {
 	unsigned char  bit7      : 1;
 };
 
-union PU4union {
+struct PU4struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -402,7 +402,7 @@ union PU4union {
 	unsigned char  bit7      : 1;
 };
 
-union PU5union {
+struct PU5struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -413,7 +413,7 @@ union PU5union {
 	unsigned char  bit7      : 1;
 };
 
-union PU6union {
+struct PU6struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -424,7 +424,7 @@ union PU6union {
 	unsigned char  bit7      : 1;
 };
 
-union PU7union {
+struct PU7struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -435,7 +435,7 @@ union PU7union {
 	unsigned char  bit7      : 1;
 };
 
-union PU8union {
+struct PU8struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -446,7 +446,7 @@ union PU8union {
 	unsigned char  bit7      : 1;
 };
 
-union PU9union {
+struct PU9struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -457,7 +457,7 @@ union PU9union {
 	unsigned char  bit7      : 1;
 };
 
-union PU10union {
+struct PU10struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -468,7 +468,7 @@ union PU10union {
 	unsigned char  bit7      : 1;
 };
 
-union PU11union {
+struct PU11struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -479,7 +479,7 @@ union PU11union {
 	unsigned char  bit7      : 1;
 };
 
-union PU12union {
+struct PU12struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -490,7 +490,7 @@ union PU12union {
 	unsigned char  bit7      : 1;
 };
 
-union PU14union {
+struct PU14struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -501,7 +501,7 @@ union PU14union {
 	unsigned char  bit7      : 1;
 };
 
-union PIM0union {
+struct PIM0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -512,7 +512,7 @@ union PIM0union {
 	unsigned char  bit7      : 1;
 };
 
-union PIM1union {
+struct PIM1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -523,7 +523,7 @@ union PIM1union {
 	unsigned char  bit7      : 1;
 };
 
-union PIM4union {
+struct PIM4struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -534,7 +534,7 @@ union PIM4union {
 	unsigned char  bit7      : 1;
 };
 
-union PIM5union {
+struct PIM5struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -545,7 +545,7 @@ union PIM5union {
 	unsigned char  bit7      : 1;
 };
 
-union PIM8union {
+struct PIM8struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -556,7 +556,7 @@ union PIM8union {
 	unsigned char  bit7      : 1;
 };
 
-union PIM14union {
+struct PIM14struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -567,7 +567,7 @@ union PIM14union {
 	unsigned char  bit7      : 1;
 };
 
-union POM0union {
+struct POM0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -578,7 +578,7 @@ union POM0union {
 	unsigned char  bit7      : 1;
 };
 
-union POM1union {
+struct POM1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -589,7 +589,7 @@ union POM1union {
 	unsigned char  bit7      : 1;
 };
 
-union POM4union {
+struct POM4struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -600,7 +600,7 @@ union POM4union {
 	unsigned char  bit7      : 1;
 };
 
-union POM5union {
+struct POM5struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -611,7 +611,7 @@ union POM5union {
 	unsigned char  bit7      : 1;
 };
 
-union POM7union {
+struct POM7struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -622,7 +622,7 @@ union POM7union {
 	unsigned char  bit7      : 1;
 };
 
-union POM8union {
+struct POM8struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -633,7 +633,7 @@ union POM8union {
 	unsigned char  bit7      : 1;
 };
 
-union POM9union {
+struct POM9struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -644,7 +644,7 @@ union POM9union {
 	unsigned char  bit7      : 1;
 };
 
-union POM14union {
+struct POM14struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -655,7 +655,7 @@ union POM14union {
 	unsigned char  bit7      : 1;
 };
 
-union PMC0union {
+struct PMC0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -666,7 +666,7 @@ union PMC0union {
 	unsigned char  bit7      : 1;
 };
 
-union PMC3union {
+struct PMC3struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -677,7 +677,7 @@ union PMC3union {
 	unsigned char  bit7      : 1;
 };
 
-union PMC10union {
+struct PMC10struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -688,7 +688,7 @@ union PMC10union {
 	unsigned char  bit7      : 1;
 };
 
-union PMC11union {
+struct PMC11struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -699,7 +699,7 @@ union PMC11union {
 	unsigned char  bit7      : 1;
 };
 
-union PMC12union {
+struct PMC12struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -710,7 +710,7 @@ union PMC12union {
 	unsigned char  bit7      : 1;
 };
 
-union PMC14union {
+struct PMC14struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -721,7 +721,7 @@ union PMC14union {
 	unsigned char  bit7      : 1;
 };
 
-union NFEN0union {
+struct NFEN0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -732,7 +732,7 @@ union NFEN0union {
 	unsigned char  bit7      : 1;
 };
 
-union NFEN1union {
+struct NFEN1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -743,7 +743,7 @@ union NFEN1union {
 	unsigned char  bit7      : 1;
 };
 
-union NFEN2union {
+struct NFEN2struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -754,7 +754,7 @@ union NFEN2union {
 	unsigned char  bit7      : 1;
 };
 
-union ISCunion {
+struct ISCstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -765,7 +765,7 @@ union ISCunion {
 	unsigned char  bit7      : 1;
 };
 
-union TIS0union {
+struct TIS0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -776,7 +776,7 @@ union TIS0union {
 	unsigned char  bit7      : 1;
 };
 
-union ADPCunion {
+struct ADPCstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -787,7 +787,7 @@ union ADPCunion {
 	unsigned char  bit7      : 1;
 };
 
-union PIORunion {
+struct PIORstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -798,7 +798,7 @@ union PIORunion {
 	unsigned char  bit7      : 1;
 };
 
-union IAWCTLunion {
+struct IAWCTLstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -809,7 +809,7 @@ union IAWCTLunion {
 	unsigned char  bit7      : 1;
 };
 
-union GDIDISunion {
+struct GDIDISstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -820,7 +820,7 @@ union GDIDISunion {
 	unsigned char  bit7      : 1;
 };
 
-union PRDSELunion {
+struct PRDSELstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -839,7 +839,7 @@ union PRDSELunion {
 	unsigned short bit15     : 1;
 };
 
-union TOOLENunion {
+struct TOOLENstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -850,7 +850,7 @@ union TOOLENunion {
 	unsigned char  bit7      : 1;
 };
 
-union BPAL0union {
+struct BPAL0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -861,7 +861,7 @@ union BPAL0union {
 	unsigned char  bit7      : 1;
 };
 
-union BPAH0union {
+struct BPAH0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -872,7 +872,7 @@ union BPAH0union {
 	unsigned char  bit7      : 1;
 };
 
-union BPAS0union {
+struct BPAS0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -883,7 +883,7 @@ union BPAS0union {
 	unsigned char  bit7      : 1;
 };
 
-union BACDVL0union {
+struct BACDVL0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -894,7 +894,7 @@ union BACDVL0union {
 	unsigned char  bit7      : 1;
 };
 
-union BACDVH0union {
+struct BACDVH0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -905,7 +905,7 @@ union BACDVH0union {
 	unsigned char  bit7      : 1;
 };
 
-union BACDML0union {
+struct BACDML0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -916,7 +916,7 @@ union BACDML0union {
 	unsigned char  bit7      : 1;
 };
 
-union BACDMH0union {
+struct BACDMH0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -927,7 +927,7 @@ union BACDMH0union {
 	unsigned char  bit7      : 1;
 };
 
-union MONMODunion {
+struct MONMODstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -938,11 +938,11 @@ union MONMODunion {
 	unsigned char  bit7      : 1;
 };
 
-union DFLCTLunion {
+struct DFLCTLstruct {
 	unsigned char  dflen     : 1;
 };
 
-union HIOTRMunion {
+struct HIOTRMstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -953,11 +953,11 @@ union HIOTRMunion {
 	unsigned char  bit7      : 1;
 };
 
-union BECTLunion {
+struct BECTLstruct {
 	unsigned char  brsam     : 1;
 };
 
-union HOCODIVunion {
+struct HOCODIVstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -968,7 +968,7 @@ union HOCODIVunion {
 	unsigned char  bit7      : 1;
 };
 
-union TEMPCAL0union {
+struct TEMPCAL0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -979,7 +979,7 @@ union TEMPCAL0union {
 	unsigned char  bit7      : 1;
 };
 
-union TEMPCAL1union {
+struct TEMPCAL1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -990,7 +990,7 @@ union TEMPCAL1union {
 	unsigned char  bit7      : 1;
 };
 
-union TEMPCAL2union {
+struct TEMPCAL2struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1001,7 +1001,7 @@ union TEMPCAL2union {
 	unsigned char  bit7      : 1;
 };
 
-union TEMPCAL3union {
+struct TEMPCAL3struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1012,7 +1012,7 @@ union TEMPCAL3union {
 	unsigned char  bit7      : 1;
 };
 
-union FLSECunion {
+struct FLSECstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1031,7 +1031,7 @@ union FLSECunion {
 	unsigned short bit15     : 1;
 };
 
-union FLFSWSunion {
+struct FLFSWSstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1050,7 +1050,7 @@ union FLFSWSunion {
 	unsigned short bit15     : 1;
 };
 
-union FLFSWEunion {
+struct FLFSWEstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1069,7 +1069,7 @@ union FLFSWEunion {
 	unsigned short bit15     : 1;
 };
 
-union FSSETunion {
+struct FSSETstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1080,12 +1080,12 @@ union FSSETunion {
 	unsigned char  bit7      : 1;
 };
 
-union FSSEunion {
+struct FSSEstruct {
 	unsigned char            : 1;
 	unsigned char  esqst     : 1;
 };
 
-union FLFADLunion {
+struct FLFADLstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1104,7 +1104,7 @@ union FLFADLunion {
 	unsigned short bit15     : 1;
 };
 
-union FLFADHunion {
+struct FLFADHstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1115,7 +1115,7 @@ union FLFADHunion {
 	unsigned char  bit7      : 1;
 };
 
-union PFCMDunion {
+struct PFCMDstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1126,7 +1126,7 @@ union PFCMDunion {
 	unsigned char  bit7      : 1;
 };
 
-union PFSunion {
+struct PFSstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1137,7 +1137,7 @@ union PFSunion {
 	unsigned char  bit7      : 1;
 };
 
-union FLRLunion {
+struct FLRLstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1156,7 +1156,7 @@ union FLRLunion {
 	unsigned short bit15     : 1;
 };
 
-union FLRHunion {
+struct FLRHstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1175,7 +1175,7 @@ union FLRHunion {
 	unsigned short bit15     : 1;
 };
 
-union FLWEunion {
+struct FLWEstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1186,7 +1186,7 @@ union FLWEunion {
 	unsigned char  bit7      : 1;
 };
 
-union FLREunion {
+struct FLREstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1197,7 +1197,7 @@ union FLREunion {
 	unsigned char  bit7      : 1;
 };
 
-union FLTMSunion {
+struct FLTMSstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1216,7 +1216,7 @@ union FLTMSunion {
 	unsigned short bit15     : 1;
 };
 
-union DFLMCunion {
+struct DFLMCstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1235,7 +1235,7 @@ union DFLMCunion {
 	unsigned short bit15     : 1;
 };
 
-union FLMCLunion {
+struct FLMCLstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1254,7 +1254,7 @@ union FLMCLunion {
 	unsigned short bit15     : 1;
 };
 
-union FLMCHunion {
+struct FLMCHstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1265,7 +1265,7 @@ union FLMCHunion {
 	unsigned char  bit7      : 1;
 };
 
-union FSCTLunion {
+struct FSCTLstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1276,7 +1276,7 @@ union FSCTLunion {
 	unsigned char  bit7      : 1;
 };
 
-union ICEADRunion {
+struct ICEADRstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1295,7 +1295,7 @@ union ICEADRunion {
 	unsigned short bit15     : 1;
 };
 
-union ICEDATunion {
+struct ICEDATstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1314,7 +1314,7 @@ union ICEDATunion {
 	unsigned short bit15     : 1;
 };
 
-union MDCLunion {
+struct MDCLstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1333,7 +1333,7 @@ union MDCLunion {
 	unsigned short bit15     : 1;
 };
 
-union MDCHunion {
+struct MDCHstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1352,7 +1352,7 @@ union MDCHunion {
 	unsigned short bit15     : 1;
 };
 
-union MDUCunion {
+struct MDUCstruct {
 	unsigned char  divst     : 1;
 	unsigned char  macsf     : 1;
 	unsigned char  macof     : 1;
@@ -1362,7 +1362,7 @@ union MDUCunion {
 	unsigned char  divmode   : 1;
 };
 
-union PER0union {
+struct PER0struct {
 	unsigned char  tau0en    : 1;
 	unsigned char  tau1en    : 1;
 	unsigned char  sau0en    : 1;
@@ -1373,7 +1373,7 @@ union PER0union {
 	unsigned char  rtcen     : 1;
 };
 
-union OSMCunion {
+struct OSMCstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1384,19 +1384,19 @@ union OSMCunion {
 	unsigned char  bit7      : 1;
 };
 
-union RMCunion {
+struct RMCstruct {
 	unsigned char  paenb     : 1;
 	unsigned char            : 1;
 	unsigned char  wdvol     : 1;
 };
 
-union RPECTLunion {
+struct RPECTLstruct {
 	unsigned char  rpef      : 1;
 	unsigned char            : 1;
 	unsigned char  rperdis   : 1;
 };
 
-union BCDADJunion {
+struct BCDADJstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1407,7 +1407,7 @@ union BCDADJunion {
 	unsigned char  bit7      : 1;
 };
 
-union VECTCTRLunion {
+struct VECTCTRLstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1418,7 +1418,7 @@ union VECTCTRLunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR00union {
+struct SSR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1437,7 +1437,7 @@ union SSR00union {
 	unsigned short bit15     : 1;
 };
 
-union SSR00Lunion {
+struct SSR00Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1448,7 +1448,7 @@ union SSR00Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR01union {
+struct SSR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1467,7 +1467,7 @@ union SSR01union {
 	unsigned short bit15     : 1;
 };
 
-union SSR01Lunion {
+struct SSR01Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1478,7 +1478,7 @@ union SSR01Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR02union {
+struct SSR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1497,7 +1497,7 @@ union SSR02union {
 	unsigned short bit15     : 1;
 };
 
-union SSR02Lunion {
+struct SSR02Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1508,7 +1508,7 @@ union SSR02Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR03union {
+struct SSR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1527,7 +1527,7 @@ union SSR03union {
 	unsigned short bit15     : 1;
 };
 
-union SSR03Lunion {
+struct SSR03Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1538,7 +1538,7 @@ union SSR03Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR00union {
+struct SIR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1557,7 +1557,7 @@ union SIR00union {
 	unsigned short bit15     : 1;
 };
 
-union SIR00Lunion {
+struct SIR00Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1568,7 +1568,7 @@ union SIR00Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR01union {
+struct SIR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1587,7 +1587,7 @@ union SIR01union {
 	unsigned short bit15     : 1;
 };
 
-union SIR01Lunion {
+struct SIR01Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1598,7 +1598,7 @@ union SIR01Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR02union {
+struct SIR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1617,7 +1617,7 @@ union SIR02union {
 	unsigned short bit15     : 1;
 };
 
-union SIR02Lunion {
+struct SIR02Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1628,7 +1628,7 @@ union SIR02Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR03union {
+struct SIR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1647,7 +1647,7 @@ union SIR03union {
 	unsigned short bit15     : 1;
 };
 
-union SIR03Lunion {
+struct SIR03Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1658,7 +1658,7 @@ union SIR03Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SMR00union {
+struct SMR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1677,7 +1677,7 @@ union SMR00union {
 	unsigned short bit15     : 1;
 };
 
-union SMR01union {
+struct SMR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1696,7 +1696,7 @@ union SMR01union {
 	unsigned short bit15     : 1;
 };
 
-union SMR02union {
+struct SMR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1715,7 +1715,7 @@ union SMR02union {
 	unsigned short bit15     : 1;
 };
 
-union SMR03union {
+struct SMR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1734,7 +1734,7 @@ union SMR03union {
 	unsigned short bit15     : 1;
 };
 
-union SCR00union {
+struct SCR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1753,7 +1753,7 @@ union SCR00union {
 	unsigned short bit15     : 1;
 };
 
-union SCR01union {
+struct SCR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1772,7 +1772,7 @@ union SCR01union {
 	unsigned short bit15     : 1;
 };
 
-union SCR02union {
+struct SCR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1791,7 +1791,7 @@ union SCR02union {
 	unsigned short bit15     : 1;
 };
 
-union SCR03union {
+struct SCR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1810,7 +1810,7 @@ union SCR03union {
 	unsigned short bit15     : 1;
 };
 
-union SE0union {
+struct SE0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1829,7 +1829,7 @@ union SE0union {
 	unsigned short bit15     : 1;
 };
 
-union SE0Lunion {
+struct SE0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1840,7 +1840,7 @@ union SE0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SS0union {
+struct SS0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1859,7 +1859,7 @@ union SS0union {
 	unsigned short bit15     : 1;
 };
 
-union SS0Lunion {
+struct SS0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1870,7 +1870,7 @@ union SS0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union ST0union {
+struct ST0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1889,7 +1889,7 @@ union ST0union {
 	unsigned short bit15     : 1;
 };
 
-union ST0Lunion {
+struct ST0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1900,7 +1900,7 @@ union ST0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SPS0union {
+struct SPS0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1919,7 +1919,7 @@ union SPS0union {
 	unsigned short bit15     : 1;
 };
 
-union SPS0Lunion {
+struct SPS0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1930,7 +1930,7 @@ union SPS0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SO0union {
+struct SO0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1949,7 +1949,7 @@ union SO0union {
 	unsigned short bit15     : 1;
 };
 
-union SOE0union {
+struct SOE0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1968,7 +1968,7 @@ union SOE0union {
 	unsigned short bit15     : 1;
 };
 
-union SOE0Lunion {
+struct SOE0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -1979,7 +1979,7 @@ union SOE0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR00union {
+struct EDR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -1998,7 +1998,7 @@ union EDR00union {
 	unsigned short bit15     : 1;
 };
 
-union EDR00Lunion {
+struct EDR00Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2009,7 +2009,7 @@ union EDR00Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR01union {
+struct EDR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2028,7 +2028,7 @@ union EDR01union {
 	unsigned short bit15     : 1;
 };
 
-union EDR01Lunion {
+struct EDR01Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2039,7 +2039,7 @@ union EDR01Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR02union {
+struct EDR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2058,7 +2058,7 @@ union EDR02union {
 	unsigned short bit15     : 1;
 };
 
-union EDR02Lunion {
+struct EDR02Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2069,7 +2069,7 @@ union EDR02Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR03union {
+struct EDR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2088,7 +2088,7 @@ union EDR03union {
 	unsigned short bit15     : 1;
 };
 
-union EDR03Lunion {
+struct EDR03Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2099,7 +2099,7 @@ union EDR03Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SOL0union {
+struct SOL0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2118,7 +2118,7 @@ union SOL0union {
 	unsigned short bit15     : 1;
 };
 
-union SOL0Lunion {
+struct SOL0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2129,7 +2129,7 @@ union SOL0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSC0union {
+struct SSC0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2148,7 +2148,7 @@ union SSC0union {
 	unsigned short bit15     : 1;
 };
 
-union SSC0Lunion {
+struct SSC0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2159,7 +2159,7 @@ union SSC0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR10union {
+struct SSR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2178,7 +2178,7 @@ union SSR10union {
 	unsigned short bit15     : 1;
 };
 
-union SSR10Lunion {
+struct SSR10Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2189,7 +2189,7 @@ union SSR10Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR11union {
+struct SSR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2208,7 +2208,7 @@ union SSR11union {
 	unsigned short bit15     : 1;
 };
 
-union SSR11Lunion {
+struct SSR11Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2219,7 +2219,7 @@ union SSR11Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR12union {
+struct SSR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2238,7 +2238,7 @@ union SSR12union {
 	unsigned short bit15     : 1;
 };
 
-union SSR12Lunion {
+struct SSR12Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2249,7 +2249,7 @@ union SSR12Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSR13union {
+struct SSR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2268,7 +2268,7 @@ union SSR13union {
 	unsigned short bit15     : 1;
 };
 
-union SSR13Lunion {
+struct SSR13Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2279,7 +2279,7 @@ union SSR13Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR10union {
+struct SIR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2298,7 +2298,7 @@ union SIR10union {
 	unsigned short bit15     : 1;
 };
 
-union SIR10Lunion {
+struct SIR10Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2309,7 +2309,7 @@ union SIR10Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR11union {
+struct SIR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2328,7 +2328,7 @@ union SIR11union {
 	unsigned short bit15     : 1;
 };
 
-union SIR11Lunion {
+struct SIR11Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2339,7 +2339,7 @@ union SIR11Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR12union {
+struct SIR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2358,7 +2358,7 @@ union SIR12union {
 	unsigned short bit15     : 1;
 };
 
-union SIR12Lunion {
+struct SIR12Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2369,7 +2369,7 @@ union SIR12Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SIR13union {
+struct SIR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2388,7 +2388,7 @@ union SIR13union {
 	unsigned short bit15     : 1;
 };
 
-union SIR13Lunion {
+struct SIR13Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2399,7 +2399,7 @@ union SIR13Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SMR10union {
+struct SMR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2418,7 +2418,7 @@ union SMR10union {
 	unsigned short bit15     : 1;
 };
 
-union SMR11union {
+struct SMR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2437,7 +2437,7 @@ union SMR11union {
 	unsigned short bit15     : 1;
 };
 
-union SMR12union {
+struct SMR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2456,7 +2456,7 @@ union SMR12union {
 	unsigned short bit15     : 1;
 };
 
-union SMR13union {
+struct SMR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2475,7 +2475,7 @@ union SMR13union {
 	unsigned short bit15     : 1;
 };
 
-union SCR10union {
+struct SCR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2494,7 +2494,7 @@ union SCR10union {
 	unsigned short bit15     : 1;
 };
 
-union SCR11union {
+struct SCR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2513,7 +2513,7 @@ union SCR11union {
 	unsigned short bit15     : 1;
 };
 
-union SCR12union {
+struct SCR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2532,7 +2532,7 @@ union SCR12union {
 	unsigned short bit15     : 1;
 };
 
-union SCR13union {
+struct SCR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2551,7 +2551,7 @@ union SCR13union {
 	unsigned short bit15     : 1;
 };
 
-union SE1union {
+struct SE1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2570,7 +2570,7 @@ union SE1union {
 	unsigned short bit15     : 1;
 };
 
-union SE1Lunion {
+struct SE1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2581,7 +2581,7 @@ union SE1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SS1union {
+struct SS1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2600,7 +2600,7 @@ union SS1union {
 	unsigned short bit15     : 1;
 };
 
-union SS1Lunion {
+struct SS1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2611,7 +2611,7 @@ union SS1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union ST1union {
+struct ST1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2630,7 +2630,7 @@ union ST1union {
 	unsigned short bit15     : 1;
 };
 
-union ST1Lunion {
+struct ST1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2641,7 +2641,7 @@ union ST1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SPS1union {
+struct SPS1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2660,7 +2660,7 @@ union SPS1union {
 	unsigned short bit15     : 1;
 };
 
-union SPS1Lunion {
+struct SPS1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2671,7 +2671,7 @@ union SPS1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SO1union {
+struct SO1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2690,7 +2690,7 @@ union SO1union {
 	unsigned short bit15     : 1;
 };
 
-union SOE1union {
+struct SOE1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2709,7 +2709,7 @@ union SOE1union {
 	unsigned short bit15     : 1;
 };
 
-union SOE1Lunion {
+struct SOE1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2720,7 +2720,7 @@ union SOE1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR10union {
+struct EDR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2739,7 +2739,7 @@ union EDR10union {
 	unsigned short bit15     : 1;
 };
 
-union EDR10Lunion {
+struct EDR10Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2750,7 +2750,7 @@ union EDR10Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR11union {
+struct EDR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2769,7 +2769,7 @@ union EDR11union {
 	unsigned short bit15     : 1;
 };
 
-union EDR11Lunion {
+struct EDR11Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2780,7 +2780,7 @@ union EDR11Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR12union {
+struct EDR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2799,7 +2799,7 @@ union EDR12union {
 	unsigned short bit15     : 1;
 };
 
-union EDR12Lunion {
+struct EDR12Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2810,7 +2810,7 @@ union EDR12Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union EDR13union {
+struct EDR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2829,7 +2829,7 @@ union EDR13union {
 	unsigned short bit15     : 1;
 };
 
-union EDR13Lunion {
+struct EDR13Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2840,7 +2840,7 @@ union EDR13Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SOL1union {
+struct SOL1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2859,7 +2859,7 @@ union SOL1union {
 	unsigned short bit15     : 1;
 };
 
-union SOL1Lunion {
+struct SOL1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2870,7 +2870,7 @@ union SOL1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union SSC1union {
+struct SSC1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2889,7 +2889,7 @@ union SSC1union {
 	unsigned short bit15     : 1;
 };
 
-union SSC1Lunion {
+struct SSC1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -2900,7 +2900,7 @@ union SSC1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TCR00union {
+struct TCR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2919,7 +2919,7 @@ union TCR00union {
 	unsigned short bit15     : 1;
 };
 
-union TCR01union {
+struct TCR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2938,7 +2938,7 @@ union TCR01union {
 	unsigned short bit15     : 1;
 };
 
-union TCR02union {
+struct TCR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2957,7 +2957,7 @@ union TCR02union {
 	unsigned short bit15     : 1;
 };
 
-union TCR03union {
+struct TCR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2976,7 +2976,7 @@ union TCR03union {
 	unsigned short bit15     : 1;
 };
 
-union TCR04union {
+struct TCR04struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -2995,7 +2995,7 @@ union TCR04union {
 	unsigned short bit15     : 1;
 };
 
-union TCR05union {
+struct TCR05struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3014,7 +3014,7 @@ union TCR05union {
 	unsigned short bit15     : 1;
 };
 
-union TCR06union {
+struct TCR06struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3033,7 +3033,7 @@ union TCR06union {
 	unsigned short bit15     : 1;
 };
 
-union TCR07union {
+struct TCR07struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3052,7 +3052,7 @@ union TCR07union {
 	unsigned short bit15     : 1;
 };
 
-union TMR00union {
+struct TMR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3071,7 +3071,7 @@ union TMR00union {
 	unsigned short bit15     : 1;
 };
 
-union TMR01union {
+struct TMR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3090,7 +3090,7 @@ union TMR01union {
 	unsigned short bit15     : 1;
 };
 
-union TMR02union {
+struct TMR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3109,7 +3109,7 @@ union TMR02union {
 	unsigned short bit15     : 1;
 };
 
-union TMR03union {
+struct TMR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3128,7 +3128,7 @@ union TMR03union {
 	unsigned short bit15     : 1;
 };
 
-union TMR04union {
+struct TMR04struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3147,7 +3147,7 @@ union TMR04union {
 	unsigned short bit15     : 1;
 };
 
-union TMR05union {
+struct TMR05struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3166,7 +3166,7 @@ union TMR05union {
 	unsigned short bit15     : 1;
 };
 
-union TMR06union {
+struct TMR06struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3185,7 +3185,7 @@ union TMR06union {
 	unsigned short bit15     : 1;
 };
 
-union TMR07union {
+struct TMR07struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3204,7 +3204,7 @@ union TMR07union {
 	unsigned short bit15     : 1;
 };
 
-union TSR00union {
+struct TSR00struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3223,7 +3223,7 @@ union TSR00union {
 	unsigned short bit15     : 1;
 };
 
-union TSR00Lunion {
+struct TSR00Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3234,7 +3234,7 @@ union TSR00Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR01union {
+struct TSR01struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3253,7 +3253,7 @@ union TSR01union {
 	unsigned short bit15     : 1;
 };
 
-union TSR01Lunion {
+struct TSR01Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3264,7 +3264,7 @@ union TSR01Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR02union {
+struct TSR02struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3283,7 +3283,7 @@ union TSR02union {
 	unsigned short bit15     : 1;
 };
 
-union TSR02Lunion {
+struct TSR02Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3294,7 +3294,7 @@ union TSR02Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR03union {
+struct TSR03struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3313,7 +3313,7 @@ union TSR03union {
 	unsigned short bit15     : 1;
 };
 
-union TSR03Lunion {
+struct TSR03Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3324,7 +3324,7 @@ union TSR03Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR04union {
+struct TSR04struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3343,7 +3343,7 @@ union TSR04union {
 	unsigned short bit15     : 1;
 };
 
-union TSR04Lunion {
+struct TSR04Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3354,7 +3354,7 @@ union TSR04Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR05union {
+struct TSR05struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3373,7 +3373,7 @@ union TSR05union {
 	unsigned short bit15     : 1;
 };
 
-union TSR05Lunion {
+struct TSR05Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3384,7 +3384,7 @@ union TSR05Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR06union {
+struct TSR06struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3403,7 +3403,7 @@ union TSR06union {
 	unsigned short bit15     : 1;
 };
 
-union TSR06Lunion {
+struct TSR06Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3414,7 +3414,7 @@ union TSR06Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR07union {
+struct TSR07struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3433,7 +3433,7 @@ union TSR07union {
 	unsigned short bit15     : 1;
 };
 
-union TSR07Lunion {
+struct TSR07Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3444,7 +3444,7 @@ union TSR07Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TE0union {
+struct TE0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3463,7 +3463,7 @@ union TE0union {
 	unsigned short bit15     : 1;
 };
 
-union TE0Lunion {
+struct TE0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3474,7 +3474,7 @@ union TE0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TS0union {
+struct TS0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3493,7 +3493,7 @@ union TS0union {
 	unsigned short bit15     : 1;
 };
 
-union TS0Lunion {
+struct TS0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3504,7 +3504,7 @@ union TS0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TT0union {
+struct TT0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3523,7 +3523,7 @@ union TT0union {
 	unsigned short bit15     : 1;
 };
 
-union TT0Lunion {
+struct TT0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3534,7 +3534,7 @@ union TT0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TPS0union {
+struct TPS0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3553,7 +3553,7 @@ union TPS0union {
 	unsigned short bit15     : 1;
 };
 
-union TO0union {
+struct TO0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3572,7 +3572,7 @@ union TO0union {
 	unsigned short bit15     : 1;
 };
 
-union TO0Lunion {
+struct TO0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3583,7 +3583,7 @@ union TO0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TOE0union {
+struct TOE0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3602,7 +3602,7 @@ union TOE0union {
 	unsigned short bit15     : 1;
 };
 
-union TOE0Lunion {
+struct TOE0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3613,7 +3613,7 @@ union TOE0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TOL0union {
+struct TOL0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3632,7 +3632,7 @@ union TOL0union {
 	unsigned short bit15     : 1;
 };
 
-union TOL0Lunion {
+struct TOL0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3643,7 +3643,7 @@ union TOL0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TOM0union {
+struct TOM0struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3662,7 +3662,7 @@ union TOM0union {
 	unsigned short bit15     : 1;
 };
 
-union TOM0Lunion {
+struct TOM0Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -3673,7 +3673,7 @@ union TOM0Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TCR10union {
+struct TCR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3692,7 +3692,7 @@ union TCR10union {
 	unsigned short bit15     : 1;
 };
 
-union TCR11union {
+struct TCR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3711,7 +3711,7 @@ union TCR11union {
 	unsigned short bit15     : 1;
 };
 
-union TCR12union {
+struct TCR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3730,7 +3730,7 @@ union TCR12union {
 	unsigned short bit15     : 1;
 };
 
-union TCR13union {
+struct TCR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3749,7 +3749,7 @@ union TCR13union {
 	unsigned short bit15     : 1;
 };
 
-union TCR14union {
+struct TCR14struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3768,7 +3768,7 @@ union TCR14union {
 	unsigned short bit15     : 1;
 };
 
-union TCR15union {
+struct TCR15struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3787,7 +3787,7 @@ union TCR15union {
 	unsigned short bit15     : 1;
 };
 
-union TCR16union {
+struct TCR16struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3806,7 +3806,7 @@ union TCR16union {
 	unsigned short bit15     : 1;
 };
 
-union TCR17union {
+struct TCR17struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3825,7 +3825,7 @@ union TCR17union {
 	unsigned short bit15     : 1;
 };
 
-union TMR10union {
+struct TMR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3844,7 +3844,7 @@ union TMR10union {
 	unsigned short bit15     : 1;
 };
 
-union TMR11union {
+struct TMR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3863,7 +3863,7 @@ union TMR11union {
 	unsigned short bit15     : 1;
 };
 
-union TMR12union {
+struct TMR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3882,7 +3882,7 @@ union TMR12union {
 	unsigned short bit15     : 1;
 };
 
-union TMR13union {
+struct TMR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3901,7 +3901,7 @@ union TMR13union {
 	unsigned short bit15     : 1;
 };
 
-union TMR14union {
+struct TMR14struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3920,7 +3920,7 @@ union TMR14union {
 	unsigned short bit15     : 1;
 };
 
-union TMR15union {
+struct TMR15struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3939,7 +3939,7 @@ union TMR15union {
 	unsigned short bit15     : 1;
 };
 
-union TMR16union {
+struct TMR16struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3958,7 +3958,7 @@ union TMR16union {
 	unsigned short bit15     : 1;
 };
 
-union TMR17union {
+struct TMR17struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3977,7 +3977,7 @@ union TMR17union {
 	unsigned short bit15     : 1;
 };
 
-union TSR10union {
+struct TSR10struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -3996,7 +3996,7 @@ union TSR10union {
 	unsigned short bit15     : 1;
 };
 
-union TSR10Lunion {
+struct TSR10Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4007,7 +4007,7 @@ union TSR10Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR11union {
+struct TSR11struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4026,7 +4026,7 @@ union TSR11union {
 	unsigned short bit15     : 1;
 };
 
-union TSR11Lunion {
+struct TSR11Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4037,7 +4037,7 @@ union TSR11Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR12union {
+struct TSR12struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4056,7 +4056,7 @@ union TSR12union {
 	unsigned short bit15     : 1;
 };
 
-union TSR12Lunion {
+struct TSR12Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4067,7 +4067,7 @@ union TSR12Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR13union {
+struct TSR13struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4086,7 +4086,7 @@ union TSR13union {
 	unsigned short bit15     : 1;
 };
 
-union TSR13Lunion {
+struct TSR13Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4097,7 +4097,7 @@ union TSR13Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR14union {
+struct TSR14struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4116,7 +4116,7 @@ union TSR14union {
 	unsigned short bit15     : 1;
 };
 
-union TSR14Lunion {
+struct TSR14Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4127,7 +4127,7 @@ union TSR14Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR15union {
+struct TSR15struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4146,7 +4146,7 @@ union TSR15union {
 	unsigned short bit15     : 1;
 };
 
-union TSR15Lunion {
+struct TSR15Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4157,7 +4157,7 @@ union TSR15Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR16union {
+struct TSR16struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4176,7 +4176,7 @@ union TSR16union {
 	unsigned short bit15     : 1;
 };
 
-union TSR16Lunion {
+struct TSR16Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4187,7 +4187,7 @@ union TSR16Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TSR17union {
+struct TSR17struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4206,7 +4206,7 @@ union TSR17union {
 	unsigned short bit15     : 1;
 };
 
-union TSR17Lunion {
+struct TSR17Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4217,7 +4217,7 @@ union TSR17Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TE1union {
+struct TE1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4236,7 +4236,7 @@ union TE1union {
 	unsigned short bit15     : 1;
 };
 
-union TE1Lunion {
+struct TE1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4247,7 +4247,7 @@ union TE1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TS1union {
+struct TS1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4266,7 +4266,7 @@ union TS1union {
 	unsigned short bit15     : 1;
 };
 
-union TS1Lunion {
+struct TS1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4277,7 +4277,7 @@ union TS1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TT1union {
+struct TT1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4296,7 +4296,7 @@ union TT1union {
 	unsigned short bit15     : 1;
 };
 
-union TT1Lunion {
+struct TT1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4307,7 +4307,7 @@ union TT1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TPS1union {
+struct TPS1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4326,7 +4326,7 @@ union TPS1union {
 	unsigned short bit15     : 1;
 };
 
-union TO1union {
+struct TO1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4345,7 +4345,7 @@ union TO1union {
 	unsigned short bit15     : 1;
 };
 
-union TO1Lunion {
+struct TO1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4356,7 +4356,7 @@ union TO1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TOE1union {
+struct TOE1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4375,7 +4375,7 @@ union TOE1union {
 	unsigned short bit15     : 1;
 };
 
-union TOE1Lunion {
+struct TOE1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4386,7 +4386,7 @@ union TOE1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TOL1union {
+struct TOL1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4405,7 +4405,7 @@ union TOL1union {
 	unsigned short bit15     : 1;
 };
 
-union TOL1Lunion {
+struct TOL1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4416,7 +4416,7 @@ union TOL1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union TOM1union {
+struct TOM1struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4435,7 +4435,7 @@ union TOM1union {
 	unsigned short bit15     : 1;
 };
 
-union TOM1Lunion {
+struct TOM1Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4446,7 +4446,7 @@ union TOM1Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union DSA2union {
+struct DSA2struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4457,7 +4457,7 @@ union DSA2union {
 	unsigned char  bit7      : 1;
 };
 
-union DSA3union {
+struct DSA3struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4468,7 +4468,7 @@ union DSA3union {
 	unsigned char  bit7      : 1;
 };
 
-union DRA2union {
+struct DRA2struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4487,7 +4487,7 @@ union DRA2union {
 	unsigned short bit15     : 1;
 };
 
-union DRA2Lunion {
+struct DRA2Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4498,7 +4498,7 @@ union DRA2Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union DRA2Hunion {
+struct DRA2Hstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4509,7 +4509,7 @@ union DRA2Hunion {
 	unsigned char  bit7      : 1;
 };
 
-union DRA3union {
+struct DRA3struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4528,7 +4528,7 @@ union DRA3union {
 	unsigned short bit15     : 1;
 };
 
-union DRA3Lunion {
+struct DRA3Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4539,7 +4539,7 @@ union DRA3Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union DRA3Hunion {
+struct DRA3Hstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4550,7 +4550,7 @@ union DRA3Hunion {
 	unsigned char  bit7      : 1;
 };
 
-union DBC2union {
+struct DBC2struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4569,7 +4569,7 @@ union DBC2union {
 	unsigned short bit15     : 1;
 };
 
-union DBC2Lunion {
+struct DBC2Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4580,7 +4580,7 @@ union DBC2Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union DBC2Hunion {
+struct DBC2Hstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4591,7 +4591,7 @@ union DBC2Hunion {
 	unsigned char  bit7      : 1;
 };
 
-union DBC3union {
+struct DBC3struct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4610,7 +4610,7 @@ union DBC3union {
 	unsigned short bit15     : 1;
 };
 
-union DBC3Lunion {
+struct DBC3Lstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4621,7 +4621,7 @@ union DBC3Lunion {
 	unsigned char  bit7      : 1;
 };
 
-union DBC3Hunion {
+struct DBC3Hstruct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4632,7 +4632,7 @@ union DBC3Hunion {
 	unsigned char  bit7      : 1;
 };
 
-union DMC2union {
+struct DMC2struct {
 	unsigned char            : 1;
 	unsigned char  dwait2    : 1;
 	unsigned char  ds2       : 1;
@@ -4640,7 +4640,7 @@ union DMC2union {
 	unsigned char  stg2      : 1;
 };
 
-union DMC3union {
+struct DMC3struct {
 	unsigned char            : 1;
 	unsigned char  dwait3    : 1;
 	unsigned char  ds3       : 1;
@@ -4648,25 +4648,25 @@ union DMC3union {
 	unsigned char  stg3      : 1;
 };
 
-union DRC2union {
+struct DRC2struct {
 	unsigned char  dst2      : 1;
 	unsigned char            : 1;
 	unsigned char  den2      : 1;
 };
 
-union DRC3union {
+struct DRC3struct {
 	unsigned char  dst3      : 1;
 	unsigned char            : 1;
 	unsigned char  den3      : 1;
 };
 
-union DWAITALLunion {
+struct DWAITALLstruct {
 	unsigned char  dwaitall0 : 1;
 	unsigned char            : 1;
 	unsigned char  prvari    : 1;
 };
 
-union IICCTL00union {
+struct IICCTL00struct {
 	unsigned char  spt0      : 1;
 	unsigned char  stt0      : 1;
 	unsigned char  acke0     : 1;
@@ -4677,7 +4677,7 @@ union IICCTL00union {
 	unsigned char  iice0     : 1;
 };
 
-union IICCTL01union {
+struct IICCTL01struct {
 	unsigned char  prs0      : 1;
 	unsigned char            : 1;
 	unsigned char  dfc0      : 1;
@@ -4688,7 +4688,7 @@ union IICCTL01union {
 	unsigned char  wup0      : 1;
 };
 
-union IICWL0union {
+struct IICWL0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4699,7 +4699,7 @@ union IICWL0union {
 	unsigned char  bit7      : 1;
 };
 
-union IICWH0union {
+struct IICWH0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4710,7 +4710,7 @@ union IICWH0union {
 	unsigned char  bit7      : 1;
 };
 
-union SVA0union {
+struct SVA0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4721,7 +4721,7 @@ union SVA0union {
 	unsigned char  bit7      : 1;
 };
 
-union IICSE0union {
+struct IICSE0struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4732,7 +4732,7 @@ union IICSE0union {
 	unsigned char  bit7      : 1;
 };
 
-union IICCTL10union {
+struct IICCTL10struct {
 	unsigned char  spt1      : 1;
 	unsigned char  stt1      : 1;
 	unsigned char  acke1     : 1;
@@ -4743,7 +4743,7 @@ union IICCTL10union {
 	unsigned char  iice1     : 1;
 };
 
-union IICCTL11union {
+struct IICCTL11struct {
 	unsigned char  prs1      : 1;
 	unsigned char            : 1;
 	unsigned char  dfc1      : 1;
@@ -4754,7 +4754,7 @@ union IICCTL11union {
 	unsigned char  wup1      : 1;
 };
 
-union IICWL1union {
+struct IICWL1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4765,7 +4765,7 @@ union IICWL1union {
 	unsigned char  bit7      : 1;
 };
 
-union IICWH1union {
+struct IICWH1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4776,7 +4776,7 @@ union IICWH1union {
 	unsigned char  bit7      : 1;
 };
 
-union SVA1union {
+struct SVA1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4787,7 +4787,7 @@ union SVA1union {
 	unsigned char  bit7      : 1;
 };
 
-union IICSE1union {
+struct IICSE1struct {
 	unsigned char  bit0      : 1;
 	unsigned char  bit1      : 1;
 	unsigned char  bit2      : 1;
@@ -4798,12 +4798,12 @@ union IICSE1union {
 	unsigned char  bit7      : 1;
 };
 
-union CRC0CTLunion {
+struct CRC0CTLstruct {
 	unsigned char            : 1;
 	unsigned char  crc0en    : 1;
 };
 
-union PGCRCLunion {
+struct PGCRCLstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4822,7 +4822,7 @@ union PGCRCLunion {
 	unsigned short bit15     : 1;
 };
 
-union CRCDunion {
+struct CRCDstruct {
 	unsigned short bit0      : 1;
 	unsigned short bit1      : 1;
 	unsigned short bit2      : 1;
@@ -4843,321 +4843,321 @@ union CRCDunion {
 
 
 
-#define ADM2bits     (*(volatile union ADM2union    *)0xF0010)
-#define ADULbits     (*(volatile union ADULunion    *)0xF0011)
-#define ADLLbits     (*(volatile union ADLLunion    *)0xF0012)
-#define ADTESbits    (*(volatile union ADTESunion   *)0xF0013)
-#define PU0bits      (*(volatile union PU0union     *)0xF0030)
-#define PU1bits      (*(volatile union PU1union     *)0xF0031)
-#define PU3bits      (*(volatile union PU3union     *)0xF0033)
-#define PU4bits      (*(volatile union PU4union     *)0xF0034)
-#define PU5bits      (*(volatile union PU5union     *)0xF0035)
-#define PU6bits      (*(volatile union PU6union     *)0xF0036)
-#define PU7bits      (*(volatile union PU7union     *)0xF0037)
-#define PU8bits      (*(volatile union PU8union     *)0xF0038)
-#define PU9bits      (*(volatile union PU9union     *)0xF0039)
-#define PU10bits     (*(volatile union PU10union    *)0xF003A)
-#define PU11bits     (*(volatile union PU11union    *)0xF003B)
-#define PU12bits     (*(volatile union PU12union    *)0xF003C)
-#define PU14bits     (*(volatile union PU14union    *)0xF003E)
-#define PIM0bits     (*(volatile union PIM0union    *)0xF0040)
-#define PIM1bits     (*(volatile union PIM1union    *)0xF0041)
-#define PIM4bits     (*(volatile union PIM4union    *)0xF0044)
-#define PIM5bits     (*(volatile union PIM5union    *)0xF0045)
-#define PIM8bits     (*(volatile union PIM8union    *)0xF0048)
-#define PIM14bits    (*(volatile union PIM14union   *)0xF004E)
-#define POM0bits     (*(volatile union POM0union    *)0xF0050)
-#define POM1bits     (*(volatile union POM1union    *)0xF0051)
-#define POM4bits     (*(volatile union POM4union    *)0xF0054)
-#define POM5bits     (*(volatile union POM5union    *)0xF0055)
-#define POM7bits     (*(volatile union POM7union    *)0xF0057)
-#define POM8bits     (*(volatile union POM8union    *)0xF0058)
-#define POM9bits     (*(volatile union POM9union    *)0xF0059)
-#define POM14bits    (*(volatile union POM14union   *)0xF005E)
-#define PMC0bits     (*(volatile union PMC0union    *)0xF0060)
-#define PMC3bits     (*(volatile union PMC3union    *)0xF0063)
-#define PMC10bits    (*(volatile union PMC10union   *)0xF006A)
-#define PMC11bits    (*(volatile union PMC11union   *)0xF006B)
-#define PMC12bits    (*(volatile union PMC12union   *)0xF006C)
-#define PMC14bits    (*(volatile union PMC14union   *)0xF006E)
-#define NFEN0bits    (*(volatile union NFEN0union   *)0xF0070)
-#define NFEN1bits    (*(volatile union NFEN1union   *)0xF0071)
-#define NFEN2bits    (*(volatile union NFEN2union   *)0xF0072)
-#define ISCbits      (*(volatile union ISCunion     *)0xF0073)
-#define TIS0bits     (*(volatile union TIS0union    *)0xF0074)
-#define ADPCbits     (*(volatile union ADPCunion    *)0xF0076)
-#define PIORbits     (*(volatile union PIORunion    *)0xF0077)
-#define IAWCTLbits   (*(volatile union IAWCTLunion  *)0xF0078)
-#define GDIDISbits   (*(volatile union GDIDISunion  *)0xF007D)
-#define PRDSELbits   (*(volatile union PRDSELunion  *)0xF007E)
-#define TOOLENbits   (*(volatile union TOOLENunion  *)0xF0080)
-#define BPAL0bits    (*(volatile union BPAL0union   *)0xF0081)
-#define BPAH0bits    (*(volatile union BPAH0union   *)0xF0082)
-#define BPAS0bits    (*(volatile union BPAS0union   *)0xF0083)
-#define BACDVL0bits  (*(volatile union BACDVL0union *)0xF0084)
-#define BACDVH0bits  (*(volatile union BACDVH0union *)0xF0085)
-#define BACDML0bits  (*(volatile union BACDML0union *)0xF0086)
-#define BACDMH0bits  (*(volatile union BACDMH0union *)0xF0087)
-#define MONMODbits   (*(volatile union MONMODunion  *)0xF0088)
-#define DFLCTLbits   (*(volatile union DFLCTLunion  *)0xF0090)
-#define HIOTRMbits   (*(volatile union HIOTRMunion  *)0xF00A0)
-#define BECTLbits    (*(volatile union BECTLunion   *)0xF00A1)
-#define HOCODIVbits  (*(volatile union HOCODIVunion *)0xF00A8)
-#define TEMPCAL0bits (*(volatile union TEMPCAL0union*)0xF00AC)
-#define TEMPCAL1bits (*(volatile union TEMPCAL1union*)0xF00AD)
-#define TEMPCAL2bits (*(volatile union TEMPCAL2union*)0xF00AE)
-#define TEMPCAL3bits (*(volatile union TEMPCAL3union*)0xF00AF)
-#define FLSECbits    (*(volatile union FLSECunion   *)0xF00B0)
-#define FLFSWSbits   (*(volatile union FLFSWSunion  *)0xF00B2)
-#define FLFSWEbits   (*(volatile union FLFSWEunion  *)0xF00B4)
-#define FSSETbits    (*(volatile union FSSETunion   *)0xF00B6)
-#define FSSEbits     (*(volatile union FSSEunion    *)0xF00B7)
-#define FLFADLbits   (*(volatile union FLFADLunion  *)0xF00B8)
-#define FLFADHbits   (*(volatile union FLFADHunion  *)0xF00BA)
-#define PFCMDbits    (*(volatile union PFCMDunion   *)0xF00C0)
-#define PFSbits      (*(volatile union PFSunion     *)0xF00C1)
-#define FLRLbits     (*(volatile union FLRLunion    *)0xF00C2)
-#define FLRHbits     (*(volatile union FLRHunion    *)0xF00C4)
-#define FLWEbits     (*(volatile union FLWEunion    *)0xF00C6)
-#define FLREbits     (*(volatile union FLREunion    *)0xF00C7)
-#define FLTMSbits    (*(volatile union FLTMSunion   *)0xF00C8)
-#define DFLMCbits    (*(volatile union DFLMCunion   *)0xF00CA)
-#define FLMCLbits    (*(volatile union FLMCLunion   *)0xF00CC)
-#define FLMCHbits    (*(volatile union FLMCHunion   *)0xF00CE)
-#define FSCTLbits    (*(volatile union FSCTLunion   *)0xF00CF)
-#define ICEADRbits   (*(volatile union ICEADRunion  *)0xF00D0)
-#define ICEDATbits   (*(volatile union ICEDATunion  *)0xF00D2)
-#define MDCLbits     (*(volatile union MDCLunion    *)0xF00E0)
-#define MDCHbits     (*(volatile union MDCHunion    *)0xF00E2)
-#define MDUCbits     (*(volatile union MDUCunion    *)0xF00E8)
-#define PER0bits     (*(volatile union PER0union    *)0xF00F0)
-#define OSMCbits     (*(volatile union OSMCunion    *)0xF00F3)
-#define RMCbits      (*(volatile union RMCunion     *)0xF00F4)
-#define RPECTLbits   (*(volatile union RPECTLunion  *)0xF00F5)
-#define BCDADJbits   (*(volatile union BCDADJunion  *)0xF00FE)
-#define VECTCTRLbits (*(volatile union VECTCTRLunion*)0xF00FF)
-#define SSR00bits    (*(volatile union SSR00union   *)0xF0100)
-#define SSR00Lbits   (*(volatile union SSR00Lunion  *)0xF0100)
-#define SSR01bits    (*(volatile union SSR01union   *)0xF0102)
-#define SSR01Lbits   (*(volatile union SSR01Lunion  *)0xF0102)
-#define SSR02bits    (*(volatile union SSR02union   *)0xF0104)
-#define SSR02Lbits   (*(volatile union SSR02Lunion  *)0xF0104)
-#define SSR03bits    (*(volatile union SSR03union   *)0xF0106)
-#define SSR03Lbits   (*(volatile union SSR03Lunion  *)0xF0106)
-#define SIR00bits    (*(volatile union SIR00union   *)0xF0108)
-#define SIR00Lbits   (*(volatile union SIR00Lunion  *)0xF0108)
-#define SIR01bits    (*(volatile union SIR01union   *)0xF010A)
-#define SIR01Lbits   (*(volatile union SIR01Lunion  *)0xF010A)
-#define SIR02bits    (*(volatile union SIR02union   *)0xF010C)
-#define SIR02Lbits   (*(volatile union SIR02Lunion  *)0xF010C)
-#define SIR03bits    (*(volatile union SIR03union   *)0xF010E)
-#define SIR03Lbits   (*(volatile union SIR03Lunion  *)0xF010E)
-#define SMR00bits    (*(volatile union SMR00union   *)0xF0110)
-#define SMR01bits    (*(volatile union SMR01union   *)0xF0112)
-#define SMR02bits    (*(volatile union SMR02union   *)0xF0114)
-#define SMR03bits    (*(volatile union SMR03union   *)0xF0116)
-#define SCR00bits    (*(volatile union SCR00union   *)0xF0118)
-#define SCR01bits    (*(volatile union SCR01union   *)0xF011A)
-#define SCR02bits    (*(volatile union SCR02union   *)0xF011C)
-#define SCR03bits    (*(volatile union SCR03union   *)0xF011E)
-#define SE0bits      (*(volatile union SE0union     *)0xF0120)
-#define SE0Lbits     (*(volatile union SE0Lunion    *)0xF0120)
-#define SS0bits      (*(volatile union SS0union     *)0xF0122)
-#define SS0Lbits     (*(volatile union SS0Lunion    *)0xF0122)
-#define ST0bits      (*(volatile union ST0union     *)0xF0124)
-#define ST0Lbits     (*(volatile union ST0Lunion    *)0xF0124)
-#define SPS0bits     (*(volatile union SPS0union    *)0xF0126)
-#define SPS0Lbits    (*(volatile union SPS0Lunion   *)0xF0126)
-#define SO0bits      (*(volatile union SO0union     *)0xF0128)
-#define SOE0bits     (*(volatile union SOE0union    *)0xF012A)
-#define SOE0Lbits    (*(volatile union SOE0Lunion   *)0xF012A)
-#define EDR00bits    (*(volatile union EDR00union   *)0xF012C)
-#define EDR00Lbits   (*(volatile union EDR00Lunion  *)0xF012C)
-#define EDR01bits    (*(volatile union EDR01union   *)0xF012E)
-#define EDR01Lbits   (*(volatile union EDR01Lunion  *)0xF012E)
-#define EDR02bits    (*(volatile union EDR02union   *)0xF0130)
-#define EDR02Lbits   (*(volatile union EDR02Lunion  *)0xF0130)
-#define EDR03bits    (*(volatile union EDR03union   *)0xF0132)
-#define EDR03Lbits   (*(volatile union EDR03Lunion  *)0xF0132)
-#define SOL0bits     (*(volatile union SOL0union    *)0xF0134)
-#define SOL0Lbits    (*(volatile union SOL0Lunion   *)0xF0134)
-#define SSC0bits     (*(volatile union SSC0union    *)0xF0138)
-#define SSC0Lbits    (*(volatile union SSC0Lunion   *)0xF0138)
-#define SSR10bits    (*(volatile union SSR10union   *)0xF0140)
-#define SSR10Lbits   (*(volatile union SSR10Lunion  *)0xF0140)
-#define SSR11bits    (*(volatile union SSR11union   *)0xF0142)
-#define SSR11Lbits   (*(volatile union SSR11Lunion  *)0xF0142)
-#define SSR12bits    (*(volatile union SSR12union   *)0xF0144)
-#define SSR12Lbits   (*(volatile union SSR12Lunion  *)0xF0144)
-#define SSR13bits    (*(volatile union SSR13union   *)0xF0146)
-#define SSR13Lbits   (*(volatile union SSR13Lunion  *)0xF0146)
-#define SIR10bits    (*(volatile union SIR10union   *)0xF0148)
-#define SIR10Lbits   (*(volatile union SIR10Lunion  *)0xF0148)
-#define SIR11bits    (*(volatile union SIR11union   *)0xF014A)
-#define SIR11Lbits   (*(volatile union SIR11Lunion  *)0xF014A)
-#define SIR12bits    (*(volatile union SIR12union   *)0xF014C)
-#define SIR12Lbits   (*(volatile union SIR12Lunion  *)0xF014C)
-#define SIR13bits    (*(volatile union SIR13union   *)0xF014E)
-#define SIR13Lbits   (*(volatile union SIR13Lunion  *)0xF014E)
-#define SMR10bits    (*(volatile union SMR10union   *)0xF0150)
-#define SMR11bits    (*(volatile union SMR11union   *)0xF0152)
-#define SMR12bits    (*(volatile union SMR12union   *)0xF0154)
-#define SMR13bits    (*(volatile union SMR13union   *)0xF0156)
-#define SCR10bits    (*(volatile union SCR10union   *)0xF0158)
-#define SCR11bits    (*(volatile union SCR11union   *)0xF015A)
-#define SCR12bits    (*(volatile union SCR12union   *)0xF015C)
-#define SCR13bits    (*(volatile union SCR13union   *)0xF015E)
-#define SE1bits      (*(volatile union SE1union     *)0xF0160)
-#define SE1Lbits     (*(volatile union SE1Lunion    *)0xF0160)
-#define SS1bits      (*(volatile union SS1union     *)0xF0162)
-#define SS1Lbits     (*(volatile union SS1Lunion    *)0xF0162)
-#define ST1bits      (*(volatile union ST1union     *)0xF0164)
-#define ST1Lbits     (*(volatile union ST1Lunion    *)0xF0164)
-#define SPS1bits     (*(volatile union SPS1union    *)0xF0166)
-#define SPS1Lbits    (*(volatile union SPS1Lunion   *)0xF0166)
-#define SO1bits      (*(volatile union SO1union     *)0xF0168)
-#define SOE1bits     (*(volatile union SOE1union    *)0xF016A)
-#define SOE1Lbits    (*(volatile union SOE1Lunion   *)0xF016A)
-#define EDR10bits    (*(volatile union EDR10union   *)0xF016C)
-#define EDR10Lbits   (*(volatile union EDR10Lunion  *)0xF016C)
-#define EDR11bits    (*(volatile union EDR11union   *)0xF016E)
-#define EDR11Lbits   (*(volatile union EDR11Lunion  *)0xF016E)
-#define EDR12bits    (*(volatile union EDR12union   *)0xF0170)
-#define EDR12Lbits   (*(volatile union EDR12Lunion  *)0xF0170)
-#define EDR13bits    (*(volatile union EDR13union   *)0xF0172)
-#define EDR13Lbits   (*(volatile union EDR13Lunion  *)0xF0172)
-#define SOL1bits     (*(volatile union SOL1union    *)0xF0174)
-#define SOL1Lbits    (*(volatile union SOL1Lunion   *)0xF0174)
-#define SSC1bits     (*(volatile union SSC1union    *)0xF0178)
-#define SSC1Lbits    (*(volatile union SSC1Lunion   *)0xF0178)
-#define TCR00bits    (*(volatile union TCR00union   *)0xF0180)
-#define TCR01bits    (*(volatile union TCR01union   *)0xF0182)
-#define TCR02bits    (*(volatile union TCR02union   *)0xF0184)
-#define TCR03bits    (*(volatile union TCR03union   *)0xF0186)
-#define TCR04bits    (*(volatile union TCR04union   *)0xF0188)
-#define TCR05bits    (*(volatile union TCR05union   *)0xF018A)
-#define TCR06bits    (*(volatile union TCR06union   *)0xF018C)
-#define TCR07bits    (*(volatile union TCR07union   *)0xF018E)
-#define TMR00bits    (*(volatile union TMR00union   *)0xF0190)
-#define TMR01bits    (*(volatile union TMR01union   *)0xF0192)
-#define TMR02bits    (*(volatile union TMR02union   *)0xF0194)
-#define TMR03bits    (*(volatile union TMR03union   *)0xF0196)
-#define TMR04bits    (*(volatile union TMR04union   *)0xF0198)
-#define TMR05bits    (*(volatile union TMR05union   *)0xF019A)
-#define TMR06bits    (*(volatile union TMR06union   *)0xF019C)
-#define TMR07bits    (*(volatile union TMR07union   *)0xF019E)
-#define TSR00bits    (*(volatile union TSR00union   *)0xF01A0)
-#define TSR00Lbits   (*(volatile union TSR00Lunion  *)0xF01A0)
-#define TSR01bits    (*(volatile union TSR01union   *)0xF01A2)
-#define TSR01Lbits   (*(volatile union TSR01Lunion  *)0xF01A2)
-#define TSR02bits    (*(volatile union TSR02union   *)0xF01A4)
-#define TSR02Lbits   (*(volatile union TSR02Lunion  *)0xF01A4)
-#define TSR03bits    (*(volatile union TSR03union   *)0xF01A6)
-#define TSR03Lbits   (*(volatile union TSR03Lunion  *)0xF01A6)
-#define TSR04bits    (*(volatile union TSR04union   *)0xF01A8)
-#define TSR04Lbits   (*(volatile union TSR04Lunion  *)0xF01A8)
-#define TSR05bits    (*(volatile union TSR05union   *)0xF01AA)
-#define TSR05Lbits   (*(volatile union TSR05Lunion  *)0xF01AA)
-#define TSR06bits    (*(volatile union TSR06union   *)0xF01AC)
-#define TSR06Lbits   (*(volatile union TSR06Lunion  *)0xF01AC)
-#define TSR07bits    (*(volatile union TSR07union   *)0xF01AE)
-#define TSR07Lbits   (*(volatile union TSR07Lunion  *)0xF01AE)
-#define TE0bits      (*(volatile union TE0union     *)0xF01B0)
-#define TE0Lbits     (*(volatile union TE0Lunion    *)0xF01B0)
-#define TS0bits      (*(volatile union TS0union     *)0xF01B2)
-#define TS0Lbits     (*(volatile union TS0Lunion    *)0xF01B2)
-#define TT0bits      (*(volatile union TT0union     *)0xF01B4)
-#define TT0Lbits     (*(volatile union TT0Lunion    *)0xF01B4)
-#define TPS0bits     (*(volatile union TPS0union    *)0xF01B6)
-#define TO0bits      (*(volatile union TO0union     *)0xF01B8)
-#define TO0Lbits     (*(volatile union TO0Lunion    *)0xF01B8)
-#define TOE0bits     (*(volatile union TOE0union    *)0xF01BA)
-#define TOE0Lbits    (*(volatile union TOE0Lunion   *)0xF01BA)
-#define TOL0bits     (*(volatile union TOL0union    *)0xF01BC)
-#define TOL0Lbits    (*(volatile union TOL0Lunion   *)0xF01BC)
-#define TOM0bits     (*(volatile union TOM0union    *)0xF01BE)
-#define TOM0Lbits    (*(volatile union TOM0Lunion   *)0xF01BE)
-#define TCR10bits    (*(volatile union TCR10union   *)0xF01C0)
-#define TCR11bits    (*(volatile union TCR11union   *)0xF01C2)
-#define TCR12bits    (*(volatile union TCR12union   *)0xF01C4)
-#define TCR13bits    (*(volatile union TCR13union   *)0xF01C6)
-#define TCR14bits    (*(volatile union TCR14union   *)0xF01C8)
-#define TCR15bits    (*(volatile union TCR15union   *)0xF01CA)
-#define TCR16bits    (*(volatile union TCR16union   *)0xF01CC)
-#define TCR17bits    (*(volatile union TCR17union   *)0xF01CE)
-#define TMR10bits    (*(volatile union TMR10union   *)0xF01D0)
-#define TMR11bits    (*(volatile union TMR11union   *)0xF01D2)
-#define TMR12bits    (*(volatile union TMR12union   *)0xF01D4)
-#define TMR13bits    (*(volatile union TMR13union   *)0xF01D6)
-#define TMR14bits    (*(volatile union TMR14union   *)0xF01D8)
-#define TMR15bits    (*(volatile union TMR15union   *)0xF01DA)
-#define TMR16bits    (*(volatile union TMR16union   *)0xF01DC)
-#define TMR17bits    (*(volatile union TMR17union   *)0xF01DE)
-#define TSR10bits    (*(volatile union TSR10union   *)0xF01E0)
-#define TSR10Lbits   (*(volatile union TSR10Lunion  *)0xF01E0)
-#define TSR11bits    (*(volatile union TSR11union   *)0xF01E2)
-#define TSR11Lbits   (*(volatile union TSR11Lunion  *)0xF01E2)
-#define TSR12bits    (*(volatile union TSR12union   *)0xF01E4)
-#define TSR12Lbits   (*(volatile union TSR12Lunion  *)0xF01E4)
-#define TSR13bits    (*(volatile union TSR13union   *)0xF01E6)
-#define TSR13Lbits   (*(volatile union TSR13Lunion  *)0xF01E6)
-#define TSR14bits    (*(volatile union TSR14union   *)0xF01E8)
-#define TSR14Lbits   (*(volatile union TSR14Lunion  *)0xF01E8)
-#define TSR15bits    (*(volatile union TSR15union   *)0xF01EA)
-#define TSR15Lbits   (*(volatile union TSR15Lunion  *)0xF01EA)
-#define TSR16bits    (*(volatile union TSR16union   *)0xF01EC)
-#define TSR16Lbits   (*(volatile union TSR16Lunion  *)0xF01EC)
-#define TSR17bits    (*(volatile union TSR17union   *)0xF01EE)
-#define TSR17Lbits   (*(volatile union TSR17Lunion  *)0xF01EE)
-#define TE1bits      (*(volatile union TE1union     *)0xF01F0)
-#define TE1Lbits     (*(volatile union TE1Lunion    *)0xF01F0)
-#define TS1bits      (*(volatile union TS1union     *)0xF01F2)
-#define TS1Lbits     (*(volatile union TS1Lunion    *)0xF01F2)
-#define TT1bits      (*(volatile union TT1union     *)0xF01F4)
-#define TT1Lbits     (*(volatile union TT1Lunion    *)0xF01F4)
-#define TPS1bits     (*(volatile union TPS1union    *)0xF01F6)
-#define TO1bits      (*(volatile union TO1union     *)0xF01F8)
-#define TO1Lbits     (*(volatile union TO1Lunion    *)0xF01F8)
-#define TOE1bits     (*(volatile union TOE1union    *)0xF01FA)
-#define TOE1Lbits    (*(volatile union TOE1Lunion   *)0xF01FA)
-#define TOL1bits     (*(volatile union TOL1union    *)0xF01FC)
-#define TOL1Lbits    (*(volatile union TOL1Lunion   *)0xF01FC)
-#define TOM1bits     (*(volatile union TOM1union    *)0xF01FE)
-#define TOM1Lbits    (*(volatile union TOM1Lunion   *)0xF01FE)
-#define DSA2bits     (*(volatile union DSA2union    *)0xF0200)
-#define DSA3bits     (*(volatile union DSA3union    *)0xF0201)
-#define DRA2bits     (*(volatile union DRA2union    *)0xF0202)
-#define DRA2Lbits    (*(volatile union DRA2Lunion   *)0xF0202)
-#define DRA2Hbits    (*(volatile union DRA2Hunion   *)0xF0203)
-#define DRA3bits     (*(volatile union DRA3union    *)0xF0204)
-#define DRA3Lbits    (*(volatile union DRA3Lunion   *)0xF0204)
-#define DRA3Hbits    (*(volatile union DRA3Hunion   *)0xF0205)
-#define DBC2bits     (*(volatile union DBC2union    *)0xF0206)
-#define DBC2Lbits    (*(volatile union DBC2Lunion   *)0xF0206)
-#define DBC2Hbits    (*(volatile union DBC2Hunion   *)0xF0207)
-#define DBC3bits     (*(volatile union DBC3union    *)0xF0208)
-#define DBC3Lbits    (*(volatile union DBC3Lunion   *)0xF0208)
-#define DBC3Hbits    (*(volatile union DBC3Hunion   *)0xF0209)
-#define DMC2bits     (*(volatile union DMC2union    *)0xF020A)
-#define DMC3bits     (*(volatile union DMC3union    *)0xF020B)
-#define DRC2bits     (*(volatile union DRC2union    *)0xF020C)
-#define DRC3bits     (*(volatile union DRC3union    *)0xF020D)
-#define DWAITALLbits (*(volatile union DWAITALLunion*)0xF020F)
-#define IICCTL00bits (*(volatile union IICCTL00union*)0xF0230)
-#define IICCTL01bits (*(volatile union IICCTL01union*)0xF0231)
-#define IICWL0bits   (*(volatile union IICWL0union  *)0xF0232)
-#define IICWH0bits   (*(volatile union IICWH0union  *)0xF0233)
-#define SVA0bits     (*(volatile union SVA0union    *)0xF0234)
-#define IICSE0bits   (*(volatile union IICSE0union  *)0xF0235)
-#define IICCTL10bits (*(volatile union IICCTL10union*)0xF0238)
-#define IICCTL11bits (*(volatile union IICCTL11union*)0xF0239)
-#define IICWL1bits   (*(volatile union IICWL1union  *)0xF023A)
-#define IICWH1bits   (*(volatile union IICWH1union  *)0xF023B)
-#define SVA1bits     (*(volatile union SVA1union    *)0xF023C)
-#define IICSE1bits   (*(volatile union IICSE1union  *)0xF023D)
-#define CRC0CTLbits  (*(volatile union CRC0CTLunion *)0xF02F0)
-#define PGCRCLbits   (*(volatile union PGCRCLunion  *)0xF02F2)
-#define CRCDbits     (*(volatile union CRCDunion    *)0xF02FA)
+#define ADM2bits     (*(volatile struct ADM2struct    *)0xF0010)
+#define ADULbits     (*(volatile struct ADULstruct    *)0xF0011)
+#define ADLLbits     (*(volatile struct ADLLstruct    *)0xF0012)
+#define ADTESbits    (*(volatile struct ADTESstruct   *)0xF0013)
+#define PU0bits      (*(volatile struct PU0struct     *)0xF0030)
+#define PU1bits      (*(volatile struct PU1struct     *)0xF0031)
+#define PU3bits      (*(volatile struct PU3struct     *)0xF0033)
+#define PU4bits      (*(volatile struct PU4struct     *)0xF0034)
+#define PU5bits      (*(volatile struct PU5struct     *)0xF0035)
+#define PU6bits      (*(volatile struct PU6struct     *)0xF0036)
+#define PU7bits      (*(volatile struct PU7struct     *)0xF0037)
+#define PU8bits      (*(volatile struct PU8struct     *)0xF0038)
+#define PU9bits      (*(volatile struct PU9struct     *)0xF0039)
+#define PU10bits     (*(volatile struct PU10struct    *)0xF003A)
+#define PU11bits     (*(volatile struct PU11struct    *)0xF003B)
+#define PU12bits     (*(volatile struct PU12struct    *)0xF003C)
+#define PU14bits     (*(volatile struct PU14struct    *)0xF003E)
+#define PIM0bits     (*(volatile struct PIM0struct    *)0xF0040)
+#define PIM1bits     (*(volatile struct PIM1struct    *)0xF0041)
+#define PIM4bits     (*(volatile struct PIM4struct    *)0xF0044)
+#define PIM5bits     (*(volatile struct PIM5struct    *)0xF0045)
+#define PIM8bits     (*(volatile struct PIM8struct    *)0xF0048)
+#define PIM14bits    (*(volatile struct PIM14struct   *)0xF004E)
+#define POM0bits     (*(volatile struct POM0struct    *)0xF0050)
+#define POM1bits     (*(volatile struct POM1struct    *)0xF0051)
+#define POM4bits     (*(volatile struct POM4struct    *)0xF0054)
+#define POM5bits     (*(volatile struct POM5struct    *)0xF0055)
+#define POM7bits     (*(volatile struct POM7struct    *)0xF0057)
+#define POM8bits     (*(volatile struct POM8struct    *)0xF0058)
+#define POM9bits     (*(volatile struct POM9struct    *)0xF0059)
+#define POM14bits    (*(volatile struct POM14struct   *)0xF005E)
+#define PMC0bits     (*(volatile struct PMC0struct    *)0xF0060)
+#define PMC3bits     (*(volatile struct PMC3struct    *)0xF0063)
+#define PMC10bits    (*(volatile struct PMC10struct   *)0xF006A)
+#define PMC11bits    (*(volatile struct PMC11struct   *)0xF006B)
+#define PMC12bits    (*(volatile struct PMC12struct   *)0xF006C)
+#define PMC14bits    (*(volatile struct PMC14struct   *)0xF006E)
+#define NFEN0bits    (*(volatile struct NFEN0struct   *)0xF0070)
+#define NFEN1bits    (*(volatile struct NFEN1struct   *)0xF0071)
+#define NFEN2bits    (*(volatile struct NFEN2struct   *)0xF0072)
+#define ISCbits      (*(volatile struct ISCstruct     *)0xF0073)
+#define TIS0bits     (*(volatile struct TIS0struct    *)0xF0074)
+#define ADPCbits     (*(volatile struct ADPCstruct    *)0xF0076)
+#define PIORbits     (*(volatile struct PIORstruct    *)0xF0077)
+#define IAWCTLbits   (*(volatile struct IAWCTLstruct  *)0xF0078)
+#define GDIDISbits   (*(volatile struct GDIDISstruct  *)0xF007D)
+#define PRDSELbits   (*(volatile struct PRDSELstruct  *)0xF007E)
+#define TOOLENbits   (*(volatile struct TOOLENstruct  *)0xF0080)
+#define BPAL0bits    (*(volatile struct BPAL0struct   *)0xF0081)
+#define BPAH0bits    (*(volatile struct BPAH0struct   *)0xF0082)
+#define BPAS0bits    (*(volatile struct BPAS0struct   *)0xF0083)
+#define BACDVL0bits  (*(volatile struct BACDVL0struct *)0xF0084)
+#define BACDVH0bits  (*(volatile struct BACDVH0struct *)0xF0085)
+#define BACDML0bits  (*(volatile struct BACDML0struct *)0xF0086)
+#define BACDMH0bits  (*(volatile struct BACDMH0struct *)0xF0087)
+#define MONMODbits   (*(volatile struct MONMODstruct  *)0xF0088)
+#define DFLCTLbits   (*(volatile struct DFLCTLstruct  *)0xF0090)
+#define HIOTRMbits   (*(volatile struct HIOTRMstruct  *)0xF00A0)
+#define BECTLbits    (*(volatile struct BECTLstruct   *)0xF00A1)
+#define HOCODIVbits  (*(volatile struct HOCODIVstruct *)0xF00A8)
+#define TEMPCAL0bits (*(volatile struct TEMPCAL0struct*)0xF00AC)
+#define TEMPCAL1bits (*(volatile struct TEMPCAL1struct*)0xF00AD)
+#define TEMPCAL2bits (*(volatile struct TEMPCAL2struct*)0xF00AE)
+#define TEMPCAL3bits (*(volatile struct TEMPCAL3struct*)0xF00AF)
+#define FLSECbits    (*(volatile struct FLSECstruct   *)0xF00B0)
+#define FLFSWSbits   (*(volatile struct FLFSWSstruct  *)0xF00B2)
+#define FLFSWEbits   (*(volatile struct FLFSWEstruct  *)0xF00B4)
+#define FSSETbits    (*(volatile struct FSSETstruct   *)0xF00B6)
+#define FSSEbits     (*(volatile struct FSSEstruct    *)0xF00B7)
+#define FLFADLbits   (*(volatile struct FLFADLstruct  *)0xF00B8)
+#define FLFADHbits   (*(volatile struct FLFADHstruct  *)0xF00BA)
+#define PFCMDbits    (*(volatile struct PFCMDstruct   *)0xF00C0)
+#define PFSbits      (*(volatile struct PFSstruct     *)0xF00C1)
+#define FLRLbits     (*(volatile struct FLRLstruct    *)0xF00C2)
+#define FLRHbits     (*(volatile struct FLRHstruct    *)0xF00C4)
+#define FLWEbits     (*(volatile struct FLWEstruct    *)0xF00C6)
+#define FLREbits     (*(volatile struct FLREstruct    *)0xF00C7)
+#define FLTMSbits    (*(volatile struct FLTMSstruct   *)0xF00C8)
+#define DFLMCbits    (*(volatile struct DFLMCstruct   *)0xF00CA)
+#define FLMCLbits    (*(volatile struct FLMCLstruct   *)0xF00CC)
+#define FLMCHbits    (*(volatile struct FLMCHstruct   *)0xF00CE)
+#define FSCTLbits    (*(volatile struct FSCTLstruct   *)0xF00CF)
+#define ICEADRbits   (*(volatile struct ICEADRstruct  *)0xF00D0)
+#define ICEDATbits   (*(volatile struct ICEDATstruct  *)0xF00D2)
+#define MDCLbits     (*(volatile struct MDCLstruct    *)0xF00E0)
+#define MDCHbits     (*(volatile struct MDCHstruct    *)0xF00E2)
+#define MDUCbits     (*(volatile struct MDUCstruct    *)0xF00E8)
+#define PER0bits     (*(volatile struct PER0struct    *)0xF00F0)
+#define OSMCbits     (*(volatile struct OSMCstruct    *)0xF00F3)
+#define RMCbits      (*(volatile struct RMCstruct     *)0xF00F4)
+#define RPECTLbits   (*(volatile struct RPECTLstruct  *)0xF00F5)
+#define BCDADJbits   (*(volatile struct BCDADJstruct  *)0xF00FE)
+#define VECTCTRLbits (*(volatile struct VECTCTRLstruct*)0xF00FF)
+#define SSR00bits    (*(volatile struct SSR00struct   *)0xF0100)
+#define SSR00Lbits   (*(volatile struct SSR00Lstruct  *)0xF0100)
+#define SSR01bits    (*(volatile struct SSR01struct   *)0xF0102)
+#define SSR01Lbits   (*(volatile struct SSR01Lstruct  *)0xF0102)
+#define SSR02bits    (*(volatile struct SSR02struct   *)0xF0104)
+#define SSR02Lbits   (*(volatile struct SSR02Lstruct  *)0xF0104)
+#define SSR03bits    (*(volatile struct SSR03struct   *)0xF0106)
+#define SSR03Lbits   (*(volatile struct SSR03Lstruct  *)0xF0106)
+#define SIR00bits    (*(volatile struct SIR00struct   *)0xF0108)
+#define SIR00Lbits   (*(volatile struct SIR00Lstruct  *)0xF0108)
+#define SIR01bits    (*(volatile struct SIR01struct   *)0xF010A)
+#define SIR01Lbits   (*(volatile struct SIR01Lstruct  *)0xF010A)
+#define SIR02bits    (*(volatile struct SIR02struct   *)0xF010C)
+#define SIR02Lbits   (*(volatile struct SIR02Lstruct  *)0xF010C)
+#define SIR03bits    (*(volatile struct SIR03struct   *)0xF010E)
+#define SIR03Lbits   (*(volatile struct SIR03Lstruct  *)0xF010E)
+#define SMR00bits    (*(volatile struct SMR00struct   *)0xF0110)
+#define SMR01bits    (*(volatile struct SMR01struct   *)0xF0112)
+#define SMR02bits    (*(volatile struct SMR02struct   *)0xF0114)
+#define SMR03bits    (*(volatile struct SMR03struct   *)0xF0116)
+#define SCR00bits    (*(volatile struct SCR00struct   *)0xF0118)
+#define SCR01bits    (*(volatile struct SCR01struct   *)0xF011A)
+#define SCR02bits    (*(volatile struct SCR02struct   *)0xF011C)
+#define SCR03bits    (*(volatile struct SCR03struct   *)0xF011E)
+#define SE0bits      (*(volatile struct SE0struct     *)0xF0120)
+#define SE0Lbits     (*(volatile struct SE0Lstruct    *)0xF0120)
+#define SS0bits      (*(volatile struct SS0struct     *)0xF0122)
+#define SS0Lbits     (*(volatile struct SS0Lstruct    *)0xF0122)
+#define ST0bits      (*(volatile struct ST0struct     *)0xF0124)
+#define ST0Lbits     (*(volatile struct ST0Lstruct    *)0xF0124)
+#define SPS0bits     (*(volatile struct SPS0struct    *)0xF0126)
+#define SPS0Lbits    (*(volatile struct SPS0Lstruct   *)0xF0126)
+#define SO0bits      (*(volatile struct SO0struct     *)0xF0128)
+#define SOE0bits     (*(volatile struct SOE0struct    *)0xF012A)
+#define SOE0Lbits    (*(volatile struct SOE0Lstruct   *)0xF012A)
+#define EDR00bits    (*(volatile struct EDR00struct   *)0xF012C)
+#define EDR00Lbits   (*(volatile struct EDR00Lstruct  *)0xF012C)
+#define EDR01bits    (*(volatile struct EDR01struct   *)0xF012E)
+#define EDR01Lbits   (*(volatile struct EDR01Lstruct  *)0xF012E)
+#define EDR02bits    (*(volatile struct EDR02struct   *)0xF0130)
+#define EDR02Lbits   (*(volatile struct EDR02Lstruct  *)0xF0130)
+#define EDR03bits    (*(volatile struct EDR03struct   *)0xF0132)
+#define EDR03Lbits   (*(volatile struct EDR03Lstruct  *)0xF0132)
+#define SOL0bits     (*(volatile struct SOL0struct    *)0xF0134)
+#define SOL0Lbits    (*(volatile struct SOL0Lstruct   *)0xF0134)
+#define SSC0bits     (*(volatile struct SSC0struct    *)0xF0138)
+#define SSC0Lbits    (*(volatile struct SSC0Lstruct   *)0xF0138)
+#define SSR10bits    (*(volatile struct SSR10struct   *)0xF0140)
+#define SSR10Lbits   (*(volatile struct SSR10Lstruct  *)0xF0140)
+#define SSR11bits    (*(volatile struct SSR11struct   *)0xF0142)
+#define SSR11Lbits   (*(volatile struct SSR11Lstruct  *)0xF0142)
+#define SSR12bits    (*(volatile struct SSR12struct   *)0xF0144)
+#define SSR12Lbits   (*(volatile struct SSR12Lstruct  *)0xF0144)
+#define SSR13bits    (*(volatile struct SSR13struct   *)0xF0146)
+#define SSR13Lbits   (*(volatile struct SSR13Lstruct  *)0xF0146)
+#define SIR10bits    (*(volatile struct SIR10struct   *)0xF0148)
+#define SIR10Lbits   (*(volatile struct SIR10Lstruct  *)0xF0148)
+#define SIR11bits    (*(volatile struct SIR11struct   *)0xF014A)
+#define SIR11Lbits   (*(volatile struct SIR11Lstruct  *)0xF014A)
+#define SIR12bits    (*(volatile struct SIR12struct   *)0xF014C)
+#define SIR12Lbits   (*(volatile struct SIR12Lstruct  *)0xF014C)
+#define SIR13bits    (*(volatile struct SIR13struct   *)0xF014E)
+#define SIR13Lbits   (*(volatile struct SIR13Lstruct  *)0xF014E)
+#define SMR10bits    (*(volatile struct SMR10struct   *)0xF0150)
+#define SMR11bits    (*(volatile struct SMR11struct   *)0xF0152)
+#define SMR12bits    (*(volatile struct SMR12struct   *)0xF0154)
+#define SMR13bits    (*(volatile struct SMR13struct   *)0xF0156)
+#define SCR10bits    (*(volatile struct SCR10struct   *)0xF0158)
+#define SCR11bits    (*(volatile struct SCR11struct   *)0xF015A)
+#define SCR12bits    (*(volatile struct SCR12struct   *)0xF015C)
+#define SCR13bits    (*(volatile struct SCR13struct   *)0xF015E)
+#define SE1bits      (*(volatile struct SE1struct     *)0xF0160)
+#define SE1Lbits     (*(volatile struct SE1Lstruct    *)0xF0160)
+#define SS1bits      (*(volatile struct SS1struct     *)0xF0162)
+#define SS1Lbits     (*(volatile struct SS1Lstruct    *)0xF0162)
+#define ST1bits      (*(volatile struct ST1struct     *)0xF0164)
+#define ST1Lbits     (*(volatile struct ST1Lstruct    *)0xF0164)
+#define SPS1bits     (*(volatile struct SPS1struct    *)0xF0166)
+#define SPS1Lbits    (*(volatile struct SPS1Lstruct   *)0xF0166)
+#define SO1bits      (*(volatile struct SO1struct     *)0xF0168)
+#define SOE1bits     (*(volatile struct SOE1struct    *)0xF016A)
+#define SOE1Lbits    (*(volatile struct SOE1Lstruct   *)0xF016A)
+#define EDR10bits    (*(volatile struct EDR10struct   *)0xF016C)
+#define EDR10Lbits   (*(volatile struct EDR10Lstruct  *)0xF016C)
+#define EDR11bits    (*(volatile struct EDR11struct   *)0xF016E)
+#define EDR11Lbits   (*(volatile struct EDR11Lstruct  *)0xF016E)
+#define EDR12bits    (*(volatile struct EDR12struct   *)0xF0170)
+#define EDR12Lbits   (*(volatile struct EDR12Lstruct  *)0xF0170)
+#define EDR13bits    (*(volatile struct EDR13struct   *)0xF0172)
+#define EDR13Lbits   (*(volatile struct EDR13Lstruct  *)0xF0172)
+#define SOL1bits     (*(volatile struct SOL1struct    *)0xF0174)
+#define SOL1Lbits    (*(volatile struct SOL1Lstruct   *)0xF0174)
+#define SSC1bits     (*(volatile struct SSC1struct    *)0xF0178)
+#define SSC1Lbits    (*(volatile struct SSC1Lstruct   *)0xF0178)
+#define TCR00bits    (*(volatile struct TCR00struct   *)0xF0180)
+#define TCR01bits    (*(volatile struct TCR01struct   *)0xF0182)
+#define TCR02bits    (*(volatile struct TCR02struct   *)0xF0184)
+#define TCR03bits    (*(volatile struct TCR03struct   *)0xF0186)
+#define TCR04bits    (*(volatile struct TCR04struct   *)0xF0188)
+#define TCR05bits    (*(volatile struct TCR05struct   *)0xF018A)
+#define TCR06bits    (*(volatile struct TCR06struct   *)0xF018C)
+#define TCR07bits    (*(volatile struct TCR07struct   *)0xF018E)
+#define TMR00bits    (*(volatile struct TMR00struct   *)0xF0190)
+#define TMR01bits    (*(volatile struct TMR01struct   *)0xF0192)
+#define TMR02bits    (*(volatile struct TMR02struct   *)0xF0194)
+#define TMR03bits    (*(volatile struct TMR03struct   *)0xF0196)
+#define TMR04bits    (*(volatile struct TMR04struct   *)0xF0198)
+#define TMR05bits    (*(volatile struct TMR05struct   *)0xF019A)
+#define TMR06bits    (*(volatile struct TMR06struct   *)0xF019C)
+#define TMR07bits    (*(volatile struct TMR07struct   *)0xF019E)
+#define TSR00bits    (*(volatile struct TSR00struct   *)0xF01A0)
+#define TSR00Lbits   (*(volatile struct TSR00Lstruct  *)0xF01A0)
+#define TSR01bits    (*(volatile struct TSR01struct   *)0xF01A2)
+#define TSR01Lbits   (*(volatile struct TSR01Lstruct  *)0xF01A2)
+#define TSR02bits    (*(volatile struct TSR02struct   *)0xF01A4)
+#define TSR02Lbits   (*(volatile struct TSR02Lstruct  *)0xF01A4)
+#define TSR03bits    (*(volatile struct TSR03struct   *)0xF01A6)
+#define TSR03Lbits   (*(volatile struct TSR03Lstruct  *)0xF01A6)
+#define TSR04bits    (*(volatile struct TSR04struct   *)0xF01A8)
+#define TSR04Lbits   (*(volatile struct TSR04Lstruct  *)0xF01A8)
+#define TSR05bits    (*(volatile struct TSR05struct   *)0xF01AA)
+#define TSR05Lbits   (*(volatile struct TSR05Lstruct  *)0xF01AA)
+#define TSR06bits    (*(volatile struct TSR06struct   *)0xF01AC)
+#define TSR06Lbits   (*(volatile struct TSR06Lstruct  *)0xF01AC)
+#define TSR07bits    (*(volatile struct TSR07struct   *)0xF01AE)
+#define TSR07Lbits   (*(volatile struct TSR07Lstruct  *)0xF01AE)
+#define TE0bits      (*(volatile struct TE0struct     *)0xF01B0)
+#define TE0Lbits     (*(volatile struct TE0Lstruct    *)0xF01B0)
+#define TS0bits      (*(volatile struct TS0struct     *)0xF01B2)
+#define TS0Lbits     (*(volatile struct TS0Lstruct    *)0xF01B2)
+#define TT0bits      (*(volatile struct TT0struct     *)0xF01B4)
+#define TT0Lbits     (*(volatile struct TT0Lstruct    *)0xF01B4)
+#define TPS0bits     (*(volatile struct TPS0struct    *)0xF01B6)
+#define TO0bits      (*(volatile struct TO0struct     *)0xF01B8)
+#define TO0Lbits     (*(volatile struct TO0Lstruct    *)0xF01B8)
+#define TOE0bits     (*(volatile struct TOE0struct    *)0xF01BA)
+#define TOE0Lbits    (*(volatile struct TOE0Lstruct   *)0xF01BA)
+#define TOL0bits     (*(volatile struct TOL0struct    *)0xF01BC)
+#define TOL0Lbits    (*(volatile struct TOL0Lstruct   *)0xF01BC)
+#define TOM0bits     (*(volatile struct TOM0struct    *)0xF01BE)
+#define TOM0Lbits    (*(volatile struct TOM0Lstruct   *)0xF01BE)
+#define TCR10bits    (*(volatile struct TCR10struct   *)0xF01C0)
+#define TCR11bits    (*(volatile struct TCR11struct   *)0xF01C2)
+#define TCR12bits    (*(volatile struct TCR12struct   *)0xF01C4)
+#define TCR13bits    (*(volatile struct TCR13struct   *)0xF01C6)
+#define TCR14bits    (*(volatile struct TCR14struct   *)0xF01C8)
+#define TCR15bits    (*(volatile struct TCR15struct   *)0xF01CA)
+#define TCR16bits    (*(volatile struct TCR16struct   *)0xF01CC)
+#define TCR17bits    (*(volatile struct TCR17struct   *)0xF01CE)
+#define TMR10bits    (*(volatile struct TMR10struct   *)0xF01D0)
+#define TMR11bits    (*(volatile struct TMR11struct   *)0xF01D2)
+#define TMR12bits    (*(volatile struct TMR12struct   *)0xF01D4)
+#define TMR13bits    (*(volatile struct TMR13struct   *)0xF01D6)
+#define TMR14bits    (*(volatile struct TMR14struct   *)0xF01D8)
+#define TMR15bits    (*(volatile struct TMR15struct   *)0xF01DA)
+#define TMR16bits    (*(volatile struct TMR16struct   *)0xF01DC)
+#define TMR17bits    (*(volatile struct TMR17struct   *)0xF01DE)
+#define TSR10bits    (*(volatile struct TSR10struct   *)0xF01E0)
+#define TSR10Lbits   (*(volatile struct TSR10Lstruct  *)0xF01E0)
+#define TSR11bits    (*(volatile struct TSR11struct   *)0xF01E2)
+#define TSR11Lbits   (*(volatile struct TSR11Lstruct  *)0xF01E2)
+#define TSR12bits    (*(volatile struct TSR12struct   *)0xF01E4)
+#define TSR12Lbits   (*(volatile struct TSR12Lstruct  *)0xF01E4)
+#define TSR13bits    (*(volatile struct TSR13struct   *)0xF01E6)
+#define TSR13Lbits   (*(volatile struct TSR13Lstruct  *)0xF01E6)
+#define TSR14bits    (*(volatile struct TSR14struct   *)0xF01E8)
+#define TSR14Lbits   (*(volatile struct TSR14Lstruct  *)0xF01E8)
+#define TSR15bits    (*(volatile struct TSR15struct   *)0xF01EA)
+#define TSR15Lbits   (*(volatile struct TSR15Lstruct  *)0xF01EA)
+#define TSR16bits    (*(volatile struct TSR16struct   *)0xF01EC)
+#define TSR16Lbits   (*(volatile struct TSR16Lstruct  *)0xF01EC)
+#define TSR17bits    (*(volatile struct TSR17struct   *)0xF01EE)
+#define TSR17Lbits   (*(volatile struct TSR17Lstruct  *)0xF01EE)
+#define TE1bits      (*(volatile struct TE1struct     *)0xF01F0)
+#define TE1Lbits     (*(volatile struct TE1Lstruct    *)0xF01F0)
+#define TS1bits      (*(volatile struct TS1struct     *)0xF01F2)
+#define TS1Lbits     (*(volatile struct TS1Lstruct    *)0xF01F2)
+#define TT1bits      (*(volatile struct TT1struct     *)0xF01F4)
+#define TT1Lbits     (*(volatile struct TT1Lstruct    *)0xF01F4)
+#define TPS1bits     (*(volatile struct TPS1struct    *)0xF01F6)
+#define TO1bits      (*(volatile struct TO1struct     *)0xF01F8)
+#define TO1Lbits     (*(volatile struct TO1Lstruct    *)0xF01F8)
+#define TOE1bits     (*(volatile struct TOE1struct    *)0xF01FA)
+#define TOE1Lbits    (*(volatile struct TOE1Lstruct   *)0xF01FA)
+#define TOL1bits     (*(volatile struct TOL1struct    *)0xF01FC)
+#define TOL1Lbits    (*(volatile struct TOL1Lstruct   *)0xF01FC)
+#define TOM1bits     (*(volatile struct TOM1struct    *)0xF01FE)
+#define TOM1Lbits    (*(volatile struct TOM1Lstruct   *)0xF01FE)
+#define DSA2bits     (*(volatile struct DSA2struct    *)0xF0200)
+#define DSA3bits     (*(volatile struct DSA3struct    *)0xF0201)
+#define DRA2bits     (*(volatile struct DRA2struct    *)0xF0202)
+#define DRA2Lbits    (*(volatile struct DRA2Lstruct   *)0xF0202)
+#define DRA2Hbits    (*(volatile struct DRA2Hstruct   *)0xF0203)
+#define DRA3bits     (*(volatile struct DRA3struct    *)0xF0204)
+#define DRA3Lbits    (*(volatile struct DRA3Lstruct   *)0xF0204)
+#define DRA3Hbits    (*(volatile struct DRA3Hstruct   *)0xF0205)
+#define DBC2bits     (*(volatile struct DBC2struct    *)0xF0206)
+#define DBC2Lbits    (*(volatile struct DBC2Lstruct   *)0xF0206)
+#define DBC2Hbits    (*(volatile struct DBC2Hstruct   *)0xF0207)
+#define DBC3bits     (*(volatile struct DBC3struct    *)0xF0208)
+#define DBC3Lbits    (*(volatile struct DBC3Lstruct   *)0xF0208)
+#define DBC3Hbits    (*(volatile struct DBC3Hstruct   *)0xF0209)
+#define DMC2bits     (*(volatile struct DMC2struct    *)0xF020A)
+#define DMC3bits     (*(volatile struct DMC3struct    *)0xF020B)
+#define DRC2bits     (*(volatile struct DRC2struct    *)0xF020C)
+#define DRC3bits     (*(volatile struct DRC3struct    *)0xF020D)
+#define DWAITALLbits (*(volatile struct DWAITALLstruct*)0xF020F)
+#define IICCTL00bits (*(volatile struct IICCTL00struct*)0xF0230)
+#define IICCTL01bits (*(volatile struct IICCTL01struct*)0xF0231)
+#define IICWL0bits   (*(volatile struct IICWL0struct  *)0xF0232)
+#define IICWH0bits   (*(volatile struct IICWH0struct  *)0xF0233)
+#define SVA0bits     (*(volatile struct SVA0struct    *)0xF0234)
+#define IICSE0bits   (*(volatile struct IICSE0struct  *)0xF0235)
+#define IICCTL10bits (*(volatile struct IICCTL10struct*)0xF0238)
+#define IICCTL11bits (*(volatile struct IICCTL11struct*)0xF0239)
+#define IICWL1bits   (*(volatile struct IICWL1struct  *)0xF023A)
+#define IICWH1bits   (*(volatile struct IICWH1struct  *)0xF023B)
+#define SVA1bits     (*(volatile struct SVA1struct    *)0xF023C)
+#define IICSE1bits   (*(volatile struct IICSE1struct  *)0xF023D)
+#define CRC0CTLbits  (*(volatile struct CRC0CTLstruct *)0xF02F0)
+#define PGCRCLbits   (*(volatile struct PGCRCLstruct  *)0xF02F2)
+#define CRCDbits     (*(volatile struct CRCDstruct    *)0xF02FA)
 
 
 #define ADTYP     (ADM2bits.adtyp)
