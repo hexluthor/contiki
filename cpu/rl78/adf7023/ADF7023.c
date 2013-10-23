@@ -66,6 +66,8 @@
 #define ADF7023_CS_DEASSERT (P2 |=  BIT(2))
 #define ADF7023_MISO        (P0 &   BIT(3))
 
+#define ADF7023_SPI_BUS     (CSI10)
+
 /******************************************************************************/
 /************************ Variables Definitions *******************************/
 /******************************************************************************/
@@ -85,7 +87,7 @@ void ADF7023_WriteReadByte(unsigned char writeByte,
     unsigned char data = 0;
     
     data = writeByte;
-    SPI_Read(CSI21, 0, &data, 1);
+    SPI_Read(ADF7023_SPI_BUS, 0, &data, 1);
     if(readByte)
     {
         *readByte = data;
@@ -107,7 +109,7 @@ char ADF7023_Init(void)
     unsigned char  status  = 0;
     
     ADF7023_BBRAMCurrent = ADF7023_BBRAMDefault;
-    SPI_Init(CSI21, 
+    SPI_Init(ADF7023_SPI_BUS, 
 				 0,         // MSB first.
              1000000,   // Clock frequency.
              0,         // Idle state for clock is a high level; active state is a low level.
