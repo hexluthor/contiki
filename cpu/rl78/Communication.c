@@ -109,14 +109,6 @@ char SPI_Init(enum CSI_Bus bus,
 	 uint16_t scr;
 	 uint8_t shift;
 
-    /* Configure the CS pins. */
-    PMOD1_CS_OUT;
-    PMOD1_CS_HIGH;
-    PMOD2_CS_OUT;
-    PMOD2_CS_HIGH;
-    ST7579_CS_OUT;
-    ST7579_CS_HIGH;
-
     /* Enable input clock supply. */
     if (bus <= CSI11) SAU0EN = 1;
     else              SAU1EN = 1;
@@ -340,49 +332,12 @@ char SPI_Write(enum CSI_Bus bus,
 	case CSI31: sio = &SIO31; ssr = &SSR13; break;
 	}
 
-
-    if(slaveDeviceId == 1)
-    {
-        PMOD1_CS_LOW;
-    }
-    if(slaveDeviceId == 2)
-    {
-        PMOD2_CS_LOW;
-    }
-    if(slaveDeviceId == 3)
-    {
-        ST1        |= 0x0002;
-        originalSO1 = SO1;
-        originalSCR = SCR11;
-        SO1        &= ~0x0202;
-        SCR11      &= ~0x3000;
-        SS1        |= 0x0002;
-        ST7579_CS_LOW;
-    }
-    
     for(byte = 0; byte < bytesNumber; byte++)
     {
         *sio = data[byte];
         NOP;
         while(*ssr & 0x0040);
         read = *sio;
-    }
-    
-    if(slaveDeviceId == 1)
-    {
-        PMOD1_CS_HIGH;
-    }
-    if(slaveDeviceId == 2)
-    {
-        PMOD2_CS_HIGH;
-    }
-    if(slaveDeviceId == 3)
-    {
-        ST7579_CS_HIGH;
-        ST1  |= 0x0002;
-        SO1   = originalSO1;
-        SCR11 = originalSCR;
-        SS1  |= 0x0002;
     }
 
     return bytesNumber;
@@ -422,27 +377,6 @@ char SPI_Read(enum CSI_Bus bus,
 	case CSI31: sio = &SIO31; ssr = &SSR13; break;
 	}
 
-
-    if(slaveDeviceId == 1)
-    {
-        PMOD1_CS_LOW;
-    }
-    if(slaveDeviceId == 2)
-    {
-        PMOD2_CS_LOW;
-    }
-    if(slaveDeviceId == 3)
-    {
-        ST1        |= 0x0002;
-        originalSO1 = SO1;
-        originalSCR = SCR11;
-        SO1        &= ~0x0202;
-        SCR11      &= ~0x3000;
-        SS1        |= 0x0002;
-        ST7579_CS_LOW;
-    }
-
-
     for(byte = 0; byte < bytesNumber; byte++)
     {
         *sio = data[byte];
@@ -450,25 +384,6 @@ char SPI_Read(enum CSI_Bus bus,
         while(*ssr & 0x0040);
         data[byte] = *sio;
     }
-
-
-    if(slaveDeviceId == 1)
-    {
-        PMOD1_CS_HIGH;
-    }
-    if(slaveDeviceId == 2)
-    {
-        PMOD2_CS_HIGH;
-    }
-    if(slaveDeviceId == 3)
-    {
-        ST7579_CS_HIGH;
-        ST1  |= 0x0002;
-        SO1   = originalSO1;
-        SCR11 = originalSCR;
-        SS1  |= 0x0002;
-    }
-
 
     return bytesNumber;
 }
