@@ -50,9 +50,6 @@
 /******************************************************************************/
 /*************************** Macros Definitions *******************************/
 /******************************************************************************/
-#define SPI_CS_PIN_OUT  PMOD1_CS_OUT
-#define SPI_CS_LOW      PMOD1_CS_LOW
-#define SPI_CS_HIGH     PMOD1_CS_HIGH
 #define SPI_MISO        PMOD1_MISO
 
 #define GPIO1_PIN_OUT   PMOD1_GPIO1_PIN_OUT
