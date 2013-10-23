@@ -57,6 +57,10 @@
 #undef BIT
 #define BIT(n) ( 1 << (n) )
 
+#define f_CLK      (16000000UL) // 16 MHz
+#define CLK_SCALER (0x4)
+#define SCALED_CLK (f_CLK / (1 << CLK_SCALER))
+
 char IICA0_Flag;
 
 /******************************************************************************/
@@ -103,7 +107,6 @@ char SPI_Init(enum CSI_Bus bus,
               char clockPol,
               char clockEdg)
 {
-    long mckFreq  = 32000000;
     char sdrValue = 0;
     char delay    = 0;
 	 uint16_t scr;
@@ -121,8 +124,8 @@ char SPI_Init(enum CSI_Bus bus,
     NOP;
 
     /* Select the fCLK as input clock.  */
-    if (bus <= CSI11) SPS0 = 0x0000;
-    else              SPS1 = 0x0000;
+    if (bus <= CSI11) SPS0 = (CLK_SCALER << 4) | CLK_SCALER; // TODO: kludge
+    else              SPS1 = (CLK_SCALER << 4) | CLK_SCALER; // TODO: kludge
 
     /* Select the CSI operation mode. */
 	switch(bus) {
@@ -153,7 +156,7 @@ char SPI_Init(enum CSI_Bus bus,
 	}
 
     /* clockFreq =  mckFreq / (sdrValue * 2 + 2) */
-    sdrValue = mckFreq / (2 * clockFreq) - 1;
+    sdrValue = SCALED_CLK / (2 * clockFreq) - 1;
 	 sdrValue <<= 9;
 	switch(bus) {
 	case CSI00: SDR00 = sdrValue; break;
@@ -294,7 +297,9 @@ char SPI_Init(enum CSI_Bus bus,
 	case CSI30: SS1 = BIT(2); break;
 	case CSI31: SS1 = BIT(3); break;
 	}
-    
+
+	 printf("End of SPI_Init().\n", SPS1);
+
     return 0;
 }
 
