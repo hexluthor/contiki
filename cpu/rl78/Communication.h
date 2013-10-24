@@ -75,19 +75,33 @@
 /************************ Functions Declarations ******************************/
 /******************************************************************************/
 
+enum CSI_Bus {
+	CSI00,
+	CSI01,
+	CSI10,
+	CSI11,
+	CSI20,
+	CSI21,
+	CSI30,
+	CSI31,
+};
+
 /*! Initializes the SPI communication peripheral. */
-char SPI_Init(char lsbFirst,
+char SPI_Init(enum CSI_Bus bus,
+				  char lsbFirst,
               long clockFreq,
               char clockPol,
               char clockEdg);
 
 /*! Writes data to SPI. */
-char SPI_Write(char slaveDeviceId,
+char SPI_Write(enum CSI_Bus bus,
+					char slaveDeviceId,
                unsigned char* data,
                char bytesNumber);
 
 /*! Reads data from SPI. */
-char SPI_Read(char slaveDeviceId,
+char SPI_Read(enum CSI_Bus bus,
+				  char slaveDeviceId,
               unsigned char* data,
               char bytesNumber);
 
