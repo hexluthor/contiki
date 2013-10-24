@@ -220,6 +220,8 @@ char SPI_Init(enum CSI_Bus bus,
 		break;
 	
 	case CSI10:
+		PMC0 &= ~BIT(2); // Disable analog input on SO10.
+		
 		// SO10 output:
 		P0  |=  BIT(2);
 		PM0 &= ~BIT(2);
@@ -298,8 +300,6 @@ char SPI_Init(enum CSI_Bus bus,
 	case CSI31: SS1 = BIT(3); break;
 	}
 
-	 printf("End of SPI_Init().\n", SPS1);
-
     return 0;
 }
 
@@ -312,6 +312,7 @@ char SPI_Init(enum CSI_Bus bus,
  *
  * @return Number of written bytes.
 *******************************************************************************/
+#if 0
 char SPI_Write(enum CSI_Bus bus,
 					char slaveDeviceId,
                unsigned char* data,
@@ -347,6 +348,7 @@ char SPI_Write(enum CSI_Bus bus,
 
     return bytesNumber;
 }
+#endif
 
 /***************************************************************************//**
  * @brief Reads data from SPI.
