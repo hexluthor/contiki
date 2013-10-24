@@ -47,6 +47,9 @@
 #include "ADF7023_Config.h"
 #include "Communication.h"
 
+#include "sfrs.h"
+#include "sfrs-ext.h"
+
 /******************************************************************************/
 /*************************** Macros Definitions *******************************/
 /******************************************************************************/
@@ -55,9 +58,13 @@
 #define ADF7023_CS_DEASSERT CS_PIN_HIGH
 #define ADF7023_MISO        MISO_PIN
 */
-#define ADF7023_CS_ASSERT   do { } while(0)
-#define ADF7023_CS_DEASSERT do { } while(0)
-#define ADF7023_MISO        0
+
+#undef BIT
+#define BIT(n) ( 1 << (n) )
+
+#define ADF7023_CS_ASSERT   (P2 &= ~BIT(2))
+#define ADF7023_CS_DEASSERT (P2 |=  BIT(2))
+#define ADF7023_MISO        (P0 &   BIT(3))
 
 /******************************************************************************/
 /************************ Variables Definitions *******************************/
@@ -78,7 +85,7 @@ void ADF7023_WriteReadByte(unsigned char writeByte,
     unsigned char data = 0;
     
     data = writeByte;
-    SPI_Read(0, &data, 1);
+    SPI_Read(CSI21, 0, &data, 1);
     if(readByte)
     {
         *readByte = data;
@@ -100,10 +107,16 @@ char ADF7023_Init(void)
     unsigned char  status  = 0;
     
     ADF7023_BBRAMCurrent = ADF7023_BBRAMDefault;
-    SPI_Init(0,         // MSB first.
+    SPI_Init(CSI21, 
+				 0,         // MSB first.
              1000000,   // Clock frequency.
              0,         // Idle state for clock is a high level; active state is a low level.
              1);        // Serial output data changes on transition from idle clock state to active clock state.
+	 
+	ADF7023_CS_DEASSERT;
+	PM2 &= ~BIT(2);      // Configure ADF7023_CS as an output.
+
+	 
     ADF7023_CS_ASSERT;
     while ((miso == 0) && (timeout < 1000))
     {
