@@ -131,6 +131,10 @@ main(int argc, char **argv)
 	ITMK = 0;                                               /* Enable IT interrupt */
 	//asm ("ei");                                             /* Enable interrupts */
 
+	// Disable analog inputs because they can conflict with the SPI buses:
+	ADPC  = 0x01; // Configure all analog pins as digital I/O.
+	PMC0 &= 0xF0; // Disable analog inputs.
+
 #if UIP_CONF_IPV6
 #if UIP_CONF_IPV6_RPL
   printf(CONTIKI_VERSION_STRING " started with IPV6, RPL\n");
