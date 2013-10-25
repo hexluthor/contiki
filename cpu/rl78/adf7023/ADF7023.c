@@ -249,6 +249,18 @@ void ADF7023_SetRAM(unsigned long address,
     ADF7023_CS_DEASSERT;
 }
 
+static unsigned char ADF7023_ReadInterruptSource(void) {
+	unsigned char interruptReg;
+	ADF7023_SetFwState(FW_STATE_PHY_ON);
+	ADF7023_SetFwState(FW_STATE_PHY_RX);
+	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
+	return interruptReg;
+}
+
+unsigned char ADF7023_ReceivePacketAvailable(void) {
+	return ADF7023_ReadInterruptSource() & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT;
+}
+
 /***************************************************************************//**
  * @brief Receives one packet.
  *
@@ -261,14 +273,9 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
 {
     unsigned char interruptReg = 0;
     
-    ADF7023_SetFwState(FW_STATE_PHY_ON);
-    ADF7023_SetFwState(FW_STATE_PHY_RX);
-    while(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT))
-    {
-        ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0,
-                       0x1,
-                       &interruptReg);
-    }
+    do interruptReg = ADF7023_ReadInterruptSource();
+    while (!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT));
+
     ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0,
                    0x1,
                    &interruptReg);
