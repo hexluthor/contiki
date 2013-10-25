@@ -328,8 +328,6 @@ void ADF7023_SetChannelFrequency(unsigned long chFreq)
 *******************************************************************************/
 void ADF7023_SetDataRate(unsigned long dataRate)
 {
-    unsigned char status = 0;
-    
     dataRate = (unsigned long)(dataRate / 100);
     ADF7023_BBRAMCurrent.radioCfg0 = 
         BBRAM_RADIO_CFG_0_DATA_RATE_7_0((dataRate & 0x00FF) >> 0);
@@ -350,8 +348,6 @@ void ADF7023_SetDataRate(unsigned long dataRate)
 *******************************************************************************/
 void ADF7023_SetFrequencyDeviation(unsigned long freqDev)
 {
-    unsigned char status = 0;
-    
     freqDev = (unsigned long)(freqDev / 100);
     ADF7023_BBRAMCurrent.radioCfg1 &= 
         ~BBRAM_RADIO_CFG_1_FREQ_DEVIATION_11_8(0xF);
