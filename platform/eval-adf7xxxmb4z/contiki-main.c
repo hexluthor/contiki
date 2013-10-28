@@ -134,6 +134,8 @@ main(int argc, char **argv)
 	// Disable analog inputs because they can conflict with the SPI buses:
 	ADPC  = 0x01; // Configure all analog pins as digital I/O.
 	PMC0 &= 0xF0; // Disable analog inputs.
+	
+	clock_init();
 
 #if UIP_CONF_IPV6
 #if UIP_CONF_IPV6_RPL

@@ -75,7 +75,7 @@
 /* #define M12_CONF_SERIAL 0x000000 */
 
 /* Clock ticks per second */
-#define CLOCK_CONF_SECOND 100
+#define CLOCK_CONF_SECOND (f_CLK >> CLOCK_SCALER)
 
 #define CCIF
 #define CLIF
@@ -99,8 +99,8 @@
 /* end of mc1322x specific config. */
 
 /* start of conitki config. */
-#define PLATFORM_HAS_LEDS 1
-#define PLATFORM_HAS_BUTTON 1
+#define PLATFORM_HAS_LEDS   0 // TODO
+#define PLATFORM_HAS_BUTTON 0 // TODO
 
 #define RIMEADDR_CONF_SIZE              8
 

@@ -46,8 +46,7 @@
 
 #include <stdint.h>
 
-#include "sfrs.h"
-#include "sfrs-ext.h"
+#include "rl78.h"
 
 #include "Communication.h"	// Communication definitions
 #include "RDKRL78G14.h"		// RDKRL78G14 definitions
@@ -57,7 +56,6 @@
 #undef BIT
 #define BIT(n) ( 1 << (n) )
 
-#define f_CLK      (16000000UL) // 16 MHz
 #define CLK_SCALER (0x4)
 #define SCALED_CLK (f_CLK / (1 << CLK_SCALER))
 
