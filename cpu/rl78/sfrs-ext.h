@@ -5228,4 +5228,8 @@ struct CRCDstruct {
 #define WUP1      (IICCTL11bits.wup1)
 #define CRC0EN    (CRC0CTLbits.crc0en)
 
+
+#define TCR (&TCR00)
+#define TMR (&TMR00)
+
 #endif // SFRS_EXT_H
