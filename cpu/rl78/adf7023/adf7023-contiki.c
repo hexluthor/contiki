@@ -1,8 +1,17 @@
 
+#include <string.h>          // for memcpy().
+
 #include "radio.h"
 
 #include "ADF7023.h"
 #include "adf7023-contiki.h"
+
+
+#define ADF7023_MAX_PACKET_SIZE 255
+
+
+static unsigned char tx_buf[ADF7023_MAX_PACKET_SIZE];
+static unsigned char rx_buf[ADF7023_MAX_PACKET_SIZE];
 
 const struct radio_driver adf7023_driver = {
 
@@ -38,61 +47,62 @@ const struct radio_driver adf7023_driver = {
 };
 
 int adf7023_init(void) {
-	// Prepare the radio with a packet to be sent.
-	// TODO
-	return 0;
+	ADF7023_Init();
+	return 1;
 }
 
 int adf7023_prepare(const void *payload, unsigned short payload_len) {
 	// Prepare the radio with a packet to be sent.
-	// TODO
+	memcpy(tx_buf, payload, (payload_len <= sizeof(tx_buf))? payload_len : sizeof(tx_buf));
 	return 0;
 }
 
 int adf7023_transmit(unsigned short transmit_len) {
 	// Send the packet that has previously been prepared.
-	// TODO
-	return 0;
+	ADF7023_TransmitPacket(tx_buf, transmit_len);
+	// TODO: Error conditions (RADIO_TX_ERR, RADIO_TX_COLLISION, RADIO_TX_NOACK)?
+	return RADIO_TX_OK;
 }
+
+
+
 
 int adf7023_send(const void *payload, unsigned short payload_len) {
 	// Prepare & transmit a packet.
-	// TODO
-	return 0;
+	ADF7023_TransmitPacket((void*)payload, payload_len);
+	// TODO: Error conditions (RADIO_TX_ERR, RADIO_TX_COLLISION, RADIO_TX_NOACK)?
+	return RADIO_TX_OK;
 }
 
 int adf7023_read(void *buf, unsigned short buf_len) {
-	// Prepare & transmit a packet.
-	// TODO
-	return 0;
+	unsigned char num_bytes;
+	// Read a received packet into a buffer.
+	ADF7023_ReceivePacket(rx_buf, &num_bytes);
+	memcpy(buf, rx_buf, (num_bytes <= buf_len)? num_bytes : buf_len);
+	return num_bytes;
 }
 
 int adf7023_channel_clear(void) {
 	// Perform a Clear-Channel Assessment (CCA) to find out if there is a packet in the air or not.
-	// TODO
-	return 0;
+	return 1;
 }
 
 int adf7023_receiving_packet(void) {
   // Check if the radio driver is currently receiving a packet.
-	// TODO
 	return 0;
 }
 
 int adf7023_pending_packet(void) {
   // Check if the radio driver has just received a packet.
-	// TODO
-	return 0;
+	return ADF7023_ReceivePacketAvailable();
 }
 
 int adf7023_on(void) {
 	// Turn the radio on.
-	// TODO
-  return 0;
+  return 1;
 }
 
 int adf7023_off(void) {
 	// Turn the radio off.
-	// TODO
   return 0;
 }
