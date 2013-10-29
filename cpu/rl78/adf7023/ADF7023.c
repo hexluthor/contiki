@@ -43,6 +43,9 @@
 /******************************************************************************/
 /***************************** Include Files **********************************/
 /******************************************************************************/
+
+#include <stdio.h>
+
 #include "ADF7023.h"
 #include "ADF7023_Config.h"
 #include "Communication.h"
@@ -67,6 +70,17 @@
 #define ADF7023_MISO        (P0 &   BIT(3))
 
 #define ADF7023_SPI_BUS     (CSI10)
+
+#define ADF7023_While(condition, body) do {                                 \
+    int count = 0;                                                          \
+    while(condition) {                                                      \
+        body;                                                               \
+        count++;                                                            \
+        if (count < 1000) continue;                                         \
+        printf("Breaking stuck while loop at %s:%u\n", __FILE__, __LINE__); \
+        break;                                                              \
+    }                                                                       \
+} while(0)
 
 /******************************************************************************/
 /************************ Variables Definitions *******************************/
@@ -129,10 +143,7 @@ char ADF7023_Init(void)
     {
         retVal = -1;
     }
-    while(!(status & STATUS_CMD_READY))
-    {
-        ADF7023_GetStatus(&status);
-    }
+    ADF7023_While(!(status & STATUS_CMD_READY), ADF7023_GetStatus(&status));
     ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
     
@@ -196,10 +207,7 @@ void ADF7023_SetFwState(unsigned char fwState)
         default:
             ADF7023_SetCommand(CMD_PHY_SLEEP);
     }
-    while((status & STATUS_FW_STATE) != fwState)
-    {
-        ADF7023_GetStatus(&status);
-    }
+    ADF7023_While((status & STATUS_FW_STATE) != fwState, ADF7023_GetStatus(&status));
 }
 
 /***************************************************************************//**
@@ -273,8 +281,8 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
 {
     unsigned char interruptReg = 0;
     
-    do interruptReg = ADF7023_ReadInterruptSource();
-    while (!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT));
+    ADF7023_While(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT),
+        interruptReg = ADF7023_ReadInterruptSource());
 
     ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0,
                    0x1,
@@ -302,12 +310,8 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
     ADF7023_SetRAM(0x12, length, packet);
     ADF7023_SetFwState(FW_STATE_PHY_ON);
     ADF7023_SetFwState(FW_STATE_PHY_TX);
-    while(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_TX_EOF))
-    {
-        ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0,
-                       0x1,
-                       &interruptReg);
-    }
+    ADF7023_While(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_TX_EOF),
+        ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg));
 }
 
 /***************************************************************************//**
