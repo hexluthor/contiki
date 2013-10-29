@@ -369,6 +369,7 @@ char SPI_Read(enum CSI_Bus bus,
 
 	 volatile uint8_t* sio;
 	 volatile uint16_t* ssr;
+    char dummy;
 	
 	switch(bus) {
 	default:
@@ -381,6 +382,10 @@ char SPI_Read(enum CSI_Bus bus,
 	case CSI30: sio = &SIO30; ssr = &SSR12; break;
 	case CSI31: sio = &SIO31; ssr = &SSR13; break;
 	}
+
+    // Flush the receive buffer:
+    while(*ssr & 0x0020) dummy = *sio;
+    (void)dummy;
 
     for(byte = 0; byte < bytesNumber; byte++)
     {
