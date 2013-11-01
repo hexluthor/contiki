@@ -30,4 +30,5 @@ PROG_UART    ?= /dev/ttyUSB1
 CONSOLE_UART ?= /dev/ttyUSB0
 
 run: $(CONTIKI_PROJECT).$(TARGET).srec
-	~/adi-contiki/github/rl78flash/rl78flash -vv -i -m3 $(PROG_UART) -b500000 -a $< && stty -F $(CONSOLE_UART) 9600 && cat $(CONSOLE_UART)
+	~/adi-contiki/github/rl78flash/rl78flash -vv -i -m3 $(PROG_UART) -b500000 -a $<
+	# && stty -F $(CONSOLE_UART) 9600 && cat $(CONSOLE_UART)
