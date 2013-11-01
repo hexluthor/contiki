@@ -76,8 +76,8 @@
     while(condition) {                                                      \
         body;                                                               \
         count++;                                                            \
-        if (count < 1000) continue;                                         \
-        printf("Breaking stuck while loop at %s:%u\n", __FILE__, __LINE__); \
+        if (count < 100) continue;                                         \
+        if (__LINE__ != 233) printf("Breaking stuck while loop at %s:%u\n", __FILE__, __LINE__); \
         break;                                                              \
     }                                                                       \
 } while(0)
@@ -163,6 +163,7 @@ void ADF7023_GetStatus(unsigned char* status)
     ADF7023_WriteReadByte(SPI_NOP, 0);
     ADF7023_WriteReadByte(SPI_NOP, status);
     ADF7023_CS_DEASSERT;
+// 	 printf("ADF7023_GetStatus(): status = 0x%02x\r\n", *status);
 }
 
 /***************************************************************************//**
@@ -179,17 +180,8 @@ void ADF7023_SetCommand(unsigned char command)
     ADF7023_CS_DEASSERT;
 }
 
-/***************************************************************************//**
- * @brief Sets a FW state and waits until the device enters in that state.
- *
- * @param fwState - FW state.
- *
- * @return None.
-*******************************************************************************/
-void ADF7023_SetFwState(unsigned char fwState)
+void ADF7023_SetFwState_NoWait(unsigned char fwState)
 {
-    unsigned char status = 0;
-    
     switch(fwState)
     {
         case FW_STATE_PHY_OFF:
@@ -207,7 +199,39 @@ void ADF7023_SetFwState(unsigned char fwState)
         default:
             ADF7023_SetCommand(CMD_PHY_SLEEP);
     }
-    ADF7023_While((status & STATUS_FW_STATE) != fwState, ADF7023_GetStatus(&status));
+}
+
+/***************************************************************************//**
+ * @brief Sets a FW state and waits until the device enters in that state.
+ *
+ * @param fwState - FW state.
+ *
+ * @return None.
+*******************************************************************************/
+void ADF7023_SetFwState(unsigned char fwState)
+{
+    unsigned char status = 0;
+	 unsigned char s0;
+	 unsigned char sbuf[20];
+	 int i = 0, i2;
+	 ADF7023_GetStatus(&s0);
+    ADF7023_SetFwState_NoWait(fwState);
+#if 0
+    do {
+		 ADF7023_GetStatus(&status);
+		 if (i < sizeof(sbuf)) sbuf[i] = status;
+		 i++;
+		 if (i > 1000) {
+			printf("ADF7023_SetFwState hung. s0 = 0x%02x, fwState = 0x%02x, sbuf = ", s0, fwState);
+			for(i2 = 0; i2 < sizeof(sbuf); i2++) printf("%02x ", sbuf[i2]);
+			printf("\r\n");
+			break;
+		 }
+	 }
+    while ((status & STATUS_FW_STATE) != fwState);
+#else
+	ADF7023_While((status & STATUS_FW_STATE) != fwState, ADF7023_GetStatus(&status));
+#endif
 }
 
 /***************************************************************************//**
@@ -259,9 +283,14 @@ void ADF7023_SetRAM(unsigned long address,
 
 static unsigned char ADF7023_ReadInterruptSource(void) {
 	unsigned char interruptReg;
+	unsigned char int1;
 	ADF7023_SetFwState(FW_STATE_PHY_ON);
 	ADF7023_SetFwState(FW_STATE_PHY_RX);
 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
+// 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
+// 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
+// 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
+// 	printf("ADF7023_ReadInterruptSource: 0x%02x, 0x%02x\r\n", interruptReg, int1);
 	return interruptReg;
 }
 
@@ -287,8 +316,15 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
     ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0,
                    0x1,
                    &interruptReg);
-    ADF7023_GetRAM(0x10, 1, length);
-    ADF7023_GetRAM(0x12, *length - 2, packet);
+    ADF7023_GetRAM(ADF7023_RX_BASE_ADR, 1, length);
+    ADF7023_GetRAM(ADF7023_RX_BASE_ADR + 2, *length - 2, packet);
+	 
+	{
+		unsigned char n;
+		printf("ADF7023_ReceivePacket: ");
+		for (n=0; n < (*length - 2); n++) printf("%02x ", packet[n]);
+		printf("\r\n");
+	}
 }
 
 /***************************************************************************//**
@@ -303,11 +339,48 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 {
     unsigned char interruptReg = 0;
     unsigned char header[2]    = {0, 0};
-    
+	 unsigned char buf[255];
+	 unsigned char i;
+
+	 // MOSI:
+	 PIOR5 = 0;
+	 PMC02 = 0;
+	 PM02  = 0;
+	 P02   = 1;
+	 
+	 // MISO:
+	 PIOR5 = 0;
+	 PMC03 = 0;
+	 PM03  = 1;
+	 
+	 // SCLK:
+	 PIOR5 = 0;
+	 PM04  = 0;
+	 P04   = 1;
+	 
     header[0] = 2 + length;
     header[1] = ADF7023_BBRAMCurrent.addressMatchOffset;
-    ADF7023_SetRAM(0x10, 2, header);
-    ADF7023_SetRAM(0x12, length, packet);
+    ADF7023_SetRAM(ADF7023_TX_BASE_ADR, 2, header);
+    ADF7023_SetRAM(ADF7023_TX_BASE_ADR + 2, length, packet);
+	 
+	 
+
+	{
+		unsigned char n;
+		printf("ADF7023_TransmitPacket0: ");
+		for (n=0; n<length; n++) printf("%02x ", packet[n]);
+		printf("\r\n");
+	}
+	
+
+	for(i=1; i<=3; i++) {
+    ADF7023_GetRAM(0x12, length, buf);
+		unsigned char n;
+		printf("ADF7023_TransmitPacket%u: ", i);
+		for (n=0; n<length; n++) printf("%02x ", buf[n]);
+		printf("\r\n");
+	}
+
     ADF7023_SetFwState(FW_STATE_PHY_ON);
     ADF7023_SetFwState(FW_STATE_PHY_TX);
     ADF7023_While(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_TX_EOF),

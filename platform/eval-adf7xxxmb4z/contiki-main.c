@@ -190,6 +190,16 @@ main(int argc, char **argv)
 
   while(1) {
     int retval;
+
+	if (NETSTACK_RADIO.pending_packet()) {
+		int len;
+		packetbuf_clear();
+		len = NETSTACK_RADIO.read(packetbuf_dataptr(), PACKETBUF_SIZE);
+		if(len > 0) {
+			packetbuf_set_datalen(len);
+			NETSTACK_RDC.input();
+		}
+	}
  
     retval = process_run();
 

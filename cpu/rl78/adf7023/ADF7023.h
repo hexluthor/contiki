@@ -363,8 +363,10 @@ struct ADF7023_BBRAM
     unsigned char txSynthLockTime;              // 0x13F
 };
 
+#define ADF7023_RAM_SIZE 256
+
 #define ADF7023_TX_BASE_ADR 0x10
-#define ADF7023_RX_BASE_ADR 0x10
+#define ADF7023_RX_BASE_ADR ((ADF7023_TX_BASE_ADR + ADF7023_RAM_SIZE) / 2)
 
 /******************************************************************************/
 /************************ Functions Declarations ******************************/
