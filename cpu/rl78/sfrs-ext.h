@@ -5242,6 +5242,13 @@ struct CRCDstruct {
 #define PM04  (PM0bits.bit4)
 #define P04   (P0bits.bit4)
 
+#define P05   (P0bits.bit5)
+#define P06   (P0bits.bit6)
+#define P16   (P1bits.bit6)
+#define P30   (P3bits.bit0)
+#define P43   (P4bits.bit3)
+#define P50   (P5bits.bit0)
+#define P120  (P12bits.bit0)
 
 #define TCR (&TCR00)
 #define TMR (&TMR00)
