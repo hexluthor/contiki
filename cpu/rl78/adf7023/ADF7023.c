@@ -342,22 +342,6 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 	 unsigned char buf[255];
 	 unsigned char i;
 
-	 // MOSI:
-	 PIOR5 = 0;
-	 PMC02 = 0;
-	 PM02  = 0;
-	 P02   = 1;
-	 
-	 // MISO:
-	 PIOR5 = 0;
-	 PMC03 = 0;
-	 PM03  = 1;
-	 
-	 // SCLK:
-	 PIOR5 = 0;
-	 PM04  = 0;
-	 P04   = 1;
-	 
     header[0] = 2 + length;
     header[1] = ADF7023_BBRAMCurrent.addressMatchOffset;
     ADF7023_SetRAM(ADF7023_TX_BASE_ADR, 2, header);
