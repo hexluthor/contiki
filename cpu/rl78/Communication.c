@@ -58,6 +58,7 @@
 
 #define CLK_SCALER (0x4)
 #define SCALED_CLK (f_CLK / (1 << CLK_SCALER))
+#define BITBANG_SPI 1
 
 char IICA0_Flag;
 
@@ -105,6 +106,20 @@ char SPI_Init(enum CSI_Bus bus,
               char clockPol,
               char clockEdg)
 {
+#if BITBANG_SPI
+	// Configure SCLK as an output.
+	PM0  &= ~BIT(4);
+	POM0 &= ~BIT(4);
+	
+	// Configure MOSI as an output:
+	PM0  &= ~BIT(2);
+	POM0 &= ~BIT(2);
+	PMC0 &= ~BIT(2);
+	
+	// Configure MISO as an input:
+	PM0  |=  BIT(3);
+	PMC0 &= ~BIT(3);
+#else
     char sdrValue = 0;
     char delay    = 0;
 	 uint16_t scr;
@@ -298,6 +313,26 @@ char SPI_Init(enum CSI_Bus bus,
 	case CSI31: SS1 = BIT(3); break;
 	}
 
+	// Sanity check:
+	if (bus == CSI10) {
+		// MOSI:
+		PIOR5 = 0;
+		PMC02 = 0;
+		PM02  = 0;
+		P02   = 1;
+
+		// MISO:
+		PIOR5 = 0;
+		PMC03 = 0;
+		PM03  = 1;
+
+		// SCLK:
+		PIOR5 = 0;
+		PM04  = 0;
+		P04   = 1;
+	}
+#endif
+
     return 0;
 }
 
@@ -348,6 +383,34 @@ char SPI_Write(enum CSI_Bus bus,
 }
 #endif
 
+#if BITBANG_SPI
+	#define sclk_low()  (P0 &= ~BIT(4))
+	#define sclk_high() (P0 |=  BIT(4))
+	#define mosi_low()  (P0 &= ~BIT(2))
+	#define mosi_high() (P0 |=  BIT(2))
+	#define read_miso() (P0bits.bit3)
+
+	static unsigned char spi_byte_exchange(unsigned char tx) {
+		unsigned char rx = 0, n = 0;
+		
+		sclk_low();
+		
+		for(n = 0; n < 8; n++) {
+			if (tx & 0x80) mosi_high();
+			else           mosi_low();
+			sclk_high();
+
+			rx <<= 1;
+			rx |= read_miso();
+
+			tx <<= 1;
+			sclk_low();
+		}
+		
+		return rx;
+	}
+#endif
+
 /***************************************************************************//**
  * @brief Reads data from SPI.
  *
@@ -363,6 +426,11 @@ char SPI_Read(enum CSI_Bus bus,
               unsigned char* data,
               char bytesNumber)
 {
+#if BITBANG_SPI
+	unsigned char n = 0;
+	for (n = 0; n < bytesNumber; n++)
+		data[n] = spi_byte_exchange(data[n]);
+#else
     char           byte        = 0;
     unsigned short originalSCR = 0;
     unsigned short originalSO1 = 0;
@@ -394,6 +462,7 @@ char SPI_Read(enum CSI_Bus bus,
         while(*ssr & 0x0040);
         data[byte] = *sio;
     }
+#endif
 
     return bytesNumber;
 }
