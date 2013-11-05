@@ -51,6 +51,15 @@
 #include "net/rime.h"
 #include "uart0.h"
 
+#define LED1 P120
+#define LED2 P43
+#define LED3 P16
+#define LED4 P15
+#define LED5 P06
+#define LED6 P05
+#define LED7 P30
+#define LED8 P50
+
 SENSORS(&button_sensor);
 
 static uint8_t serial_id[] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
@@ -137,6 +146,17 @@ main(int argc, char **argv)
 	
 	clock_init();
 
+	// Initialize LED outputs:
+	#define BIT(n) ( 1 << (n) )
+	PM12 &= ~BIT(0); // LED1
+	PM4  &= ~BIT(3); // LED2
+	PM1  &= ~BIT(6); // LED3
+	PM1  &= ~BIT(5); // LED4
+	PM0  &= ~BIT(6); // LED5
+	PM0  &= ~BIT(5); // LED6
+	PM3  &= ~BIT(0); // LED7
+	PM5  &= ~BIT(0); // LED8
+
 #if UIP_CONF_IPV6
 #if UIP_CONF_IPV6_RPL
   printf(CONTIKI_VERSION_STRING " started with IPV6, RPL\n");
@@ -189,6 +209,7 @@ main(int argc, char **argv)
   autostart_start(autostart_processes);
 
   while(1) {
+    static uint8_t counter;
     int retval;
 
 	if (NETSTACK_RADIO.pending_packet()) {
@@ -204,6 +225,16 @@ main(int argc, char **argv)
     retval = process_run();
 
     etimer_request_poll();
+
+	 counter++;
+	 LED1 = (counter >> 0) & 1;
+	 LED2 = (counter >> 1) & 1;
+	 LED3 = (counter >> 2) & 1;
+	 LED4 = (counter >> 3) & 1;
+	 LED5 = (counter >> 4) & 1;
+	 LED6 = (counter >> 5) & 1;
+	 LED7 = (counter >> 6) & 1;
+	 LED8 = (counter >> 7) & 1;
   }
 
   return 0;
