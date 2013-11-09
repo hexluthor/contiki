@@ -115,3 +115,9 @@ clock_seconds(void)
   return clock() / CLOCK_CONF_SECOND;
 }
 /*---------------------------------------------------------------------------*/
+
+void clock_wait(clock_time_t t) {
+	clock_time_t t0;
+	t0 = clock();
+	while(clock() - t0 < t);
+}

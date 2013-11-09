@@ -54,6 +54,8 @@
 #include "sfrs.h"
 #include "sfrs-ext.h"
 
+#include "contiki.h"        // for clock_wait() and CLOCK_SECOND.
+
 /******************************************************************************/
 /*************************** Macros Definitions *******************************/
 /******************************************************************************/
@@ -87,6 +89,9 @@
 	#define ADF7023_VERBOSE 0
 #endif
 
+#undef MIN
+#define MIN(x,y) ( ((x) < (y))? (x) : (y) )
+
 /******************************************************************************/
 /************************ Variables Definitions *******************************/
 /******************************************************************************/
@@ -94,6 +99,10 @@ struct ADF7023_BBRAM ADF7023_BBRAMCurrent;
 
 static unsigned char status_old = 0xff;
 static unsigned char int0_old   = 0xff;
+
+
+static void ADF7023_SetCommand_Assume_CMD_READY(unsigned char command);
+
 
 /***************************************************************************//**
  * @brief Transfers one byte of data.
@@ -118,10 +127,34 @@ void ADF7023_WriteReadByte(unsigned char writeByte,
 
 void ADF7023_Wait_for_CMD_READY(void) {
 	unsigned char status;
-	do {
+	
+	for(;;) {
 		ADF7023_GetStatus(&status);
-		if ((status & STATUS_SPI_READY) == 0) continue;
-	} while ((status & STATUS_CMD_READY) == 0);
+		
+		if ((status & STATUS_SPI_READY) == 0) {
+			// The SPI bus is not ready. Continue polling the status word.
+			continue;
+		}
+		
+		if (status & STATUS_CMD_READY) {
+			// The SPI bus is ready and CMD_READY == 1. This is the state we want.
+			break;
+		}
+		
+		if ((status & STATUS_FW_STATE) == FW_STATE_PHY_OFF) {
+			// SPI is ready, but CMD_READY == 0 and the radio is in state PHY_OFF.
+			// It seems that the ADF7023 gets stuck in this state sometimes (errata?), so transition to PHY_ON:
+			ADF7023_SetCommand_Assume_CMD_READY(CMD_PHY_ON);
+		}
+	}
+}
+
+static void ADF7023_Init_Procedure(void) {
+	ADF7023_CS_DEASSERT;
+	ADF7023_CS_ASSERT;
+	while (! ADF7023_MISO);
+	ADF7023_Wait_for_CMD_READY();
+	ADF7023_CS_DEASSERT;
 }
 
 /***************************************************************************//**
@@ -134,33 +167,23 @@ void ADF7023_Wait_for_CMD_READY(void) {
 char ADF7023_Init(void)
 {
     char           retVal  = 0;
-    unsigned char  miso    = 0;
-    unsigned short timeout = 0;
-    unsigned char  status  = 0;
     
+	ADF7023_CS_DEASSERT;
+	PM2 &= ~BIT(2);      // Configure ADF7023_CS as an output.
+
     ADF7023_BBRAMCurrent = ADF7023_BBRAMDefault;
     SPI_Init(ADF7023_SPI_BUS, 
 				 0,         // MSB first.
              1000000,   // Clock frequency.
              0,         // Idle state for clock is a high level; active state is a low level.
              1);        // Serial output data changes on transition from idle clock state to active clock state.
-	 
-	ADF7023_CS_DEASSERT;
-	PM2 &= ~BIT(2);      // Configure ADF7023_CS as an output.
 
+	ADF7023_Init_Procedure();
+	
+	ADF7023_SetCommand(CMD_HW_RESET);
+	clock_wait(MIN(CLOCK_SECOND / 1000, 1));
+	ADF7023_Init_Procedure();
 	 
-    ADF7023_CS_ASSERT;
-    while ((miso == 0) && (timeout < 1000))
-    {
-        miso = ADF7023_MISO;
-        timeout++;
-    }
-    if(timeout == 1000)
-    {
-        retVal = -1;
-    }
-    ADF7023_CS_DEASSERT;
-
     ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
     
@@ -194,6 +217,13 @@ void ADF7023_GetStatus(unsigned char* status)
 #endif
 }
 
+static void ADF7023_SetCommand_Assume_CMD_READY(unsigned char command)
+{
+    ADF7023_CS_ASSERT;
+    ADF7023_WriteReadByte(command, 0);
+    ADF7023_CS_DEASSERT;
+}
+
 /***************************************************************************//**
  * @brief Initiates a command.
  *
@@ -204,10 +234,7 @@ void ADF7023_GetStatus(unsigned char* status)
 void ADF7023_SetCommand(unsigned char command)
 {
     ADF7023_Wait_for_CMD_READY();
-
-    ADF7023_CS_ASSERT;
-    ADF7023_WriteReadByte(command, 0);
-    ADF7023_CS_DEASSERT;
+    ADF7023_SetCommand_Assume_CMD_READY(command);
 }
 
 void ADF7023_SetFwState_NoWait(unsigned char fwState)
@@ -313,6 +340,29 @@ void ADF7023_SetRAM(unsigned long address,
     ADF7023_CS_DEASSERT;
 }
 
+void ADF7023_PHY_ON(void) {
+	unsigned char status;
+
+	for(;;) {
+		do ADF7023_GetStatus(&status);
+		while((status & STATUS_SPI_READY) == 0);
+		
+		switch (status & STATUS_FW_STATE) {
+		default:
+			ADF7023_SetCommand(CMD_PHY_ON);
+			break;
+			
+		case FW_STATE_BUSY:
+			// Wait!
+			break;
+
+		case FW_STATE_PHY_ON:
+			// This is the desired state.
+			return;
+		}
+	}
+}
+
 void ADF7023_PHY_RX(void) {
 	unsigned char status;
 
@@ -323,9 +373,7 @@ void ADF7023_PHY_RX(void) {
 		switch(status & STATUS_FW_STATE) {
 		default:
 			// Need to turn the PHY_ON.
-			do ADF7023_GetStatus(&status);
-			while((status & STATUS_CMD_READY) == 0);
-			ADF7023_SetCommand(CMD_PHY_ON);
+			ADF7023_PHY_ON();
 			break;
 			
 		case FW_STATE_BUSY:
@@ -356,9 +404,7 @@ void ADF7023_PHY_TX(void) {
 		switch(status & STATUS_FW_STATE) {
 		default:
 			// Need to turn the PHY_ON.
-			do ADF7023_GetStatus(&status);
-			while((status & STATUS_CMD_READY) == 0);
-			ADF7023_SetCommand(CMD_PHY_ON);
+			ADF7023_PHY_ON();
 			break;
 		
 		case FW_STATE_BUSY:
