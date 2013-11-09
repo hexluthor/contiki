@@ -45,6 +45,7 @@
 /******************************************************************************/
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "ADF7023.h"
 #include "ADF7023_Config.h"
@@ -82,10 +83,17 @@
     }                                                                       \
 } while(0)
 
+#ifndef ADF7023_VERBOSE
+	#define ADF7023_VERBOSE 0
+#endif
+
 /******************************************************************************/
 /************************ Variables Definitions *******************************/
 /******************************************************************************/
 struct ADF7023_BBRAM ADF7023_BBRAMCurrent;
+
+static unsigned char status_old = 0xff;
+static unsigned char int0_old   = 0xff;
 
 /***************************************************************************//**
  * @brief Transfers one byte of data.
@@ -163,7 +171,18 @@ void ADF7023_GetStatus(unsigned char* status)
     ADF7023_WriteReadByte(SPI_NOP, 0);
     ADF7023_WriteReadByte(SPI_NOP, status);
     ADF7023_CS_DEASSERT;
-// 	 printf("ADF7023_GetStatus(): status = 0x%02x\r\n", *status);
+	 
+#if ADF7023_VERBOSE
+	if (*status != status_old) {
+		printf("ADF7023_GetStatus: %u %u %u %02x.\r\n",
+			(*status >> 7) & 1,
+			(*status >> 6) & 1,
+			(*status >> 5) & 1,
+			*status & 0x1f
+		);
+		status_old = *status;
+	}
+#endif
 }
 
 /***************************************************************************//**
@@ -281,20 +300,109 @@ void ADF7023_SetRAM(unsigned long address,
     ADF7023_CS_DEASSERT;
 }
 
+void ADF7023_PHY_RX(void) {
+	unsigned char status;
+
+	for(;;) {
+		do ADF7023_GetStatus(&status);
+		while((status & STATUS_SPI_READY) == 0);
+		
+		switch(status & STATUS_FW_STATE) {
+		default:
+			// Need to turn the PHY_ON.
+			do ADF7023_GetStatus(&status);
+			while((status & STATUS_CMD_READY) == 0);
+			ADF7023_SetCommand(CMD_PHY_ON);
+			break;
+			
+		case FW_STATE_BUSY:
+			// Wait!
+			break;
+
+		case FW_STATE_PHY_ON:
+		case FW_STATE_PHY_TX:
+			do ADF7023_GetStatus(&status);
+			while((status & STATUS_CMD_READY) == 0);
+			ADF7023_SetCommand(CMD_PHY_RX);
+			return;
+			
+		case FW_STATE_PHY_RX:
+			// This is the desired state.
+			return;
+		}
+	}
+}
+
+void ADF7023_PHY_TX(void) {
+	unsigned char status;
+	
+	for(;;) {
+		do ADF7023_GetStatus(&status);
+		while((status & STATUS_SPI_READY) == 0);
+		
+		switch(status & STATUS_FW_STATE) {
+		default:
+			// Need to turn the PHY_ON.
+			do ADF7023_GetStatus(&status);
+			while((status & STATUS_CMD_READY) == 0);
+			ADF7023_SetCommand(CMD_PHY_ON);
+			break;
+		
+		case FW_STATE_BUSY:
+			// Wait!
+			break;
+			
+		case FW_STATE_PHY_ON:
+		case FW_STATE_PHY_RX:
+			do ADF7023_GetStatus(&status);
+			while((status & STATUS_CMD_READY) == 0);
+			ADF7023_SetCommand(CMD_PHY_TX);
+			return;
+		}
+	}
+}
+
+
 static unsigned char ADF7023_ReadInterruptSource(void) {
 	unsigned char interruptReg;
 	unsigned char int1;
-	ADF7023_SetFwState(FW_STATE_PHY_ON);
-	ADF7023_SetFwState(FW_STATE_PHY_RX);
+
 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
 // 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
 // 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
 // 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
 // 	printf("ADF7023_ReadInterruptSource: 0x%02x, 0x%02x\r\n", interruptReg, int1);
+#if ADF7023_VERBOSE
+	if (interruptReg != int0_old) {
+		printf("ADF7023_ReadInterruptSource: %u%u%u%u%u%u%u%u.\r\n",
+			(interruptReg >> 7) & 1,
+			(interruptReg >> 6) & 1,
+			(interruptReg >> 5) & 1,
+			(interruptReg >> 4) & 1,
+			(interruptReg >> 3) & 1,
+			(interruptReg >> 2) & 1,
+			(interruptReg >> 1) & 1,
+			(interruptReg >> 0) & 1
+		);
+		int0_old = interruptReg;
+	}
+#endif
 	return interruptReg;
 }
 
 unsigned char ADF7023_ReceivePacketAvailable(void) {
+	unsigned char status;
+
+	ADF7023_GetStatus(&status);
+	if ((status & STATUS_SPI_READY) == 0) return false;
+	
+	if ((status & STATUS_FW_STATE) != FW_STATE_PHY_RX) {
+		ADF7023_PHY_RX();
+		return false;
+	}
+	
+	if ((status & STATUS_IRQ_STATUS) == 0) return false;
+
 	return ADF7023_ReadInterruptSource() & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT;
 }
 
@@ -313,18 +421,22 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
     ADF7023_While(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT),
         interruptReg = ADF7023_ReadInterruptSource());
 
+	 interruptReg = BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT;
+	 
     ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0,
                    0x1,
                    &interruptReg);
     ADF7023_GetRAM(ADF7023_RX_BASE_ADR, 1, length);
     ADF7023_GetRAM(ADF7023_RX_BASE_ADR + 2, *length - 2, packet);
-	 
-	{
+
+#if ADF7023_VERBOSE
+	do {
 		unsigned char n;
 		printf("ADF7023_ReceivePacket: ");
 		for (n=0; n < (*length - 2); n++) printf("%02x ", packet[n]);
 		printf("\r\n");
-	}
+	} while(false);
+#endif
 }
 
 /***************************************************************************//**
@@ -341,34 +453,37 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
     unsigned char header[2]    = {0, 0};
 	 unsigned char buf[255];
 	 unsigned char i;
+	 unsigned char status;
 
     header[0] = 2 + length;
     header[1] = ADF7023_BBRAMCurrent.addressMatchOffset;
+	 
+	 for(;;) {
+		ADF7023_GetStatus(&status);
+		if ((status & STATUS_SPI_READY) == 0) continue;
+		if ((status & STATUS_CMD_READY) == 0) continue;
+		break;
+	 }
+	 
     ADF7023_SetRAM(ADF7023_TX_BASE_ADR, 2, header);
     ADF7023_SetRAM(ADF7023_TX_BASE_ADR + 2, length, packet);
 	 
 	 
-
-	{
+#if ADF7023_VERBOSE
+	do {
 		unsigned char n;
 		printf("ADF7023_TransmitPacket0: ");
 		for (n=0; n<length; n++) printf("%02x ", packet[n]);
 		printf("\r\n");
-	}
-	
+	} while(false);
+#endif
 
-	for(i=1; i<=3; i++) {
-    ADF7023_GetRAM(0x12, length, buf);
-		unsigned char n;
-		printf("ADF7023_TransmitPacket%u: ", i);
-		for (n=0; n<length; n++) printf("%02x ", buf[n]);
-		printf("\r\n");
-	}
+	ADF7023_PHY_TX();
 
-    ADF7023_SetFwState(FW_STATE_PHY_ON);
-    ADF7023_SetFwState(FW_STATE_PHY_TX);
     ADF7023_While(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_TX_EOF),
         ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg));
+	 
+	 ADF7023_PHY_RX();
 }
 
 /***************************************************************************//**

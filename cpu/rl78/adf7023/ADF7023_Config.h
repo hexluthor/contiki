@@ -45,7 +45,19 @@
 /******************************************************************************/
 /***************************** Include Files **********************************/
 /******************************************************************************/
+#include <stdint.h>    // for uint64_t.
+
 #include "ADF7023.h"
+
+#define F_PFD 26000000 // 26 MHz
+
+#ifndef CHANNEL_FREQ_MHZ
+	// #define CHANNEL_FREQ_MHZ 432993072 // Wrong antenna
+	// #define CHANNEL_FREQ_MHZ 868000000 // Europe
+	#define CHANNEL_FREQ_MHZ 915000000 // ISM band center frequency for the Americas, Greenland and some of the eastern Pacific Islands.
+#endif
+
+#define CHANNEL_FREQ (((uint64_t)CHANNEL_FREQ_MHZ << 16) / F_PFD)
 
 /******************************************************************************/
 /************************* Variables Declarations *****************************/
@@ -72,11 +84,11 @@ struct ADF7023_BBRAM ADF7023_BBRAMDefault =
     /* swmRssiThresh - 0x108 */
     0x31,
     /* channelFreq0 - 0x109 */
-    0x51, // Channel Frequency: 433 MHz
+    (CHANNEL_FREQ >>  0) & 0xff,
     /* channelFreq1 - 0x10A */
-    0xA7, // Channel Frequency: 433 MHz
+    (CHANNEL_FREQ >>  8) & 0xff,
     /* channelFreq2 - 0x10B */
-    0x10, // Channel Frequency: 433 MHz
+    (CHANNEL_FREQ >> 16) & 0xff,
     /* radioCfg0 - 0x10C */
     BBRAM_RADIO_CFG_0_DATA_RATE_7_0(0xE8),        // Data rate: 100 kbps
     /* radioCfg1 - 0x10D */
