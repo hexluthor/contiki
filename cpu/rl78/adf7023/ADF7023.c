@@ -116,6 +116,14 @@ void ADF7023_WriteReadByte(unsigned char writeByte,
     }
 }
 
+void ADF7023_Wait_for_CMD_READY(void) {
+	unsigned char status;
+	do {
+		ADF7023_GetStatus(&status);
+		if ((status & STATUS_SPI_READY) == 0) continue;
+	} while ((status & STATUS_CMD_READY) == 0);
+}
+
 /***************************************************************************//**
  * @brief Initializes the ADF7023.
  *
@@ -151,7 +159,8 @@ char ADF7023_Init(void)
     {
         retVal = -1;
     }
-    ADF7023_While(!(status & STATUS_CMD_READY), ADF7023_GetStatus(&status));
+    ADF7023_CS_DEASSERT;
+
     ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
     
@@ -194,6 +203,8 @@ void ADF7023_GetStatus(unsigned char* status)
 *******************************************************************************/
 void ADF7023_SetCommand(unsigned char command)
 {
+    ADF7023_Wait_for_CMD_READY();
+
     ADF7023_CS_ASSERT;
     ADF7023_WriteReadByte(command, 0);
     ADF7023_CS_DEASSERT;
@@ -290,6 +301,8 @@ void ADF7023_SetRAM(unsigned long address,
                     unsigned long length,
                     unsigned char* data)
 {
+    ADF7023_Wait_for_CMD_READY();
+
     ADF7023_CS_ASSERT;
     ADF7023_WriteReadByte(SPI_MEM_WR | ((address & 0x700) >> 8), 0);
     ADF7023_WriteReadByte(address & 0xFF, 0);
