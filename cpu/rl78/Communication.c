@@ -398,12 +398,16 @@ char SPI_Write(enum CSI_Bus bus,
 		for(n = 0; n < 8; n++) {
 			if (tx & 0x80) mosi_high();
 			else           mosi_low();
+			
+			// The slave samples MOSI at the rising-edge of SCLK.
 			sclk_high();
 
 			rx <<= 1;
 			rx |= read_miso();
 
 			tx <<= 1;
+			
+			// The slave changes the value of MISO at the falling-edge of SCLK.
 			sclk_low();
 		}
 		
