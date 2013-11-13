@@ -6,6 +6,7 @@ CROSS_COMPILE ?= $(shell echo /usr/share/*rl78*/bin | head -1)/rl78-elf-
 CC       = $(CROSS_COMPILE)gcc
 LD       = $(CROSS_COMPILE)gcc
 AS       = $(CROSS_COMPILE)gcc
+AR       = $(CROSS_COMPILE)ar
 NM       = $(CROSS_COMPILE)nm
 OBJCOPY  = $(CROSS_COMPILE)objcopy
 OBJDUMP  = $(CROSS_COMPILE)objdump
