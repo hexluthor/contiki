@@ -227,14 +227,14 @@ main(int argc, char **argv)
     etimer_request_poll();
 
 	 counter++;
-	 LED1 = (counter >> 0) & 1;
-	 LED2 = (counter >> 1) & 1;
-	 LED3 = (counter >> 2) & 1;
-	 LED4 = (counter >> 3) & 1;
-	 LED5 = (counter >> 4) & 1;
-	 LED6 = (counter >> 5) & 1;
-	 LED7 = (counter >> 6) & 1;
-	 LED8 = (counter >> 7) & 1;
+	 LED1 = !(counter %   1);
+	 LED2 = !(counter %   2);
+	 LED3 = !(counter %   4);
+	 LED4 = !(counter %   8);
+	 LED5 = !(counter %  16);
+	 LED6 = !(counter %  32);
+	 LED7 = !(counter %  64);
+	 LED8 = !(counter % 128);
   }
 
   return 0;
