@@ -67,6 +67,10 @@
 #define ADF7023_MISO        MISO_PIN
 */
 
+#ifndef NEWLINE
+	#define NEWLINE "\r\n"
+#endif
+
 #ifndef ARRAY_SIZE
 	#define ARRAY_SIZE(a) ( sizeof(a) / sizeof((a)[0]) )
 #endif
@@ -84,7 +88,7 @@
 
 #define break_loop()                                                            \
 	if (++counter >= LOOP_LIMIT) {                                               \
-		printf("Breaking stuck while loop at %s line %u.\n", __FILE__, __LINE__); \
+		printf("Breaking stuck while loop at %s line %u." NEWLINE, __FILE__, __LINE__); \
 		break;                                                                    \
 	}
 
@@ -189,7 +193,7 @@ void ADF7023_SPI_End(void) {
 	hexdump(tx_rec, tx_pos);
 	printf("\", read \"");
 	hexdump(rx_rec, rx_pos);
-	printf("\".\n");
+	printf("\"." NEWLINE);
 #endif
 }
 
@@ -313,7 +317,7 @@ void ADF7023_GetStatus(unsigned char* status)
 		);
 		if ((*status & STATUS_FW_STATE) < ARRAY_SIZE(ADF7023_state_lookup))
 			printf("=\"%s\"", ADF7023_state_lookup[*status & STATUS_FW_STATE]);
-		printf(".\n");
+		printf("." NEWLINE);
 		status_old = *status;
 	}
 #endif
@@ -323,7 +327,7 @@ static void ADF7023_SetCommand_Assume_CMD_READY(unsigned char command)
 {
 #if ADF7023_VERBOSE
 	assert(ADF7023_cmd_lookup[command] != NULL);
-	printf("Sending command 0x%02x = \"%s\".\n", command, ADF7023_cmd_lookup[command]);
+	printf("Sending command 0x%02x = \"%s\"." NEWLINE, command, ADF7023_cmd_lookup[command]);
 #endif
     ADF7023_SPI_Begin();
     ADF7023_WriteReadByte(command, 0);
@@ -387,7 +391,7 @@ void ADF7023_SetFwState(unsigned char fwState)
 		 if (i > 1000) {
 			printf("ADF7023_SetFwState hung. s0 = 0x%02x, fwState = 0x%02x, sbuf = ", s0, fwState);
 			for(i2 = 0; i2 < sizeof(sbuf); i2++) printf("%02x ", sbuf[i2]);
-			printf("\r\n");
+			printf(NEWLINE);
 			break;
 		 }
 	 }
@@ -456,11 +460,11 @@ void ADF7023_SetRAM_And_Verify(unsigned long address, unsigned long length, unsi
 	ADF7023_GetRAM(address, length, readback);
 	
 	if (memcmp(data, readback, length)) {
-		printf("ADF7023_SetRAM_And_Verify failed. Wrote:\n");
+		printf("ADF7023_SetRAM_And_Verify failed. Wrote:" NEWLINE);
 		hexdump(data, length);
-		printf("\nRead:\n");
+		printf("\nRead:" NEWLINE);
 		hexdump(readback, length);
-		printf("\n");
+		printf(NEWLINE);
 	}
 }
 
@@ -564,10 +568,10 @@ static unsigned char ADF7023_ReadInterruptSource(void) {
 // 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
 // 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
 // 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
-// 	printf("ADF7023_ReadInterruptSource: 0x%02x, 0x%02x\r\n", interruptReg, int1);
+// 	printf("ADF7023_ReadInterruptSource: 0x%02x, 0x%02x" NEWLINE, interruptReg, int1);
 #if ADF7023_VERBOSE
 	if (interruptReg != int0_old) {
-		printf("ADF7023_ReadInterruptSource: %u%u%u%u%u%u%u%u.\r\n",
+		printf("ADF7023_ReadInterruptSource: %u%u%u%u%u%u%u%u." NEWLINE,
 			(interruptReg >> 7) & 1,
 			(interruptReg >> 6) & 1,
 			(interruptReg >> 5) & 1,
@@ -627,7 +631,7 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
 		unsigned char n;
 		printf("ADF7023_ReceivePacket: ");
 		hexdump(packet, *length - 2);
-		printf("\r\n");
+		printf(NEWLINE);
 	} while(false);
 #endif
 }
@@ -666,7 +670,7 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 		unsigned char n;
 		printf("ADF7023_TransmitPacket: ");
 		hexdump(packet, length);
-		printf("\r\n");
+		printf(NEWLINE);
 	} while(false);
 #endif
 
