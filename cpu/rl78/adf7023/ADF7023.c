@@ -94,7 +94,7 @@
 } while(0)
 
 #ifndef ADF7023_VERBOSE
-	#define ADF7023_VERBOSE 0
+	#define ADF7023_VERBOSE 5
 #endif
 
 #undef MIN
@@ -622,7 +622,7 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
     ADF7023_GetRAM(ADF7023_RX_BASE_ADR, 1, length);
     ADF7023_GetRAM(ADF7023_RX_BASE_ADR + 2, *length - 2, packet);
 
-#if ADF7023_VERBOSE
+#if (ADF7023_VERBOSE >= 5)
 	do {
 		unsigned char n;
 		printf("ADF7023_ReceivePacket: ");
@@ -661,10 +661,10 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
     ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR, 2, header);
     ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR + 2, length, packet);
 	 
-#if ADF7023_VERBOSE
+#if (ADF7023_VERBOSE >= 5)
 	do {
 		unsigned char n;
-		printf("ADF7023_TransmitPacket0: ");
+		printf("ADF7023_TransmitPacket: ");
 		hexdump(packet, length);
 		printf("\r\n");
 	} while(false);
