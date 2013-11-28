@@ -307,7 +307,7 @@ void ADF7023_GetStatus(unsigned char* status)
     ADF7023_WriteReadByte(SPI_NOP, status);
     ADF7023_SPI_End();
 	 
-#if ADF7023_VERBOSE
+#if (ADF7023_VERBOSE >= 7)
 	if (*status != status_old) {
 		printf("ADF7023_GetStatus: SPI_READY=%u, IRQ_STATUS=%u, CMD_READY=%u, FW_STATE=0x%02x",
 			(*status >> 7) & 1,
@@ -325,7 +325,7 @@ void ADF7023_GetStatus(unsigned char* status)
 
 static void ADF7023_SetCommand_Assume_CMD_READY(unsigned char command)
 {
-#if ADF7023_VERBOSE
+#if (ADF7023_VERBOSE >= 7)
 	assert(ADF7023_cmd_lookup[command] != NULL);
 	printf("Sending command 0x%02x = \"%s\"." NEWLINE, command, ADF7023_cmd_lookup[command]);
 #endif
@@ -569,7 +569,7 @@ static unsigned char ADF7023_ReadInterruptSource(void) {
 // 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
 // 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
 // 	printf("ADF7023_ReadInterruptSource: 0x%02x, 0x%02x" NEWLINE, interruptReg, int1);
-#if ADF7023_VERBOSE
+#if (ADF7023_VERBOSE >= 7)
 	if (interruptReg != int0_old) {
 		printf("ADF7023_ReadInterruptSource: %u%u%u%u%u%u%u%u." NEWLINE,
 			(interruptReg >> 7) & 1,
