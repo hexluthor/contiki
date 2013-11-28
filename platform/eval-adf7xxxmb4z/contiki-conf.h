@@ -101,7 +101,7 @@
 
 /* start of conitki config. */
 #define PLATFORM_HAS_LEDS   0 // TODO
-#define PLATFORM_HAS_BUTTON 0 // TODO
+#define PLATFORM_HAS_BUTTON 1
 
 #define RIMEADDR_CONF_SIZE              8
 

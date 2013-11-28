@@ -147,6 +147,10 @@ main(int argc, char **argv)
 	
 	clock_init();
 
+	// Initialize Joystick Inputs:
+	PM5 |= BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1); // Set pins as inputs.
+	PU5 |= BIT(5) | BIT(4) | BIT(3) | BIT(2) | BIT(1); // Enable internal pull-up resistors.
+	
 	// Initialize LED outputs:
 	#define BIT(n) ( 1 << (n) )
 	PM12 &= ~BIT(0); // LED1
