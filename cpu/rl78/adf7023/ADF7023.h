@@ -394,6 +394,8 @@ void ADF7023_SetRAM(unsigned long address,
                     unsigned long length,
                     unsigned char* data);
 
+void ADF7023_SetRAM_And_Verify(unsigned long address, unsigned long length, unsigned char* data);
+
 /* Indicates if an incoming packet is available. */
 unsigned char ADF7023_ReceivePacketAvailable(void);
 
