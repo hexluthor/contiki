@@ -38,13 +38,18 @@
 
 #include <signal.h>
 
+#define JOYSTICK_PUSH  (!(P5 & BIT(5)))
+#define JOYSTICK_RIGHT (!(P5 & BIT(4)))
+#define JOYSTICK_DOWN  (!(P5 & BIT(3)))
+#define JOYSTICK_LEFT  (!(P5 & BIT(2)))
+#define JOYSTICK_UP    (!(P5 & BIT(1)))
+
 const struct sensors_sensor button_sensor;
 
 static int
 value(int type)
 {
-	// TODO
-	return 0;
+	return JOYSTICK_PUSH;
 }
 
 static int
