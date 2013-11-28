@@ -45,6 +45,8 @@
 /******************************************************************************/
 
 #include <stdio.h>
+#include <assert.h>
+#include <string.h>  // for memcmp().
 #include <stdbool.h>
 
 #include "ADF7023.h"
@@ -65,6 +67,10 @@
 #define ADF7023_MISO        MISO_PIN
 */
 
+#ifndef ARRAY_SIZE
+	#define ARRAY_SIZE(a) ( sizeof(a) / sizeof((a)[0]) )
+#endif
+
 #undef BIT
 #define BIT(n) ( 1 << (n) )
 
@@ -76,15 +82,15 @@
 
 #define LOOP_LIMIT 100
 
+#define break_loop()                                                            \
+	if (++counter >= LOOP_LIMIT) {                                               \
+		printf("Breaking stuck while loop at %s line %u.\n", __FILE__, __LINE__); \
+		break;                                                                    \
+	}
+
 #define ADF7023_While(condition, body) do {                                 \
-    int count = 0;                                                          \
-    while(condition) {                                                      \
-        body;                                                               \
-        count++;                                                            \
-        if (count < LOOP_LIMIT) continue;                                   \
-        if (__LINE__ != 233) printf("Breaking stuck while loop at %s:%u\n", __FILE__, __LINE__); \
-        break;                                                              \
-    }                                                                       \
+    int counter = 0;                                                        \
+    while(condition) {body; break_loop();}                                  \
 } while(0)
 
 #ifndef ADF7023_VERBOSE
@@ -102,9 +108,90 @@ struct ADF7023_BBRAM ADF7023_BBRAMCurrent;
 static unsigned char status_old = 0xff;
 static unsigned char int0_old   = 0xff;
 
+const char* ADF7023_state_lookup[] = {
+	/* 0x00 */ "Busy, performing a state transition",
+	/* 0x01 */ "(unknown)",
+	/* 0x02 */ "(unknown)",
+	/* 0x03 */ "(unknown)",
+	/* 0x04 */ "(unknown)",
+	/* 0x05 */ "Performing CMD_GET_RSSI",
+	/* 0x06 */ "PHY_SLEEP",
+	/* 0x07 */ "Performing CMD_IR_CAL",
+	/* 0x08 */ "Performing CMD_AES_DECRYPT_INIT",
+	/* 0x09 */ "Performing CMD_AES_DECRYPT",
+	/* 0x0A */ "Performing CMD_AES_ENCRYPT",
+	/* 0x0B */ "(unknown)",
+	/* 0x0C */ "(unknown)",
+	/* 0x0D */ "(unknown)",
+	/* 0x0E */ "(unknown)",
+	/* 0x0F */ "Initializing",
+	/* 0x10 */ "(unknown)",
+	/* 0x11 */ "PHY_OFF",
+	/* 0x12 */ "PHY_ON",
+	/* 0x13 */ "PHY_RX",
+	/* 0x14 */ "PHY_TX",
+};
+
+const char* ADF7023_cmd_lookup[] = {
+	[CMD_SYNC            ] = "CMD_SYNC",
+	[CMD_PHY_OFF         ] = "CMD_PHY_OFF",
+	[CMD_PHY_ON          ] = "CMD_PHY_ON",
+	[CMD_PHY_RX          ] = "CMD_PHY_RX",
+	[CMD_PHY_TX          ] = "CMD_PHY_TX",
+	[CMD_PHY_SLEEP       ] = "CMD_PHY_SLEEP",
+	[CMD_CONFIG_DEV      ] = "CMD_CONFIG_DEV",
+	[CMD_GET_RSSI        ] = "CMD_GET_RSSI",
+	[CMD_BB_CAL          ] = "CMD_BB_CAL",
+	[CMD_HW_RESET        ] = "CMD_HW_RESET",
+	[CMD_RAM_LOAD_INIT   ] = "CMD_RAM_LOAD_INIT",
+	[CMD_RAM_LOAD_DONE   ] = "CMD_RAM_LOAD_DONE",
+	[CMD_IR_CAL          ] = "CMD_IR_CAL",
+	[CMD_AES_ENCRYPT     ] = "CMD_AES_ENCRYPT",
+	[CMD_AES_DECRYPT     ] = "CMD_AES_DECRYPT",
+	[CMD_AES_DECRYPT_INIT] = "CMD_AES_DECRYPT_INIT",
+	[CMD_RS_ENCODE_INIT  ] = "CMD_RS_ENCODE_INIT",
+	[CMD_RS_ENCODE       ] = "CMD_RS_ENCODE",
+	[CMD_RS_DECODE       ] = "CMD_RS_DECODE",
+};
+
+static int spi_busy = 0;
+static uint8_t tx_rec[255];
+static uint8_t rx_rec[255];
+static uint8_t tx_pos;
+static uint8_t rx_pos;
 
 static void ADF7023_SetCommand_Assume_CMD_READY(unsigned char command);
 
+void hexdump(const void* data, size_t len) {
+	size_t n;
+	if (len <= 0) return;
+	printf("%02x", ((const unsigned char*)data)[0]);
+	for (n=1; n<len; n++) printf(" %02x", ((const unsigned char*)data)[n]);
+}
+
+void ADF7023_SPI_Begin(void) {
+	assert(spi_busy == 0);
+	spi_busy++;
+	
+	tx_pos = 0;
+	rx_pos = 0;
+	
+	ADF7023_CS_ASSERT;
+}
+
+void ADF7023_SPI_End(void) {
+	assert(spi_busy > 0);
+	spi_busy--;
+	ADF7023_CS_DEASSERT;
+	
+#if (ADF7023_VERBOSE >= 10)
+	printf("ADF7023_SPI_End(): wrote \"");
+	hexdump(tx_rec, tx_pos);
+	printf("\", read \"");
+	hexdump(rx_rec, rx_pos);
+	printf("\".\n");
+#endif
+}
 
 /***************************************************************************//**
  * @brief Transfers one byte of data.
@@ -125,12 +212,23 @@ void ADF7023_WriteReadByte(unsigned char writeByte,
     {
         *readByte = data;
     }
+    
+	assert(tx_pos < ARRAY_SIZE(tx_rec));
+	tx_rec[tx_pos] = writeByte;
+	tx_pos++;
+
+	assert(rx_pos < ARRAY_SIZE(rx_rec));
+	rx_rec[rx_pos] = data;
+	rx_pos++;
 }
 
 void ADF7023_Wait_for_CMD_READY(void) {
 	unsigned char status;
+	int counter = 0;
 	
 	for(;;) {
+		break_loop();
+		
 		ADF7023_GetStatus(&status);
 		
 		if ((status & STATUS_SPI_READY) == 0) {
@@ -152,11 +250,10 @@ void ADF7023_Wait_for_CMD_READY(void) {
 }
 
 static void ADF7023_Init_Procedure(void) {
-	ADF7023_CS_DEASSERT;
-	ADF7023_CS_ASSERT;
-	while (! ADF7023_MISO);
+	ADF7023_SPI_Begin();
+	ADF7023_While(! ADF7023_MISO, (void)0);
+	ADF7023_SPI_End();
 	ADF7023_Wait_for_CMD_READY();
-	ADF7023_CS_DEASSERT;
 }
 
 /***************************************************************************//**
@@ -186,7 +283,7 @@ char ADF7023_Init(void)
 	clock_wait(MIN(CLOCK_SECOND / 1000, 1));
 	ADF7023_Init_Procedure();
 	 
-    ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
+    ADF7023_SetRAM_And_Verify(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
     
     return retVal;
@@ -201,19 +298,22 @@ char ADF7023_Init(void)
 *******************************************************************************/
 void ADF7023_GetStatus(unsigned char* status)
 {
-    ADF7023_CS_ASSERT;
+    ADF7023_SPI_Begin();
     ADF7023_WriteReadByte(SPI_NOP, 0);
     ADF7023_WriteReadByte(SPI_NOP, status);
-    ADF7023_CS_DEASSERT;
+    ADF7023_SPI_End();
 	 
 #if ADF7023_VERBOSE
 	if (*status != status_old) {
-		printf("ADF7023_GetStatus: %u %u %u %02x.\r\n",
+		printf("ADF7023_GetStatus: SPI_READY=%u, IRQ_STATUS=%u, CMD_READY=%u, FW_STATE=0x%02x",
 			(*status >> 7) & 1,
 			(*status >> 6) & 1,
 			(*status >> 5) & 1,
-			*status & 0x1f
+			*status & STATUS_FW_STATE
 		);
+		if ((*status & STATUS_FW_STATE) < ARRAY_SIZE(ADF7023_state_lookup))
+			printf("=\"%s\"", ADF7023_state_lookup[*status & STATUS_FW_STATE]);
+		printf(".\n");
 		status_old = *status;
 	}
 #endif
@@ -221,9 +321,13 @@ void ADF7023_GetStatus(unsigned char* status)
 
 static void ADF7023_SetCommand_Assume_CMD_READY(unsigned char command)
 {
-    ADF7023_CS_ASSERT;
+#if ADF7023_VERBOSE
+	assert(ADF7023_cmd_lookup[command] != NULL);
+	printf("Sending command 0x%02x = \"%s\".\n", command, ADF7023_cmd_lookup[command]);
+#endif
+    ADF7023_SPI_Begin();
     ADF7023_WriteReadByte(command, 0);
-    ADF7023_CS_DEASSERT;
+    ADF7023_SPI_End();
 }
 
 /***************************************************************************//**
@@ -306,7 +410,7 @@ void ADF7023_GetRAM(unsigned long address,
                     unsigned long length,
                     unsigned char* data)
 {
-    ADF7023_CS_ASSERT;
+    ADF7023_SPI_Begin();
     ADF7023_WriteReadByte(SPI_MEM_RD | ((address & 0x700) >> 8), 0);
     ADF7023_WriteReadByte(address & 0xFF, 0);
     ADF7023_WriteReadByte(SPI_NOP, 0);
@@ -314,7 +418,7 @@ void ADF7023_GetRAM(unsigned long address,
     {
         ADF7023_WriteReadByte(SPI_NOP, data++);
     }
-    ADF7023_CS_DEASSERT;
+    ADF7023_SPI_End();
 }
 
 /***************************************************************************//**
@@ -332,36 +436,46 @@ void ADF7023_SetRAM(unsigned long address,
 {
     ADF7023_Wait_for_CMD_READY();
 
-    ADF7023_CS_ASSERT;
+    ADF7023_SPI_Begin();
     ADF7023_WriteReadByte(SPI_MEM_WR | ((address & 0x700) >> 8), 0);
     ADF7023_WriteReadByte(address & 0xFF, 0);
     while(length--)
     {
         ADF7023_WriteReadByte(*(data++), 0);
     }
-    ADF7023_CS_DEASSERT;
+    ADF7023_SPI_End();
 }
 
-void ADF7023_Wait_for_SPI_READY(void) {
-  unsigned char status;
-  unsigned int counter = 0;
-  do {
-    ADF7023_GetStatus(&status);
-    counter++;
-		if (counter > LOOP_LIMIT) {
-		  printf("ADF7023_Wait_for_SPI_READY(): Breaking stuck while loop, calling ADF7023_Init().\r\n");
-		  ADF7023_Init();
-		  break;
-		}    
-  }
-  while((status & STATUS_SPI_READY) == 0);
+void ADF7023_SetRAM_And_Verify(unsigned long address, unsigned long length, unsigned char* data) {
+	unsigned char readback[256];
+	
+	ADF7023_SetRAM(address, length, data);
+	
+	assert(length <= sizeof(readback));
+	if (length > sizeof(readback)) return;
+	ADF7023_GetRAM(address, length, readback);
+	
+	if (memcmp(data, readback, length)) {
+		printf("ADF7023_SetRAM_And_Verify failed. Wrote:\n");
+		hexdump(data, length);
+		printf("\nRead:\n");
+		hexdump(readback, length);
+		printf("\n");
+	}
+}
+
+unsigned char ADF7023_Wait_for_SPI_READY(void) {
+  unsigned char status = 0;
+  ADF7023_While((status & STATUS_SPI_READY) == 0, ADF7023_GetStatus(&status));
+  return status; // Return the status -- why not?
 }
 
 void ADF7023_PHY_ON(void) {
 	unsigned char status;
+	unsigned int counter = 0;
 
 	for(;;) {
-		ADF7023_Wait_for_SPI_READY();
+		status = ADF7023_Wait_for_SPI_READY();
 		
 		switch (status & STATUS_FW_STATE) {
 		default:
@@ -376,6 +490,8 @@ void ADF7023_PHY_ON(void) {
 			// This is the desired state.
 			return;
 		}
+		
+		break_loop();
 	}
 }
 
@@ -384,7 +500,7 @@ void ADF7023_PHY_RX(void) {
 	unsigned int counter = 0;
 
 	for(;;) {
-		ADF7023_Wait_for_SPI_READY();
+		status = ADF7023_Wait_for_SPI_READY();
 		
 		switch(status & STATUS_FW_STATE) {
 		default:
@@ -398,8 +514,7 @@ void ADF7023_PHY_RX(void) {
 
 		case FW_STATE_PHY_ON:
 		case FW_STATE_PHY_TX:
-			do ADF7023_GetStatus(&status);
-			while((status & STATUS_CMD_READY) == 0);
+			ADF7023_While((status & STATUS_CMD_READY) == 0, ADF7023_GetStatus(&status));
 			ADF7023_SetCommand(CMD_PHY_RX);
 			return;
 			
@@ -408,19 +523,16 @@ void ADF7023_PHY_RX(void) {
 			return;
 		}
 		
-		counter++;
-		if (counter > LOOP_LIMIT) {
-		  printf("ADF7023_PHY_RX(): Breaking stuck while loop\r\n");
-		  break;
-		}
+		break_loop();
 	}
 }
 
 void ADF7023_PHY_TX(void) {
 	unsigned char status;
+	unsigned int counter = 0;
 	
 	for(;;) {
-		ADF7023_Wait_for_SPI_READY();
+		status = ADF7023_Wait_for_SPI_READY();
 		
 		switch(status & STATUS_FW_STATE) {
 		default:
@@ -434,11 +546,12 @@ void ADF7023_PHY_TX(void) {
 			
 		case FW_STATE_PHY_ON:
 		case FW_STATE_PHY_RX:
-			do ADF7023_GetStatus(&status);
-			while((status & STATUS_CMD_READY) == 0);
+			ADF7023_While((status & STATUS_CMD_READY) == 0, ADF7023_GetStatus(&status));
 			ADF7023_SetCommand(CMD_PHY_TX);
 			return;
 		}
+		
+		break_loop();
 	}
 }
 
@@ -513,7 +626,7 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
 	do {
 		unsigned char n;
 		printf("ADF7023_ReceivePacket: ");
-		for (n=0; n < (*length - 2); n++) printf("%02x ", packet[n]);
+		hexdump(packet, *length - 2);
 		printf("\r\n");
 	} while(false);
 #endif
@@ -545,15 +658,14 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 		break;
 	 }
 	 
-    ADF7023_SetRAM(ADF7023_TX_BASE_ADR, 2, header);
-    ADF7023_SetRAM(ADF7023_TX_BASE_ADR + 2, length, packet);
-	 
+    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR, 2, header);
+    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR + 2, length, packet);
 	 
 #if ADF7023_VERBOSE
 	do {
 		unsigned char n;
 		printf("ADF7023_TransmitPacket0: ");
-		for (n=0; n<length; n++) printf("%02x ", packet[n]);
+		hexdump(packet, length);
 		printf("\r\n");
 	} while(false);
 #endif
@@ -579,7 +691,7 @@ void ADF7023_SetChannelFrequency(unsigned long chFreq)
     ADF7023_BBRAMCurrent.channelFreq0 = (chFreq & 0x0000FF) >> 0;
     ADF7023_BBRAMCurrent.channelFreq1 = (chFreq & 0x00FF00) >> 8;
     ADF7023_BBRAMCurrent.channelFreq2 = (chFreq & 0xFF0000) >> 16;
-    ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
+    ADF7023_SetRAM_And_Verify(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
 }
 
 /***************************************************************************//**
@@ -597,7 +709,7 @@ void ADF7023_SetDataRate(unsigned long dataRate)
     ADF7023_BBRAMCurrent.radioCfg1 &= ~BBRAM_RADIO_CFG_1_DATA_RATE_11_8(0xF);
     ADF7023_BBRAMCurrent.radioCfg1 |= 
         BBRAM_RADIO_CFG_1_DATA_RATE_11_8((dataRate & 0x0F00) >> 8);
-    ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
+    ADF7023_SetRAM_And_Verify(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetFwState(FW_STATE_PHY_OFF);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
 }
@@ -618,7 +730,7 @@ void ADF7023_SetFrequencyDeviation(unsigned long freqDev)
         BBRAM_RADIO_CFG_1_FREQ_DEVIATION_11_8((freqDev & 0x0F00) >> 8);
     ADF7023_BBRAMCurrent.radioCfg2 =
         BBRAM_RADIO_CFG_2_FREQ_DEVIATION_7_0((freqDev & 0x00FF) >> 0);
-    ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
+    ADF7023_SetRAM_And_Verify(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetFwState(FW_STATE_PHY_OFF);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
 }
