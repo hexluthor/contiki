@@ -51,6 +51,7 @@
 #include <stdint.h>
 
 #include "rl78.h"
+#include "platform-conf.h"
 
 /* Econotag I tune parameters */
 #define ECONOTAG_CTUNE_4PF 1

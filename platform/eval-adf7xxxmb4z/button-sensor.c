@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2006, Swedish Institute of Computer Science
  * Copyright (c) 2010, Mariano Alvira <mar@devl.org> and other contributors
  * to the MC1322x project (http://mc1322x.devl.org) and Contiki.
  *
@@ -31,71 +30,44 @@
  *
  * This file is part of the Contiki OS.
  *
- *
+ * $Id: button-sensor.c,v 1.1 2010/06/09 14:46:30 maralvira Exp $
  */
 
-/*
- * Machine dependent mc1322x SLIP routines for UART1.
- */
+#include "lib/sensors.h"
+#include "dev/button-sensor.h"
 
-#include <stdio.h>    // for putchar().
+#include <signal.h>
 
-#include "contiki.h"
-#include "dev/slip.h"
+const struct sensors_sensor button_sensor;
 
-#include "uart0.h"
-
-/*---------------------------------------------------------------------------*/
-void
-slip_arch_writeb(unsigned char c)
+static int
+value(int type)
 {
-  uart0_putchar(c);
+	// TODO
+	return 0;
 }
-/*---------------------------------------------------------------------------*/
-/*
- * The serial line is used to transfer IP packets using slip. To make
- * it possible to send debug output over the same line we send debug
- * output as slip frames (i.e delimeted by SLIP_END).
- *
- */
-/*---------------------------------------------------------------------------*/
-// #if WITH_UIP
-// #if (WITH_UIP || WITH_UIP6)
-#if 0
-int
-putchar(int c)
+
+static int
+configure(int type, int c)
 {
-#define SLIP_END 0300
-  static char debug_frame = 0;
-
-  if (!debug_frame) {		/* Start of debug output */
-    slip_arch_writeb(SLIP_END);
-    slip_arch_writeb('\r');	/* Type debug line == '\r' */
-    debug_frame = 1;
-  }
-
-  slip_arch_writeb((char)c);
-  
-  /*
-   * Line buffered output, a newline marks the end of debug output and
-   * implicitly flushes debug output.
-   */
-  if (c == '\n') {
-    slip_arch_writeb(SLIP_END);
-    debug_frame = 0;
-  }
-
-  return c;
+	switch (type) {
+	case SENSORS_ACTIVE:
+		// TODO
+		return 1;
+	}
+	return 0;
 }
-#endif
-/*---------------------------------------------------------------------------*/
-/**
- * Initalize the RS232 port and the SLIP driver.
- *
- */
-void
-slip_arch_init(unsigned long ubr)
+
+static int
+status(int type)
 {
-  uart1_set_input(slip_input_byte);
+	switch (type) {
+	case SENSORS_ACTIVE:
+	case SENSORS_READY:
+		return 0; // TODO
+	}
+	return 0;
 }
-/*---------------------------------------------------------------------------*/
+
+SENSORS_SENSOR(button_sensor, BUTTON_SENSOR,
+	       value, configure, status);
