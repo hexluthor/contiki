@@ -49,6 +49,12 @@
 
 #include "ADF7023.h"
 
+#define LENGTH_OFFSET          4
+#define PACKET_LENGTH_MAX    240
+#define ADDRESS_MATCH_OFFSET   0
+#define ADDRESS_LENGTH         0
+
+
 #define F_PFD 26000000 // 26 MHz
 
 #ifndef CHANNEL_FREQ_MHZ
@@ -146,16 +152,12 @@ struct ADF7023_BBRAM ADF7023_BBRAMDefault =
     ADF7023_TX_BASE_ADR,
     /* rxBaseAdr - 0x125 */
     ADF7023_RX_BASE_ADR,
-    /* packetLengthControl - 0x126 */
-    0x24,
-    /* packetLengthMax - 0x127 */
-    0xF0,
+    /* 0x126 (PACKET_LENGTH_CONTROL) = */ 0x20 | LENGTH_OFFSET,
+    /* 0x127 (PACKET_LENGTH_MAX)     = */ PACKET_LENGTH_MAX,
     /* staticRegFix - 0x128 */
     0x00,
-    /* addressMatchOffset - 0x129 */
-    0x01,
-    /* addressLength - 0x12A */
-    0x02,
+    /* 0x129 (ADDRESS_MATCH_OFFSET)  = */ ADDRESS_MATCH_OFFSET,
+    /* 0x12a (ADDRESS_LENGTH)        = */ ADDRESS_LENGTH,
     /* addressFiltering0 - 0x12B */
     0x01,
     /* addressFiltering1 - 0x12C */

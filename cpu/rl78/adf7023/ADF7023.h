@@ -400,7 +400,7 @@ void ADF7023_SetRAM_And_Verify(unsigned long address, unsigned long length, unsi
 unsigned char ADF7023_ReceivePacketAvailable(void);
 
 /* Receives one packet. */
-void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length);
+void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* payload_length);
 
 /* Transmits one packet. */
 void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length);
