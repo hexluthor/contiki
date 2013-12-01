@@ -611,8 +611,9 @@ unsigned char ADF7023_ReceivePacketAvailable(void) {
  *
  * @return None.
 *******************************************************************************/
-void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
+void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* payload_length)
 {
+	unsigned char length;
     unsigned char interruptReg = 0;
     
     ADF7023_While(!(interruptReg & BBRAM_INTERRUPT_MASK_0_INTERRUPT_CRC_CORRECT),
@@ -623,14 +624,18 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
     ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0,
                    0x1,
                    &interruptReg);
-    ADF7023_GetRAM(ADF7023_RX_BASE_ADR, 1, length);
-    ADF7023_GetRAM(ADF7023_RX_BASE_ADR + 2, *length - 2, packet);
+
+	ADF7023_GetRAM(ADF7023_RX_BASE_ADR, 1, &length);
+	 
+	*payload_length = length + LENGTH_OFFSET - 4;
+
+	ADF7023_GetRAM(ADF7023_RX_BASE_ADR + 1, *payload_length, packet);
 
 #if (ADF7023_VERBOSE >= 5)
 	do {
 		unsigned char n;
-		printf("ADF7023_ReceivePacket: ");
-		hexdump(packet, *length - 2);
+		printf("ADF7023_ReceivePacket, length=%u: ", *payload_length);
+		hexdump(packet, *payload_length);
 		printf(NEWLINE);
 	} while(false);
 #endif
@@ -647,14 +652,9 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* length)
 void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 {
     unsigned char interruptReg = 0;
-    unsigned char header[2]    = {0, 0};
-	 unsigned char buf[255];
 	 unsigned char i;
 	 unsigned char status;
 
-    header[0] = 2 + length;
-    header[1] = ADF7023_BBRAMCurrent.addressMatchOffset;
-	 
 	 for(;;) {
 		ADF7023_GetStatus(&status);
 		if ((status & STATUS_SPI_READY) == 0) continue;
@@ -662,13 +662,13 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 		break;
 	 }
 	 
-    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR, 2, header);
-    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR + 2, length, packet);
+    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR, 1, &length);
+    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR + 1, length, packet);
 	 
 #if (ADF7023_VERBOSE >= 5)
 	do {
 		unsigned char n;
-		printf("ADF7023_TransmitPacket: ");
+		printf("ADF7023_TransmitPacket, length=%u: ", length);
 		hexdump(packet, length);
 		printf(NEWLINE);
 	} while(false);
