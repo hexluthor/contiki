@@ -74,12 +74,14 @@
 
 #define ADF7023_SPI_BUS     (CSI10)
 
+#define LOOP_LIMIT 100
+
 #define ADF7023_While(condition, body) do {                                 \
     int count = 0;                                                          \
     while(condition) {                                                      \
         body;                                                               \
         count++;                                                            \
-        if (count < 100) continue;                                         \
+        if (count < LOOP_LIMIT) continue;                                   \
         if (__LINE__ != 233) printf("Breaking stuck while loop at %s:%u\n", __FILE__, __LINE__); \
         break;                                                              \
     }                                                                       \
@@ -340,12 +342,26 @@ void ADF7023_SetRAM(unsigned long address,
     ADF7023_CS_DEASSERT;
 }
 
+void ADF7023_Wait_for_SPI_READY(void) {
+  unsigned char status;
+  unsigned int counter = 0;
+  do {
+    ADF7023_GetStatus(&status);
+    counter++;
+		if (counter > LOOP_LIMIT) {
+		  printf("ADF7023_Wait_for_SPI_READY(): Breaking stuck while loop, calling ADF7023_Init().\r\n");
+		  ADF7023_Init();
+		  break;
+		}    
+  }
+  while((status & STATUS_SPI_READY) == 0);
+}
+
 void ADF7023_PHY_ON(void) {
 	unsigned char status;
 
 	for(;;) {
-		do ADF7023_GetStatus(&status);
-		while((status & STATUS_SPI_READY) == 0);
+		ADF7023_Wait_for_SPI_READY();
 		
 		switch (status & STATUS_FW_STATE) {
 		default:
@@ -365,10 +381,10 @@ void ADF7023_PHY_ON(void) {
 
 void ADF7023_PHY_RX(void) {
 	unsigned char status;
+	unsigned int counter = 0;
 
 	for(;;) {
-		do ADF7023_GetStatus(&status);
-		while((status & STATUS_SPI_READY) == 0);
+		ADF7023_Wait_for_SPI_READY();
 		
 		switch(status & STATUS_FW_STATE) {
 		default:
@@ -391,6 +407,12 @@ void ADF7023_PHY_RX(void) {
 			// This is the desired state.
 			return;
 		}
+		
+		counter++;
+		if (counter > LOOP_LIMIT) {
+		  printf("ADF7023_PHY_RX(): Breaking stuck while loop\r\n");
+		  break;
+		}
 	}
 }
 
@@ -398,8 +420,7 @@ void ADF7023_PHY_TX(void) {
 	unsigned char status;
 	
 	for(;;) {
-		do ADF7023_GetStatus(&status);
-		while((status & STATUS_SPI_READY) == 0);
+		ADF7023_Wait_for_SPI_READY();
 		
 		switch(status & STATUS_FW_STATE) {
 		default:

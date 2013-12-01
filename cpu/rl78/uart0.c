@@ -79,6 +79,14 @@ void uart0_putchar(int c) {
 	SDR00 = c;
 }
 
+char uart0_getchar(void) {
+	char c;
+	while (! uart0_can_getchar());
+	c = SDR01;
+	SRIF0 = 0;
+	return c;
+}
+
 int uart0_puts(const char* s)
 {
     int len = 0;

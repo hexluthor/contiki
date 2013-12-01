@@ -50,6 +50,7 @@
 
 #include "net/rime.h"
 #include "uart0.h"
+#include "contiki-uart.h"
 
 #define LED1 P120
 #define LED2 P43
@@ -221,7 +222,13 @@ main(int argc, char **argv)
 			NETSTACK_RDC.input();
 		}
 	}
- 
+
+		if(uart1_input_handler != NULL) {
+			if(uart0_can_getchar()) {
+				uart1_input_handler(uart0_getchar());
+			}
+		}
+
     retval = process_run();
 
     etimer_request_poll();
