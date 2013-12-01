@@ -34,6 +34,7 @@ AS       = $(CROSS)as
 AR       = $(CROSS)ar
 NM       = $(CROSS)nm
 OBJCOPY  = $(CROSS)objcopy
+OBJDUMP  = $(CROSS)objdump
 STRIP    = $(CROSS)strip
 
 PROJECT_OBJECTFILES += ${addprefix $(OBJECTDIR)/,$(CONTIKI_TARGET_MAIN:.c=.o)}
@@ -116,4 +117,5 @@ CUSTOM_RULE_C_TO_CO=yes
 %.elf: $(OBJECTDIR)/board.h  %.co $(PROJECT_OBJECTFILES) contiki-$(TARGET).a $(STARTUP) $(OBJECTDIR)/mc1322x.lds
 	$(CC) $(LDFLAGS) $(CFLAGS) -nostartfiles -o $@ $(filter-out %.a %.lds,$^) $(filter %.a,$^) $(filter %.a,$^)
 
-
+%.lst: %.elf
+	$(OBJDUMP) -DS $^ > $@
