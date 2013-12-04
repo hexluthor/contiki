@@ -87,7 +87,7 @@
 #define LOOP_LIMIT 100
 
 #ifndef ADF7023_VERBOSE
-	#define ADF7023_VERBOSE 5
+	#define ADF7023_VERBOSE 0
 #endif
 
 #if (ADF7023_VERBOSE >= 2)
@@ -627,7 +627,7 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* payload_length)
 
 	ADF7023_GetRAM(ADF7023_RX_BASE_ADR, 1, &length);
 	 
-	*payload_length = length + LENGTH_OFFSET - 4;
+	*payload_length = length - 1 + LENGTH_OFFSET - 4;
 
 	ADF7023_GetRAM(ADF7023_RX_BASE_ADR + 1, *payload_length, packet);
 
@@ -654,6 +654,7 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
     unsigned char interruptReg = 0;
 	 unsigned char i;
 	 unsigned char status;
+	 unsigned char length_plus_one;
 
 	 for(;;) {
 		ADF7023_GetStatus(&status);
@@ -662,7 +663,8 @@ void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 		break;
 	 }
 	 
-    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR, 1, &length);
+	 length_plus_one = length + 1;
+    ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR, 1, &length_plus_one);
     ADF7023_SetRAM_And_Verify(ADF7023_TX_BASE_ADR + 1, length, packet);
 	 
 #if (ADF7023_VERBOSE >= 5)
