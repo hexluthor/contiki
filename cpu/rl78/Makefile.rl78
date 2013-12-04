@@ -21,6 +21,10 @@ CFLAGS  += $(CFLAGSNO) -O
 CFLAGS += -mmul=g13
 CFLAGS  += -Os -ggdb -ffunction-sections -fdata-sections
 
+ifdef SERIAL_ID
+	CFLAGS += -DSERIAL_ID='$(SERIAL_ID)'
+endif
+
 # Enable override of write() function:
 CFLAGS  += -fno-builtin
 LDFLAGS += -fno-builtin
