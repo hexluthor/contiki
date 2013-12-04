@@ -86,20 +86,20 @@
 
 #define LOOP_LIMIT 100
 
-#define break_loop()                                                            \
-	if (++counter >= LOOP_LIMIT) {                                               \
-		printf("Breaking stuck while loop at %s line %u." NEWLINE, __FILE__, __LINE__); \
-		break;                                                                    \
-	}
+#ifndef ADF7023_VERBOSE
+	#define ADF7023_VERBOSE 5
+#endif
+
+#if (ADF7023_VERBOSE >= 2)
+	#define break_loop() if (++counter >= LOOP_LIMIT) {printf("Breaking stuck while loop at %s line %u." NEWLINE, __FILE__, __LINE__); break;}
+#else
+	#define break_loop() if (++counter >= LOOP_LIMIT) break
+#endif
 
 #define ADF7023_While(condition, body) do {                                 \
     int counter = 0;                                                        \
     while(condition) {body; break_loop();}                                  \
 } while(0)
-
-#ifndef ADF7023_VERBOSE
-	#define ADF7023_VERBOSE 5
-#endif
 
 #undef MIN
 #define MIN(x,y) ( ((x) < (y))? (x) : (y) )
