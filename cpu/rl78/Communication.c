@@ -51,7 +51,9 @@
 #include "Communication.h"	// Communication definitions
 #include "RDKRL78G14.h"		// RDKRL78G14 definitions
 
-#define NOP asm("nop")
+#ifndef NOP
+	#define NOP asm("nop")
+#endif
 
 #undef BIT
 #define BIT(n) ( 1 << (n) )
@@ -71,7 +73,6 @@ char IICA0_Flag;
  *
  * @return None.
 *******************************************************************************/
-#pragma vector = INTIICA0_vect
 /*__interrupt */static void IICA0_Interrupt(void)
 {
     IICA0_Flag = 1;
