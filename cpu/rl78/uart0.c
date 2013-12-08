@@ -109,19 +109,3 @@ int uart0_puts(const char* s)
 #endif
     return len;
 }
-
-__attribute__((interrupt))
-void st0_handler(void)
-{
-}
-
-__attribute__((interrupt))
-void sr0_handler(void)
-{
-}
-
-/* This is actually INTSRE0 interrupt handler */
-__attribute__((interrupt))
-void tm01h_handler(void)
-{
-}

@@ -33,7 +33,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "contiki.h"
 #include "net/netstack.h"
@@ -69,16 +68,6 @@ SENSORS(&button_sensor);
 
 static uint8_t serial_id[] = SERIAL_ID;
 static uint16_t node_id = 0x0102;
-
-__attribute__((interrupt))
-void wdti_handler(void)
-{
-}
-
-__attribute__((interrupt))
-void it_handler(void)
-{
-}
 
 /*---------------------------------------------------------------------------*/
 static void

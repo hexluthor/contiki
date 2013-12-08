@@ -1,38 +1,57 @@
 
 CONTIKI_CPU=$(CONTIKI)/cpu/rl78
 
+CODE_MODEL ?= f
+DATA_MODEL ?= f
+CORE       ?= 2
+LIB_CONFIG ?= n
+
+IAR_PATH ?= C:\\Program\ Files\\IAR\ Systems\\Embedded\ Workbench\ 6.5\\rl78
+
 ### Compiler definitions
-CROSS_COMPILE ?= $(shell echo /usr/share/*rl78*/bin | head -1)/rl78-elf-
-CC       = $(CROSS_COMPILE)gcc
-LD       = $(CROSS_COMPILE)gcc
-AS       = $(CROSS_COMPILE)gcc
-AR       = $(CROSS_COMPILE)ar
-NM       = $(CROSS_COMPILE)nm
-OBJCOPY  = $(CROSS_COMPILE)objcopy
-OBJDUMP  = $(CROSS_COMPILE)objdump
-STRIP    = $(CROSS_COMPILE)strip
+CC = $(IAR_PATH)\\bin\\iccrl78
+LD = $(IAR_PATH)\\bin\\xlink
+AR = $(IAR_PATH)\\bin\\xar
 
-ifdef WERROR
-CFLAGSWERROR ?= -Werror -pedantic -std=c99 -Werror
-endif
-CFLAGSNO ?= -Wall -g $(CFLAGSWERROR)
-CFLAGS  += $(CFLAGSNO) -O
+CFLAGS  += --silent
+CFLAGS  += --debug
+CFLAGS  += --core rl78_$(CORE)
+CFLAGS  += --code_model $(CODE_MODEL)
+CFLAGS  += --data_model $(DATA_MODEL)
+CFLAGS  += -I$(IAR_PATH)\\lib
 
-CFLAGS += -mmul=g13
-CFLAGS  += -Os -ggdb -ffunction-sections -fdata-sections
+LDFLAGS += -S
+LDFLAGS += -D_NEAR_CONST_LOCATION_START=03000
+LDFLAGS += -D_NEAR_CONST_LOCATION_END=07EFF
+LDFLAGS += -D_NEAR_HEAP_SIZE=400
+LDFLAGS += -D_FAR_HEAP_SIZE=4000
+LDFLAGS += -D_CSTACK_SIZE=80
+LDFLAGS += -s main
+LDFLAGS += -f $(IAR_PATH)\\config\\lnkr5f100ll.xcl
+LDFLAGS += -Felf
+
+AROPTS ?= -S
+
+CUSTOM_RULE_C_TO_O = 1
+%.o: %.c
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) $< -o $@
+
+CUSTOM_RULE_C_TO_OBJECTDIR_O = 1
+$(OBJECTDIR)/%.o: %.c | $(OBJECTDIR)
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) $< --dependencies=m $(@:.o=.P) -o $@
+
+CUSTOM_RULE_C_TO_CO = 1
+%.co: %.c
+	$(TRACE_CC)
+	$(Q)$(CC) $(CFLAGS) -DAUTOSTART_ENABLE $< -o $@
 
 ifdef SERIAL_ID
 	CFLAGS += -DSERIAL_ID='$(SERIAL_ID)'
 endif
 
-# Enable override of write() function:
-CFLAGS  += -fno-builtin
-LDFLAGS += -fno-builtin
-
-# LDFLAGS += -Wl,--no-whole-archive
-LDFLAGS += -Wl,--gc-sections -T $(CONTIKI)/platform/$(TARGET)/rl78-R5F100SL.ld -nostartfiles
-
-ASFLAGS += -c
+TARGET_LIBFILES += $(IAR_PATH)\\lib\\dlrl78$(CODE_MODEL)$(DATA_MODEL)$(CORE)$(LIB_CONFIG).r87
 
 ### CPU-dependent directories
 CONTIKI_CPU_DIRS += .
@@ -49,9 +68,6 @@ CONTIKI_SOURCEFILES += ADF7023.c
 CONTIKI_SOURCEFILES += assert.c
 CONTIKI_SOURCEFILES += slip-arch.c
 CONTIKI_SOURCEFILES += contiki-uart.c
-CONTIKI_SOURCEFILES += watchdog.c
-
-CONTIKI_ASMFILES += crt0.S 
 
 ### Compilation rules
 
@@ -78,5 +94,3 @@ contiki-$(TARGET).a: ${addprefix $(OBJECTDIR)/,symbols.o}
 
 %.lst: %
 	$(OBJDUMP) -DS $^ > $@
-
-CONTIKI_OBJECTFILES += $(OBJECTDIR)/crt0.o
