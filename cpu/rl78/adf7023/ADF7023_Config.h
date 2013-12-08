@@ -45,7 +45,6 @@
 /******************************************************************************/
 /***************************** Include Files **********************************/
 /******************************************************************************/
-#include <stdint.h>    // for uint64_t.
 
 #include "ADF7023.h"
 
@@ -58,12 +57,12 @@
 #define F_PFD 26000000 // 26 MHz
 
 #ifndef CHANNEL_FREQ_MHZ
-	// #define CHANNEL_FREQ_MHZ 432993072 // Wrong antenna
-	// #define CHANNEL_FREQ_MHZ 868000000 // Europe
-	#define CHANNEL_FREQ_MHZ 915000000 // ISM band center frequency for the Americas, Greenland and some of the eastern Pacific Islands.
+	// #define CHANNEL_FREQ_MHZ 432993072LLU // Wrong antenna
+	// #define CHANNEL_FREQ_MHZ 868000000LLU // Europe
+	#define CHANNEL_FREQ_MHZ 915000000LLU // ISM band center frequency for the Americas, Greenland and some of the eastern Pacific Islands.
 #endif
 
-#define CHANNEL_FREQ (((uint64_t)CHANNEL_FREQ_MHZ << 16) / F_PFD)
+#define CHANNEL_FREQ ((CHANNEL_FREQ_MHZ << 16) / F_PFD)
 
 /******************************************************************************/
 /************************* Variables Declarations *****************************/

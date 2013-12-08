@@ -1,3 +1,6 @@
+#ifndef RL78_H
+#define RL78_H
+
 #include "sfrs.h"
 #include "sfrs-ext.h"
 
@@ -7,3 +10,5 @@
 
 typedef unsigned short clock_time_t;
 typedef unsigned short uip_stats_t;
+
+#endif // RL78_H
