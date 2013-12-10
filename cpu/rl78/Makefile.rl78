@@ -3,7 +3,10 @@ CONTIKI_CPU=$(CONTIKI)/cpu/rl78
 
 CODE_MODEL ?= f
 DATA_MODEL ?= f
+
+# RL78/G13 has core 2.
 CORE       ?= 2
+
 LIB_CONFIG ?= n
 
 IAR_PATH ?= C:\\Program\ Files\\IAR\ Systems\\Embedded\ Workbench\ 6.5\\rl78
@@ -21,12 +24,13 @@ CFLAGS  += --data_model $(DATA_MODEL)
 CFLAGS  += -I$(IAR_PATH)\\lib
 
 LDFLAGS += -S
+LDFLAGS += -D_NEAR_CONST_LOCATION=03000
 LDFLAGS += -D_NEAR_CONST_LOCATION_START=03000
 LDFLAGS += -D_NEAR_CONST_LOCATION_END=07EFF
 LDFLAGS += -D_NEAR_HEAP_SIZE=400
 LDFLAGS += -D_FAR_HEAP_SIZE=4000
 LDFLAGS += -D_CSTACK_SIZE=80
-LDFLAGS += -s main
+LDFLAGS += -s __program_start
 LDFLAGS += -f $(IAR_PATH)\\config\\lnkr5f100ll.xcl
 LDFLAGS += -Felf
 
