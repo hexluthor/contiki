@@ -50,6 +50,7 @@
 #include "net/rime.h"
 #include "uart0.h"
 #include "contiki-uart.h"
+#include "watchdog.h"
 
 #define LED1 P120
 #define LED2 P43
@@ -209,6 +210,8 @@ main(int argc, char **argv)
   while(1) {
     static uint8_t counter;
     int retval;
+
+	watchdog_periodic();
 
 	if (NETSTACK_RADIO.pending_packet()) {
 		int len;
