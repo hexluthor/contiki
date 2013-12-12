@@ -1,5 +1,7 @@
+
+#include "rl78.h"
 #include "watchdog.h"
 
 void watchdog_periodic(void) {
-	// TODO
+	WDTE = 0xAC;
 }
