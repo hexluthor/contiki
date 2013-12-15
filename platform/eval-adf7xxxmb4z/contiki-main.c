@@ -122,9 +122,6 @@ main(int argc, char **argv)
 	OSMC = 0x00;                                       /* Supply fsub to peripherals, including Interval Timer */
  	uart0_init();
 	
-	// Force linking of custom write() function:
-	write(1, NULL, 0);
-
 	/* Setup 12-bit interval timer */
 	RTCEN = 1;                                              /* Enable 12-bit interval timer and RTC */
 	ITMK = 1;                                               /* Disable IT interrupt */
