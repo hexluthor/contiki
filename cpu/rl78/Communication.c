@@ -108,6 +108,8 @@ char SPI_Init(enum CSI_Bus bus,
               char clockEdg)
 {
 #if BITBANG_SPI
+	PIOR5 = 1; // Move SPI/I2C/UART functions from Port 0 pins 2-4 to Port 8.
+	
 	// Configure SCLK as an output.
 	PM0  &= ~BIT(4);
 	POM0 &= ~BIT(4);
@@ -125,6 +127,8 @@ char SPI_Init(enum CSI_Bus bus,
     char delay    = 0;
 	 uint16_t scr;
 	 uint8_t shift;
+
+	PIOR5 = 0; // Keep SPI functions on Port 0 pins 2-4.
 
     /* Enable input clock supply. */
     if (bus <= CSI11) SAU0EN = 1;
