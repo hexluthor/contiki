@@ -1,7 +1,15 @@
+
+#include "rl78.h"     // for f_CLK
 #include "sfrs.h"
 #include "sfrs-ext.h"
 
 #include "uart0.h"
+
+#define DESIRED_BAUDRATE 115200
+#define FUDGE_FACTOR     4
+#define PRS_VALUE        0
+#define f_MCK            (f_CLK / (1 << PRS_VALUE) / FUDGE_FACTOR)
+#define SDR_VALUE        ((f_MCK / DESIRED_BAUDRATE) >> 1)
 
 void uart0_init(void)
 {
@@ -9,7 +17,7 @@ void uart0_init(void)
     PIOR = 0U;                                         /* Disable IO redirection */
     PM1 |= 0x06U;                                       /* Set P11 and P12 as inputs */
     SAU0EN = 1;                                             /* Supply clock to serial array unit 0 */
-    SPS0 = 0x44U;                                      /* Set input clock (CK00 and CK01) to fclk/16 = 2MHz */
+    SPS0 = (PRS_VALUE << 4) | PRS_VALUE;                /* Set input clock (CK00 and CK01) to fclk/16 = 2MHz */
     ST0 = 0x03U;                                        /* Stop operation of channel 0 and 1 */
     /* Setup interrupts (disable) */
     STMK0 = 1;                                              /* Disable INTST0 interrupt */
@@ -40,9 +48,7 @@ void uart0_init(void)
                                                                1 stop bit
                                                                8-bit data length
                                                             */
-    SDR00 = 0xCE00U;                                  /* transfer clock : operation clock divided by 208
-                                                               2 MHz / 208 = ~9600 bps
-                                                            */
+    SDR00 = SDR_VALUE << 9;
     /* Setup operation mode for receiver (channel 1) */
     NFEN0 |= 1;                                       /* Enable noise filter on RxD0 pin */
     SIR01 = 0x0007U;                                  /* Clear error flags */
@@ -61,9 +67,7 @@ void uart0_init(void)
                                                                1 stop bit
                                                                8-bit data length
                                                             */
-    SDR01 = 0xCE00U;                                  /* transfer clock : operation clock divided by 208
-                                                               2 MHz / 208 = ~9600 bps
-                                                            */
+    SDR01 = SDR_VALUE << 9;
     SO0 |= 1;                                           /* Prepare for use of channel 0 */
     SOE0 |= 1;
     P1 |= (1 << 2);                                      /* Set TxD0 high */
