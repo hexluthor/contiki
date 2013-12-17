@@ -87,6 +87,12 @@
 #define LOOP_LIMIT 100
 
 #ifndef ADF7023_VERBOSE
+	// ADF7023_VERBOSE Values:
+	//  2 = Inidicate when breaking stuck while loops.
+	//  5 = Dump all received and transmitted packets.
+	//  7 = Dump the ADF7023 commands, interrupt and status words.
+	// 10 = Dump all SPI transactions.
+
 	#define ADF7023_VERBOSE 0
 #endif
 
