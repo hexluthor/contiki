@@ -54,15 +54,15 @@
 #define ADDRESS_LENGTH         0
 
 
-#define F_PFD 26000000 // 26 MHz
+#define F_PFD 26 // MHz
 
 #ifndef CHANNEL_FREQ_MHZ
-	// #define CHANNEL_FREQ_MHZ 432993072LLU // Wrong antenna
-	// #define CHANNEL_FREQ_MHZ 868000000LLU // Europe
-	#define CHANNEL_FREQ_MHZ 915000000LLU // ISM band center frequency for the Americas, Greenland and some of the eastern Pacific Islands.
+	// #define CHANNEL_FREQ_MHZ 433 // Wrong antenna (432993072 Hz)
+	// #define CHANNEL_FREQ_MHZ 868 // Europe
+	#define CHANNEL_FREQ_MHZ 915 // ISM band center frequency for the Americas, Greenland and some of the eastern Pacific Islands.
 #endif
 
-#define CHANNEL_FREQ ((CHANNEL_FREQ_MHZ << 16) / F_PFD)
+#define CHANNEL_FREQ (((uint32_t)CHANNEL_FREQ_MHZ << 16) / F_PFD)
 
 /******************************************************************************/
 /************************* Variables Declarations *****************************/
