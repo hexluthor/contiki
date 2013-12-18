@@ -61,7 +61,7 @@ CUSTOM_RULE_LINK = 1
 	    ${filter %.a,$^} $(TARGET_LIBFILES) -o $@ -Omotorola=$@.srec
 
 ifdef SERIAL_ID
-	CFLAGS += -DSERIAL_ID='$(SERIAL_ID)'
+  CFLAGS += -DSERIAL_ID='$(SERIAL_ID)'
 endif
 
 TARGET_LIBFILES += $(IAR_PATH)\\lib\\dlrl78$(CODE_MODEL)$(DATA_MODEL)$(CORE)$(LIB_CONFIG).r87
