@@ -220,11 +220,11 @@ main(int argc, char **argv)
 		}
 	}
 
-		if(uart1_input_handler != NULL) {
-			if(uart0_can_getchar()) {
-				uart1_input_handler(uart0_getchar());
-			}
-		}
+	while (uart0_can_getchar()) {
+		char c;
+		c = uart0_getchar();
+		if (uart1_input_handler) uart1_input_handler(c);
+	}
 
     retval = process_run();
 
