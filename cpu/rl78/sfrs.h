@@ -111,7 +111,7 @@
 #define FLWH     (*(volatile unsigned short *)0xFFF8E)
 #define ITMC     (*(volatile unsigned short *)0xFFF90)
 #define SEC      (*(volatile unsigned char  *)0xFFF92)
-// #define MIN      (*(volatile unsigned char  *)0xFFF93) // TODO: naming conflict
+#define RL78_MIN (*(volatile unsigned char  *)0xFFF93) // Note: "MIN" would conflict with the MIN() macro.
 #define HOUR     (*(volatile unsigned char  *)0xFFF94)
 #define WEEK     (*(volatile unsigned char  *)0xFFF95)
 #define DAY      (*(volatile unsigned char  *)0xFFF96)
