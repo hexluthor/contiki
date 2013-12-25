@@ -67,10 +67,6 @@
 #define ADF7023_MISO        MISO_PIN
 */
 
-#ifndef NEWLINE
-	#define NEWLINE "\r\n"
-#endif
-
 #ifndef ARRAY_SIZE
 	#define ARRAY_SIZE(a) ( sizeof(a) / sizeof((a)[0]) )
 #endif
@@ -468,7 +464,7 @@ void ADF7023_SetRAM_And_Verify(unsigned long address, unsigned long length, unsi
 	if (memcmp(data, readback, length)) {
 		printf("ADF7023_SetRAM_And_Verify failed. Wrote:" NEWLINE);
 		hexdump(data, length);
-		printf("\nRead:" NEWLINE);
+		printf(NEWLINE "Read:" NEWLINE);
 		hexdump(readback, length);
 		printf(NEWLINE);
 	}

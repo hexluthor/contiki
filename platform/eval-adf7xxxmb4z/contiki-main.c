@@ -95,7 +95,7 @@ set_rime_addr(void)
   for(i = 0; i < sizeof(addr.u8) - 1; i++) {
     printf("%d.", addr.u8[i]);
   }
-  printf("%d\n", addr.u8[i]);
+  printf("%d" NEWLINE, addr.u8[i]);
 }
 
 
@@ -160,12 +160,12 @@ main(int argc, char **argv)
 
 #if UIP_CONF_IPV6
 #if UIP_CONF_IPV6_RPL
-  printf(CONTIKI_VERSION_STRING " started with IPV6, RPL\n");
+  printf(CONTIKI_VERSION_STRING " started with IPV6, RPL" NEWLINE);
 #else
-  printf(CONTIKI_VERSION_STRING " started with IPV6\n");
+  printf(CONTIKI_VERSION_STRING " started with IPV6" NEWLINE);
 #endif
 #else
-  printf(CONTIKI_VERSION_STRING " started\n");
+  printf(CONTIKI_VERSION_STRING " started" NEWLINE);
 #endif
 	
   /* crappy way of remembering and accessing argc/v */
@@ -181,7 +181,7 @@ main(int argc, char **argv)
   queuebuf_init();
 
   netstack_init();
-  printf("MAC %s RDC %s NETWORK %s\n", NETSTACK_MAC.name, NETSTACK_RDC.name, NETSTACK_NETWORK.name);
+  printf("MAC %s RDC %s NETWORK %s" NEWLINE, NETSTACK_MAC.name, NETSTACK_RDC.name, NETSTACK_NETWORK.name);
 
 #if WITH_UIP6
   memcpy(&uip_lladdr.addr, serial_id, sizeof(uip_lladdr.addr));
@@ -199,7 +199,7 @@ main(int argc, char **argv)
     /* make it hardcoded... */
     lladdr->state = ADDR_AUTOCONF;
 
-    printf("%02x%02x\n", lladdr->ipaddr.u8[14], lladdr->ipaddr.u8[15]);
+    printf("%02x%02x" NEWLINE, lladdr->ipaddr.u8[14], lladdr->ipaddr.u8[15]);
   }
 #else
   process_start(&tcpip_process, NULL);
@@ -252,12 +252,12 @@ main(int argc, char **argv)
 void
 log_message(char *m1, char *m2)
 {
-  printf("%s%s\n", m1, m2);
+  printf("%s%s" NEWLINE, m1, m2);
 }
 /*---------------------------------------------------------------------------*/
 void
 uip_log(char *m)
 {
-  printf("%s\n", m);
+  printf("%s" NEWLINE, m);
 }
 /*---------------------------------------------------------------------------*/
