@@ -67,9 +67,18 @@ CUSTOM_RULE_LINK = 1
 	$(Q)$(LD) $(LDFLAGS) $(TARGET_STARTFILES) ${filter-out %.a,$^} \
 	    ${filter %.a,$^} $(TARGET_LIBFILES) -o $@ -Omotorola=$@.srec
 else
-  # Use GNU GCC compiler.
+  # Use the GNU RL78 toolchain.
   
-  CROSS_COMPILE ?= $(shell echo /usr/share/*rl78*/bin | head -1)/rl78-elf-
+  ifndef CROSS_COMPILE
+    ifeq ($(shell which rl78-elf-gcc),)
+      # The RL78 toolchain is not in the path. Try finding it in /usr/share:
+      CROSS_COMPILE := $(shell echo /usr/share/*rl78*/bin | tail -1)/rl78-elf-
+    else
+      # The RL78 toolchain is in the path. Use it directly:
+      CROSS_COMPILE := rl78-elf-
+    endif
+  endif
+  
   CC       = $(CROSS_COMPILE)gcc
   LD       = $(CROSS_COMPILE)gcc
   AS       = $(CROSS_COMPILE)gcc
