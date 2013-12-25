@@ -9,6 +9,8 @@ int write(int fd, const void *buf, size_t count) {
 	return count;
 }
 
-size_t __write(int fd, const unsigned char *buf, size_t count) {
-	write(fd, buf, count);
-}
+#ifdef __IAR_SYSTEMS_ICC__
+	size_t __write(int fd, const unsigned char *buf, size_t count) {
+		write(fd, buf, count);
+	}
+#endif
