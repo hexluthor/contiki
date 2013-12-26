@@ -49,10 +49,18 @@
 #include "rl78.h"
 
 #include "Communication.h"	// Communication definitions
-#include "RDKRL78G14.h"		// RDKRL78G14 definitions
 
 #ifndef NOP
 	#define NOP asm("nop")
+#endif
+
+// Enable interrupts:
+#ifndef EI
+	#ifdef __GNUC__
+		#define EI asm("ei");
+	#else
+		#define EI __enable_interrupt();
+	#endif
 #endif
 
 #undef BIT
