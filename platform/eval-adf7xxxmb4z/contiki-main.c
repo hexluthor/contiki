@@ -31,6 +31,7 @@
  *
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -57,14 +58,6 @@
 	#include "write.h"
 #endif
 
-#define LED1 P120
-#define LED2 P43
-#define LED3 P16
-#define LED4 P15
-#define LED5 P06
-#define LED6 P05
-#define LED7 P30
-#define LED8 P50
 
 SENSORS(&button_sensor);
 
@@ -118,6 +111,8 @@ static void delay_1sec(void) {
 int
 main(int argc, char **argv)
 {
+	bool flip_flop = false;
+
 	asm("di");
 	/* Setup clocks */
 	CMC = 0x11U;                                        /* Enable XT1, disable X1 */
@@ -215,8 +210,6 @@ main(int argc, char **argv)
   autostart_start(autostart_processes);
 
   while(1) {
-    static uint8_t counter;
-
 	watchdog_periodic();
 
 	if (NETSTACK_RADIO.pending_packet()) {
@@ -231,23 +224,19 @@ main(int argc, char **argv)
 
 	while (uart0_can_getchar()) {
 		char c;
+		UART_RX_LED = 1;
 		c = uart0_getchar();
 		if (uart1_input_handler) uart1_input_handler(c);
 	}
+	UART_RX_LED = 0;
 
 	process_run();
 
     etimer_request_poll();
 
-	 counter++;
-	 LED1 = !(counter %   1);
-	 LED2 = !(counter %   2);
-	 LED3 = !(counter %   4);
-	 LED4 = !(counter %   8);
-	 LED5 = !(counter %  16);
-	 LED6 = !(counter %  32);
-	 LED7 = !(counter %  64);
-	 LED8 = !(counter % 128);
+	HEARTBEAT_LED1 = flip_flop;
+	flip_flop = !flip_flop;
+	HEARTBEAT_LED2 = flip_flop;
   }
 
   return 0;
