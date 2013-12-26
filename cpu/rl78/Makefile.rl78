@@ -103,7 +103,7 @@ else
   CFLAGS  += -fno-builtin
   LDFLAGS += -fno-builtin
 
-  LDFLAGS += -Wl,--gc-sections -T $(CONTIKI)/platform/$(TARGET)/rl78-R5F100SL.ld -nostartfiles
+  LDFLAGS += -Wl,--gc-sections -T $(CONTIKI_CPU)/R5F100xL.ld -nostartfiles
 
   ASFLAGS += -c
   
