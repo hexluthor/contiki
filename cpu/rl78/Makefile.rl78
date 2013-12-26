@@ -97,6 +97,7 @@ else
 
   CFLAGS += -mmul=g13
   CFLAGS  += -Os -ggdb -ffunction-sections -fdata-sections
+  CFLAGS  += -fno-strict-aliasing
 
   # Enable override of write() function:
   CFLAGS  += -fno-builtin

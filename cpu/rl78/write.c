@@ -2,6 +2,7 @@
 #include <stddef.h> // for size_t.
 
 #include "uart0.h"
+#include "write.h"
 
 int write(int fd, const void *buf, size_t count) {
 	size_t n;

@@ -111,8 +111,10 @@
 /******************************************************************************/
 struct ADF7023_BBRAM ADF7023_BBRAMCurrent;
 
+#if (ADF7023_VERBOSE >= 7)
 static unsigned char status_old = 0xff;
 static unsigned char int0_old   = 0xff;
+#endif
 
 const char* ADF7023_state_lookup[] = {
 	/* 0x00 */ "Busy, performing a state transition",
@@ -380,27 +382,8 @@ void ADF7023_SetFwState_NoWait(unsigned char fwState)
 void ADF7023_SetFwState(unsigned char fwState)
 {
     unsigned char status = 0;
-	 unsigned char s0;
-	 unsigned char sbuf[20];
-	 int i = 0, i2;
-	 ADF7023_GetStatus(&s0);
     ADF7023_SetFwState_NoWait(fwState);
-#if 0
-    do {
-		 ADF7023_GetStatus(&status);
-		 if (i < sizeof(sbuf)) sbuf[i] = status;
-		 i++;
-		 if (i > 1000) {
-			printf("ADF7023_SetFwState hung. s0 = 0x%02x, fwState = 0x%02x, sbuf = ", s0, fwState);
-			for(i2 = 0; i2 < sizeof(sbuf); i2++) printf("%02x ", sbuf[i2]);
-			printf(NEWLINE);
-			break;
-		 }
-	 }
-    while ((status & STATUS_FW_STATE) != fwState);
-#else
 	ADF7023_While((status & STATUS_FW_STATE) != fwState, ADF7023_GetStatus(&status));
-#endif
 }
 
 /***************************************************************************//**
@@ -564,13 +547,9 @@ void ADF7023_PHY_TX(void) {
 
 static unsigned char ADF7023_ReadInterruptSource(void) {
 	unsigned char interruptReg;
-	unsigned char int1;
 
 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
-// 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_0, 0x1, &interruptReg);
-// 	ADF7023_GetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
-// 	ADF7023_SetRAM(MCR_REG_INTERRUPT_SOURCE_1, 0x1, &int1);
-// 	printf("ADF7023_ReadInterruptSource: 0x%02x, 0x%02x" NEWLINE, interruptReg, int1);
+
 #if (ADF7023_VERBOSE >= 7)
 	if (interruptReg != int0_old) {
 		printf("ADF7023_ReadInterruptSource: %u%u%u%u%u%u%u%u." NEWLINE,
@@ -654,7 +633,6 @@ void ADF7023_ReceivePacket(unsigned char* packet, unsigned char* payload_length)
 void ADF7023_TransmitPacket(unsigned char* packet, unsigned char length)
 {
     unsigned char interruptReg = 0;
-	 unsigned char i;
 	 unsigned char status;
 	 unsigned char length_plus_one;
 

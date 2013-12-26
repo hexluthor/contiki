@@ -491,6 +491,8 @@ char I2C_Init(long clockFreq)
     unsigned char wlValue = 0;
     unsigned char whValue = 0;
 
+    (void)IICA0_Interrupt; // Prevent an unused-function warning.
+
     /* Enable interrupts */
     EI;
 

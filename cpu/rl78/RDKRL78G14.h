@@ -56,7 +56,14 @@
 /******************************************************************************/
 
 #define NOP	__no_operation();       // No operation
-#define EI	__enable_interrupt();   // Enable interrupts
+
+// Enable interrupts:
+#ifdef __GNUC__
+	#define EI asm("ei");
+#else
+	#define EI __enable_interrupt();
+#endif
+
 #define DI	__disable_interrupt();  // Disable interrupts
 
 /******************************************************************************/

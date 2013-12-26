@@ -51,6 +51,11 @@
 #include "uart0.h"
 #include "contiki-uart.h"
 #include "watchdog.h"
+#include "slip-arch.h"
+
+#if __GNUC__
+	#include "write.h"
+#endif
 
 #define LED1 P120
 #define LED2 P43
@@ -211,7 +216,6 @@ main(int argc, char **argv)
 
   while(1) {
     static uint8_t counter;
-    int retval;
 
 	watchdog_periodic();
 
@@ -231,7 +235,7 @@ main(int argc, char **argv)
 		if (uart1_input_handler) uart1_input_handler(c);
 	}
 
-    retval = process_run();
+	process_run();
 
     etimer_request_poll();
 
