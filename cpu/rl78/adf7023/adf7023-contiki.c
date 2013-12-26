@@ -5,6 +5,7 @@
 
 #include "ADF7023.h"
 #include "adf7023-contiki.h"
+#include "contiki.h"         // for LED definitions.
 
 
 #define ADF7023_MAX_PACKET_SIZE 255
@@ -59,7 +60,11 @@ int adf7023_prepare(const void *payload, unsigned short payload_len) {
 
 int adf7023_transmit(unsigned short transmit_len) {
 	// Send the packet that has previously been prepared.
+
+	RADIO_TX_LED = 1;
 	ADF7023_TransmitPacket(tx_buf, transmit_len);
+	RADIO_TX_LED = 0;
+
 	// TODO: Error conditions (RADIO_TX_ERR, RADIO_TX_COLLISION, RADIO_TX_NOACK)?
 	return RADIO_TX_OK;
 }
@@ -69,7 +74,11 @@ int adf7023_transmit(unsigned short transmit_len) {
 
 int adf7023_send(const void *payload, unsigned short payload_len) {
 	// Prepare & transmit a packet.
+
+	RADIO_TX_LED = 1;
 	ADF7023_TransmitPacket((void*)payload, payload_len);
+	RADIO_TX_LED = 0;
+
 	// TODO: Error conditions (RADIO_TX_ERR, RADIO_TX_COLLISION, RADIO_TX_NOACK)?
 	return RADIO_TX_OK;
 }
@@ -77,7 +86,11 @@ int adf7023_send(const void *payload, unsigned short payload_len) {
 int adf7023_read(void *buf, unsigned short buf_len) {
 	unsigned char num_bytes;
 	// Read a received packet into a buffer.
+
+	RADIO_RX_LED = 1;
 	ADF7023_ReceivePacket(rx_buf, &num_bytes);
+	RADIO_RX_LED = 0;
+
 	memcpy(buf, rx_buf, (num_bytes <= buf_len)? num_bytes : buf_len);
 	return num_bytes;
 }
