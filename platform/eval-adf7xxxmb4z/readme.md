@@ -68,6 +68,8 @@ Open the web server's home page at http://[aaaa::7a30:3178:3032:7830]
 On Windows:
 -----------
 
+### Using the KPIT Toolchain ###
+
 Download and install the latest
 [GNURL78 Windows Tool Chain (ELF)](http://www.kpitgnutools.com/latestToolchain.php)
 from KPIT (registration required).
@@ -87,8 +89,37 @@ of the latest source.
 Build Contiki's example-abc using the RL78 Toolchain shell.
 Click Start -> All Programs -> GNURL78v13.02-ELF -> rl78-elf Toolchain.
 
-	set PATH=%PATH%;C:\Program Files\GnuWin32\bin
+	set PATH=C:\Program Files\GnuWin32\bin;%PATH%
 	make -C contiki/examples/rime TARGET=eval-adf7xxxmb4z CROSS_COMPILE=rl78-elf- example-abc.eval-adf7xxxmb4z.srec
+
+Flash the output file `example-abc.eval-adf7xxxmb4z.srec` using the
+[Renesas Flash Programmer](http://am.renesas.com/products/tools/flash_prom_programming/rfp)
+(registration required).
+
+Connect a terminal emulator (e.g. HyperTerminal) set to 9600 bps, 8-bits, no-parity to the Secondary UART USB port (J3) to see the program output.
+
+### Using IAR Embedded Workbench ###
+
+Install [IAR Embedded Workbench](http://www.iar.com/ewrl78/).
+
+Download and install
+[GNU coreutils](http://gnuwin32.sourceforge.net/downlinks/coreutils.php),
+[sed](http://gnuwin32.sourceforge.net/downlinks/sed.php),
+and [make](http://gnuwin32.sourceforge.net/downlinks/make.php).
+
+Obtain the Contiki source code using [git](http://git-scm.com/download/win):
+
+	git clone -b rl78-dev https://github.com/hexluthor/contiki.git
+
+Alternatively, download a
+[zip file](https://github.com/hexluthor/contiki/archive/rl78-dev.zip)
+of the latest source.
+
+Build Contiki's example-abc.
+Click Start -> All Programs -> Accessories -> Command Prompt.
+
+	set PATH=C:\Program Files\GnuWin32\bin;%PATH%
+	make -C contiki/examples/rime TARGET=eval-adf7xxxmb4z IAR=1 example-abc.eval-adf7xxxmb4z.srec
 
 Flash the output file `example-abc.eval-adf7xxxmb4z.srec` using the
 [Renesas Flash Programmer](http://am.renesas.com/products/tools/flash_prom_programming/rfp)
