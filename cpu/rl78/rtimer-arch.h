@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Analog Devices, Inc.
+ * Copyright (c) 2014, Analog Devices, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
