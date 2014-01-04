@@ -32,4 +32,4 @@
  * \author Ian Martin <martini@redwirellc.com>
  */
 
-void uart1_set_input(int (*input)(unsigned char c));
+void uart0_set_input(int (*input)(unsigned char c));

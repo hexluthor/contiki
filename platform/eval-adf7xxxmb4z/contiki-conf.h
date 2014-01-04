@@ -46,10 +46,7 @@
 #define CCIF
 #define CLIF
 
-#define CONSOLE_UART UART1
-#define CONSOLE_BAUD 115200
-
-#define dbg_putchar(x) uart1_putc(x)
+#define dbg_putchar(x) uart0_putchar(x)
 
 #define USE_FORMATTED_STDIO         1
 

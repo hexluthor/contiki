@@ -226,8 +226,8 @@ main(int argc, char **argv)
       char c;
       UART_RX_LED = 1;
       c = uart0_getchar();
-      if(uart1_input_handler) {
-        uart1_input_handler(c);
+      if(uart0_input_handler) {
+        uart0_input_handler(c);
       }
     }
     UART_RX_LED = 0;
