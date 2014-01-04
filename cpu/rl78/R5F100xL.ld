@@ -29,6 +29,9 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 
 */
+/**
+ * \author DJ Delorie <dj@redhat.com>, Ian Martin <martini@redwirellc.com>
+ */
 
 /* Default linker script, for normal executables */
 OUTPUT_ARCH(rl78)

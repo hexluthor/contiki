@@ -28,6 +28,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/**
+ * \author Ian Martin <martini@redwirellc.com>
+ */
 
 #ifndef __RTIMER_ARCH_H__
 #define __RTIMER_ARCH_H__

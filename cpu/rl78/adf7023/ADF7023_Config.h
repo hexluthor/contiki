@@ -28,6 +28,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/**
+ * \author Dragos Bogdan <Dragos.Bogdan@Analog.com>
+ * Contributors: Ian Martin <martini@redwirellc.com>
+ */
 
 #ifndef __ADF7023_CONFIG_H__
 #define __ADF7023_CONFIG_H__

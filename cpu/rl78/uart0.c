@@ -28,6 +28,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/**
+ * \author Maxim Salov <max.salov@gmail.com>, Ian Martin <martini@redwirellc.com>
+ */
 
 #include "rl78.h"     /* for f_CLK */
 #include "sfrs.h"

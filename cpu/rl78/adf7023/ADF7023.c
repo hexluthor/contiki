@@ -28,6 +28,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/**
+ * \author Dragos Bogdan <Dragos.Bogdan@Analog.com>, Ian Martin <martini@redwirellc.com>
+ */
 
 #include <stdio.h>
 #include <assert.h>

@@ -28,6 +28,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/**
+ * \author Maxim Salov <max.salov@gmail.com>
+ */
 
 #ifndef UART0_H__
 #define UART0_H__
