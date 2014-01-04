@@ -50,8 +50,6 @@ CONTIKIBOARD=.
 
 CONTIKI_PLAT_DEFS = 
 
-# MCU=arm7tdmi-s
-
 ifeq ($(UIP_CONF_IPV6),1)
 CFLAGS += -DWITH_UIP6=1
 endif
@@ -59,8 +57,6 @@ endif
 include $(CONTIKIRL78)/Makefile.rl78
 
 PROG_UART    ?= /dev/ttyUSB1
-CONSOLE_UART ?= /dev/ttyUSB0
 
 run: $(CONTIKI_PROJECT).$(TARGET).srec
 	~/adi-contiki/github/rl78flash/rl78flash -vv -i -m3 $(PROG_UART) -b500000 -a $<
-	# && stty -F $(CONSOLE_UART) 9600 && cat $(CONSOLE_UART)
