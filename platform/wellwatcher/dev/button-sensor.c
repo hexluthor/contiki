@@ -100,24 +100,10 @@ btn_callback(uint8_t port, uint8_t pin)
   }
 
   timer_set(&debouncetimer, CLOCK_SECOND / 8);
-  if(port == GPIO_C_NUM) {
-    switch(pin) {
-    case BUTTON_SLU_PIN:
-      sensors_changed(&button_slu_sensor);
-      break;
-    case BUTTON_SRD_PIN:
-      sensors_changed(&button_srd_sensor);
-      break;
-    case BUTTON_SRU_PIN:
-      sensors_changed(&button_sru_sensor);
-      break;
-    case BUTTON_SLD_PIN:
-      sensors_changed(&button_sld_sensor);
-      break;
-    default:
-      return;
-    }
-  }
+  if ( (port == BUTTON_SLU_PORT) && (pin == BUTTON_SLU_PIN) ) sensors_changed(&button_slu_sensor);
+  if ( (port == BUTTON_SRD_PORT) && (pin == BUTTON_SRD_PIN) ) sensors_changed(&button_srd_sensor);
+  if ( (port == BUTTON_SRU_PORT) && (pin == BUTTON_SRU_PIN) ) sensors_changed(&button_sru_sensor);
+  if ( (port == BUTTON_SLD_PORT) && (pin == BUTTON_SLD_PIN) ) sensors_changed(&button_sld_sensor);
 }
 /*---------------------------------------------------------------------------*/
 /**
