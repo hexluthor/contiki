@@ -38,6 +38,7 @@
 #include "contiki-conf.h"
 #include "sys/energest.h"
 #include "sys/process.h"
+#include "dev/ioc.h"
 #include "dev/sys-ctrl.h"
 #include "dev/scb.h"
 #include "dev/rfcore-xreg.h"
@@ -109,6 +110,21 @@ static uint8_t max_pm;
 
 static lpm_periph_permit_pm1_func_t
 periph_permit_pm1_funcs[LPM_PERIPH_PERMIT_PM1_FUNCS_MAX];
+
+static void on_new_pm_mode(int m) {
+  if (m == -1) GPIO_SET_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(4));
+  else         GPIO_CLR_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(4));
+
+  if (m ==  0) GPIO_SET_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(5));
+  else         GPIO_CLR_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(5));
+
+  if (m ==  1) GPIO_SET_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(6));
+  else         GPIO_CLR_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(6));
+
+  if (m ==  2) GPIO_SET_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(7));
+  else         GPIO_CLR_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(7));
+}
+
 /*---------------------------------------------------------------------------*/
 static bool
 periph_permit_pm1(void)
@@ -145,6 +161,7 @@ enter_pm0(void)
     sleep_enter_time = RTIMER_NOW();
   }
 
+  on_new_pm_mode(0);
   assert_wfi();
 
   /* We reach here when the interrupt context that woke us up has returned */
@@ -195,6 +212,7 @@ select_16_mhz_rcosc(void)
 void
 lpm_exit()
 {
+  on_new_pm_mode(-1);
   if((REG(SYS_CTRL_PMCTL) & SYS_CTRL_PMCTL_PM3) == SYS_CTRL_PMCTL_PM0) {
     /* We either just exited PM0 or we were not sleeping in the first place.
      * We don't need to do anything clever */
@@ -332,6 +350,7 @@ lpm_enter()
     ENERGEST_OFF(ENERGEST_TYPE_LPM);
   } else {
     /* All clear. Assert WFI and drop to PM1/2. This is now un-interruptible */
+    on_new_pm_mode(REG(SYS_CTRL_PMCTL) & SYS_CTRL_PMCTL_PM3);
     assert_wfi();
   }
 
@@ -368,6 +387,8 @@ lpm_register_peripheral(lpm_periph_permit_pm1_func_t permit_pm1_func)
 void
 lpm_init()
 {
+  int pin;
+
   /*
    * The main loop calls lpm_enter() when we have no more events to service.
    * By default, we will enter PM0 unless lpm_enter() decides otherwise
@@ -378,6 +399,12 @@ lpm_init()
   max_pm = LPM_CONF_MAX_PM;
 
   LPM_STATS_INIT();
+
+  for (pin=4; pin <= 7; pin++) {
+    GPIO_SOFTWARE_CONTROL(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(pin));
+    GPIO_SET_OUTPUT(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(pin));
+    ioc_set_over(GPIO_A_NUM, pin, IOC_OVERRIDE_OE);
+  }
 }
 /*---------------------------------------------------------------------------*/
 #endif /* LPM_CONF_ENABLE != 0 */
