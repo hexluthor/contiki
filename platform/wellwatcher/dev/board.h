@@ -179,14 +179,14 @@
  * These values configure which CC2538 pins to use for the SPI lines.
  * @{
  */
-#define SPI_CLK_PORT             GPIO_A_NUM
-#define SPI_CLK_PIN              2
-#define SPI_MOSI_PORT            GPIO_A_NUM
-#define SPI_MOSI_PIN             4
-#define SPI_MISO_PORT            GPIO_A_NUM
-#define SPI_MISO_PIN             5
-#define SPI_SEL_PORT             GPIO_B_NUM
-#define SPI_SEL_PIN              5
+#define SPI_CLK_PORT             GPIO_D_NUM
+#define SPI_CLK_PIN              0
+#define SPI_MOSI_PORT            GPIO_D_NUM
+#define SPI_MOSI_PIN             2
+#define SPI_MISO_PORT            GPIO_D_NUM
+#define SPI_MISO_PIN             1
+#define SPI_SEL_PORT             GPIO_C_NUM
+#define SPI_SEL_PIN              7
 /** @} */
 /*---------------------------------------------------------------------------*/
 /**
