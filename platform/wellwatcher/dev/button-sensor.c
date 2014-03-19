@@ -45,20 +45,17 @@
 #include <stdint.h>
 #include <string.h>
 
-#define BUTTON_SELECT_PORT_BASE  GPIO_PORT_TO_BASE(BUTTON_SELECT_PORT)
-#define BUTTON_SELECT_PIN_MASK   GPIO_PIN_MASK(BUTTON_SELECT_PIN)
+#define BUTTON_SLU_PORT_BASE    GPIO_PORT_TO_BASE(BUTTON_SLU_PORT)
+#define BUTTON_SLU_PIN_MASK     GPIO_PIN_MASK(BUTTON_SLU_PIN)
 
-#define BUTTON_LEFT_PORT_BASE    GPIO_PORT_TO_BASE(BUTTON_LEFT_PORT)
-#define BUTTON_LEFT_PIN_MASK     GPIO_PIN_MASK(BUTTON_LEFT_PIN)
+#define BUTTON_SRD_PORT_BASE   GPIO_PORT_TO_BASE(BUTTON_SRD_PORT)
+#define BUTTON_SRD_PIN_MASK    GPIO_PIN_MASK(BUTTON_SRD_PIN)
 
-#define BUTTON_RIGHT_PORT_BASE   GPIO_PORT_TO_BASE(BUTTON_RIGHT_PORT)
-#define BUTTON_RIGHT_PIN_MASK    GPIO_PIN_MASK(BUTTON_RIGHT_PIN)
+#define BUTTON_SRU_PORT_BASE      GPIO_PORT_TO_BASE(BUTTON_SRU_PORT)
+#define BUTTON_SRU_PIN_MASK       GPIO_PIN_MASK(BUTTON_SRU_PIN)
 
-#define BUTTON_UP_PORT_BASE      GPIO_PORT_TO_BASE(BUTTON_UP_PORT)
-#define BUTTON_UP_PIN_MASK       GPIO_PIN_MASK(BUTTON_UP_PIN)
-
-#define BUTTON_DOWN_PORT_BASE    GPIO_PORT_TO_BASE(BUTTON_DOWN_PORT)
-#define BUTTON_DOWN_PIN_MASK     GPIO_PIN_MASK(BUTTON_DOWN_PIN)
+#define BUTTON_SLD_PORT_BASE    GPIO_PORT_TO_BASE(BUTTON_SLD_PORT)
+#define BUTTON_SLD_PIN_MASK     GPIO_PIN_MASK(BUTTON_SLD_PIN)
 /*---------------------------------------------------------------------------*/
 static struct timer debouncetimer;
 /*---------------------------------------------------------------------------*/
@@ -103,21 +100,19 @@ btn_callback(uint8_t port, uint8_t pin)
   }
 
   timer_set(&debouncetimer, CLOCK_SECOND / 8);
-  if(port == GPIO_A_NUM) {
-    sensors_changed(&button_select_sensor);
-  } else if(port == GPIO_C_NUM) {
+  if(port == GPIO_C_NUM) {
     switch(pin) {
-    case BUTTON_LEFT_PIN:
-      sensors_changed(&button_left_sensor);
+    case BUTTON_SLU_PIN:
+      sensors_changed(&button_slu_sensor);
       break;
-    case BUTTON_RIGHT_PIN:
-      sensors_changed(&button_right_sensor);
+    case BUTTON_SRD_PIN:
+      sensors_changed(&button_srd_sensor);
       break;
-    case BUTTON_UP_PIN:
-      sensors_changed(&button_up_sensor);
+    case BUTTON_SRU_PIN:
+      sensors_changed(&button_sru_sensor);
       break;
-    case BUTTON_DOWN_PIN:
-      sensors_changed(&button_down_sensor);
+    case BUTTON_SLD_PIN:
+      sensors_changed(&button_sld_sensor);
       break;
     default:
       return;
@@ -126,7 +121,7 @@ btn_callback(uint8_t port, uint8_t pin)
 }
 /*---------------------------------------------------------------------------*/
 /**
- * \brief Init function for the select button.
+ * \brief Init function for the slu button.
  *
  * Parameters are ignored. They have been included because the prototype is
  * dictated by the core sensor api. The return value is also not required by
@@ -137,20 +132,20 @@ btn_callback(uint8_t port, uint8_t pin)
  * \return ignored
  */
 static int
-config_select(int type, int value)
+config_slu(int type, int value)
 {
-  config(BUTTON_SELECT_PORT_BASE, BUTTON_SELECT_PIN_MASK);
+  config(BUTTON_SLU_PORT_BASE, BUTTON_SLU_PIN_MASK);
 
-  ioc_set_over(BUTTON_SELECT_PORT, BUTTON_SELECT_PIN, IOC_OVERRIDE_PUE);
+  ioc_set_over(BUTTON_SLU_PORT, BUTTON_SLU_PIN, IOC_OVERRIDE_PUE);
 
-  nvic_interrupt_enable(BUTTON_SELECT_VECTOR);
+  nvic_interrupt_enable(BUTTON_SLU_VECTOR);
 
-  gpio_register_callback(btn_callback, BUTTON_SELECT_PORT, BUTTON_SELECT_PIN);
+  gpio_register_callback(btn_callback, BUTTON_SLU_PORT, BUTTON_SLU_PIN);
   return 1;
 }
 /*---------------------------------------------------------------------------*/
 /**
- * \brief Init function for the left button.
+ * \brief Init function for the srd button.
  *
  * Parameters are ignored. They have been included because the prototype is
  * dictated by the core sensor api. The return value is also not required by
@@ -161,20 +156,20 @@ config_select(int type, int value)
  * \return ignored
  */
 static int
-config_left(int type, int value)
+config_srd(int type, int value)
 {
-  config(BUTTON_LEFT_PORT_BASE, BUTTON_LEFT_PIN_MASK);
+  config(BUTTON_SRD_PORT_BASE, BUTTON_SRD_PIN_MASK);
 
-  ioc_set_over(BUTTON_LEFT_PORT, BUTTON_LEFT_PIN, IOC_OVERRIDE_PUE);
+  ioc_set_over(BUTTON_SRD_PORT, BUTTON_SRD_PIN, IOC_OVERRIDE_PUE);
 
-  nvic_interrupt_enable(BUTTON_LEFT_VECTOR);
+  nvic_interrupt_enable(BUTTON_SRD_VECTOR);
 
-  gpio_register_callback(btn_callback, BUTTON_LEFT_PORT, BUTTON_LEFT_PIN);
+  gpio_register_callback(btn_callback, BUTTON_SRD_PORT, BUTTON_SRD_PIN);
   return 1;
 }
 /*---------------------------------------------------------------------------*/
 /**
- * \brief Init function for the right button.
+ * \brief Init function for the sru button.
  *
  * Parameters are ignored. They have been included because the prototype is
  * dictated by the core sensor api. The return value is also not required by
@@ -185,20 +180,20 @@ config_left(int type, int value)
  * \return ignored
  */
 static int
-config_right(int type, int value)
+config_sru(int type, int value)
 {
-  config(BUTTON_RIGHT_PORT_BASE, BUTTON_RIGHT_PIN_MASK);
+  config(BUTTON_SRU_PORT_BASE, BUTTON_SRU_PIN_MASK);
 
-  ioc_set_over(BUTTON_RIGHT_PORT, BUTTON_RIGHT_PIN, IOC_OVERRIDE_PUE);
+  ioc_set_over(BUTTON_SRU_PORT, BUTTON_SRU_PIN, IOC_OVERRIDE_PUE);
 
-  nvic_interrupt_enable(BUTTON_RIGHT_VECTOR);
+  nvic_interrupt_enable(BUTTON_SRU_VECTOR);
 
-  gpio_register_callback(btn_callback, BUTTON_RIGHT_PORT, BUTTON_RIGHT_PIN);
+  gpio_register_callback(btn_callback, BUTTON_SRU_PORT, BUTTON_SRU_PIN);
   return 1;
 }
 /*---------------------------------------------------------------------------*/
 /**
- * \brief Init function for the up button.
+ * \brief Init function for the sld button.
  *
  * Parameters are ignored. They have been included because the prototype is
  * dictated by the core sensor api. The return value is also not required by
@@ -209,39 +204,15 @@ config_right(int type, int value)
  * \return ignored
  */
 static int
-config_up(int type, int value)
+config_sld(int type, int value)
 {
-  config(BUTTON_UP_PORT_BASE, BUTTON_UP_PIN_MASK);
+  config(BUTTON_SLD_PORT_BASE, BUTTON_SLD_PIN_MASK);
 
-  ioc_set_over(BUTTON_UP_PORT, BUTTON_UP_PIN, IOC_OVERRIDE_PUE);
+  ioc_set_over(BUTTON_SLD_PORT, BUTTON_SLD_PIN, IOC_OVERRIDE_PUE);
 
-  nvic_interrupt_enable(BUTTON_UP_VECTOR);
+  nvic_interrupt_enable(BUTTON_SLD_VECTOR);
 
-  gpio_register_callback(btn_callback, BUTTON_UP_PORT, BUTTON_UP_PIN);
-  return 1;
-}
-/*---------------------------------------------------------------------------*/
-/**
- * \brief Init function for the down button.
- *
- * Parameters are ignored. They have been included because the prototype is
- * dictated by the core sensor api. The return value is also not required by
- * the API but otherwise ignored.
- *
- * \param type ignored
- * \param value ignored
- * \return ignored
- */
-static int
-config_down(int type, int value)
-{
-  config(BUTTON_DOWN_PORT_BASE, BUTTON_DOWN_PIN_MASK);
-
-  ioc_set_over(BUTTON_DOWN_PORT, BUTTON_DOWN_PIN, IOC_OVERRIDE_PUE);
-
-  nvic_interrupt_enable(BUTTON_DOWN_VECTOR);
-
-  gpio_register_callback(btn_callback, BUTTON_DOWN_PORT, BUTTON_DOWN_PIN);
+  gpio_register_callback(btn_callback, BUTTON_SLD_PORT, BUTTON_SLD_PIN);
   return 1;
 }
 /*---------------------------------------------------------------------------*/
@@ -251,10 +222,9 @@ button_sensor_init()
   timer_set(&debouncetimer, 0);
 }
 /*---------------------------------------------------------------------------*/
-SENSORS_SENSOR(button_select_sensor, BUTTON_SENSOR, NULL, config_select, NULL);
-SENSORS_SENSOR(button_left_sensor, BUTTON_SENSOR, NULL, config_left, NULL);
-SENSORS_SENSOR(button_right_sensor, BUTTON_SENSOR, NULL, config_right, NULL);
-SENSORS_SENSOR(button_up_sensor, BUTTON_SENSOR, NULL, config_up, NULL);
-SENSORS_SENSOR(button_down_sensor, BUTTON_SENSOR, NULL, config_down, NULL);
+SENSORS_SENSOR(button_slu_sensor, BUTTON_SENSOR, NULL, config_slu, NULL);
+SENSORS_SENSOR(button_srd_sensor, BUTTON_SENSOR, NULL, config_srd, NULL);
+SENSORS_SENSOR(button_sru_sensor, BUTTON_SENSOR, NULL, config_sru, NULL);
+SENSORS_SENSOR(button_sld_sensor, BUTTON_SENSOR, NULL, config_sld, NULL);
 
 /** @} */

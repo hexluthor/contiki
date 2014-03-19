@@ -48,12 +48,11 @@
 
 #define BUTTON_SENSOR "Button"
 
-#define button_sensor button_select_sensor
-extern const struct sensors_sensor button_select_sensor;
-extern const struct sensors_sensor button_left_sensor;
-extern const struct sensors_sensor button_right_sensor;
-extern const struct sensors_sensor button_up_sensor;
-extern const struct sensors_sensor button_down_sensor;
+#define button_sensor button_sru_sensor
+extern const struct sensors_sensor button_slu_sensor;
+extern const struct sensors_sensor button_srd_sensor;
+extern const struct sensors_sensor button_sru_sensor;
+extern const struct sensors_sensor button_sld_sensor;
 /*---------------------------------------------------------------------------*/
 #endif /* BUTTON_SENSOR_H_ */
 

@@ -138,36 +138,36 @@
  *
  * Buttons on the SmartRF06 are connected as follows:
  * - BUTTON_SELECT -> PA3
- * - BUTTON_LEFT -> PC4
- * - BUTTON_RIGHT -> PC5
- * - BUTTON_UP -> PC6
- * - BUTTON_DOWN -> PC7
+ * - BUTTON_SLU -> PC4
+ * - BUTTON_SRD -> PC5
+ * - BUTTON_SRU -> PC6
+ * - BUTTON_SLD -> PC7
  * @{
  */
 /** BUTTON_SELECT -> PA3 */
-#define BUTTON_SELECT_PORT       GPIO_A_NUM
-#define BUTTON_SELECT_PIN        3
-#define BUTTON_SELECT_VECTOR     NVIC_INT_GPIO_PORT_A
+// #define BUTTON_SELECT_PORT       GPIO_A_NUM
+// #define BUTTON_SELECT_PIN        3
+// #define BUTTON_SELECT_VECTOR     NVIC_INT_GPIO_PORT_A
 
-/** BUTTON_LEFT -> PC4 */
-#define BUTTON_LEFT_PORT         GPIO_C_NUM
-#define BUTTON_LEFT_PIN          4
-#define BUTTON_LEFT_VECTOR       NVIC_INT_GPIO_PORT_C
+/** BUTTON_SLU -> PC4 */
+#define BUTTON_SLU_PORT          GPIO_C_NUM
+#define BUTTON_SLU_PIN           0
+#define BUTTON_SLU_VECTOR        NVIC_INT_GPIO_PORT_C
 
-/** BUTTON_RIGHT -> PC5 */
-#define BUTTON_RIGHT_PORT        GPIO_C_NUM
-#define BUTTON_RIGHT_PIN         5
-#define BUTTON_RIGHT_VECTOR      NVIC_INT_GPIO_PORT_C
+/** BUTTON_SRD -> PC5 */
+#define BUTTON_SRD_PORT          GPIO_C_NUM
+#define BUTTON_SRD_PIN           2
+#define BUTTON_SRD_VECTOR        NVIC_INT_GPIO_PORT_C
 
-/** BUTTON_UP -> PC6 */
-#define BUTTON_UP_PORT           GPIO_C_NUM
-#define BUTTON_UP_PIN            6
-#define BUTTON_UP_VECTOR         NVIC_INT_GPIO_PORT_C
+/** BUTTON_SRU -> PC6 */
+#define BUTTON_SRU_PORT          GPIO_C_NUM
+#define BUTTON_SRU_PIN           1
+#define BUTTON_SRU_VECTOR        NVIC_INT_GPIO_PORT_C
 
-/** BUTTON_DOWN -> PC7 */
-#define BUTTON_DOWN_PORT        GPIO_C_NUM
-#define BUTTON_DOWN_PIN          7
-#define BUTTON_DOWN_VECTOR       NVIC_INT_GPIO_PORT_C
+/** BUTTON_SLD -> PC7 */
+#define BUTTON_SLD_PORT          GPIO_C_NUM
+#define BUTTON_SLD_PIN           3
+#define BUTTON_SLD_VECTOR        NVIC_INT_GPIO_PORT_C
 
 /* Notify various examples that we have Buttons */
 #define PLATFORM_HAS_BUTTON      1
