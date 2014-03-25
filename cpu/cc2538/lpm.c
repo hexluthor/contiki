@@ -111,7 +111,7 @@ static uint8_t max_pm;
 static lpm_periph_permit_pm1_func_t
 periph_permit_pm1_funcs[LPM_PERIPH_PERMIT_PM1_FUNCS_MAX];
 
-static void on_new_pm_mode(int m) {
+void on_new_pm_mode(int m) {
   if (m == -1) GPIO_SET_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(4));
   else         GPIO_CLR_PIN(GPIO_PORT_TO_BASE(GPIO_A_NUM), GPIO_PIN_MASK(4));
 

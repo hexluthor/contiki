@@ -206,6 +206,8 @@ typedef bool (*lpm_periph_permit_pm1_func_t)(void);
  */
 void lpm_register_peripheral(lpm_periph_permit_pm1_func_t permit_pm1_func);
 /*---------------------------------------------------------------------------*/
+void on_new_pm_mode(int m) __attribute__ ((weak));
+
 /* Disable the entire module if required */
 #if LPM_CONF_ENABLE==0
 #define lpm_init()
