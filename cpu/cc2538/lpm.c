@@ -99,7 +99,7 @@ static rtimer_clock_t sleep_enter_time;
 void clock_adjust(clock_time_t ticks);
 /*---------------------------------------------------------------------------*/
 /* Stores the currently specified MAX allowed PM */
-static uint8_t max_pm;
+static int8_t max_pm;
 /*---------------------------------------------------------------------------*/
 /* Buffer to store peripheral PM1+ permission FPs */
 #ifdef LPM_CONF_PERIPH_PERMIT_PM1_FUNCS_MAX
@@ -257,6 +257,8 @@ lpm_enter()
   rtimer_clock_t lpm_exit_time;
   rtimer_clock_t duration;
 
+  if (max_pm < 0) return;
+
   /*
    * If either the RF or the registered peripherals are on, dropping to PM1/2
    * would equal pulling the rug (32MHz XOSC) from under their feet. Thus, we
@@ -311,7 +313,7 @@ lpm_enter()
   } else if(duration >= DEEP_SLEEP_PM2_THRESHOLD && max_pm == 2) {
     /* Long sleep duration and PM2 is allowed. Use it */
     REG(SYS_CTRL_PMCTL) = SYS_CTRL_PMCTL_PM2;
-  } else {
+  } else if (max_pm >= 1) {
     /*
      * Anticipated duration too short for PM2 but long enough for PM1 and we
      * are allowed to use PM1
@@ -364,7 +366,7 @@ lpm_enter()
 }
 /*---------------------------------------------------------------------------*/
 void
-lpm_set_max_pm(uint8_t pm)
+lpm_set_max_pm(int8_t pm)
 {
   max_pm = pm > LPM_CONF_MAX_PM ? LPM_CONF_MAX_PM : pm;
 }
