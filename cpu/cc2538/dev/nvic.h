@@ -59,7 +59,11 @@
 #endif
 
 #ifndef NVIC_CONF_VTABLE_OFFSET
-#define NVIC_CONF_VTABLE_OFFSET 0x200000
+#  ifdef FLASH_CONF_ORIGIN
+#    define NVIC_CONF_VTABLE_OFFSET FLASH_CONF_ORIGIN
+#  else
+#    define NVIC_CONF_VTABLE_OFFSET 0x200000
+#  endif
 #endif
 /** @} */
 /*---------------------------------------------------------------------------*/
